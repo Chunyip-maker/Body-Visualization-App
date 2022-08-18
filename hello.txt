@@ -1,2 +1,0 @@
-Hello! This is added by Wenxi Xu to test the source tree.
-If you want to delete this feel free to do so.
