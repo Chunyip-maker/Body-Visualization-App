@@ -1,60 +1,96 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Body Visualization App</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="colorlib.com">
+<html lang="en">
 
-		<!-- MATERIAL DESIGN ICONIC FONT -->
-		<link rel="stylesheet" href="../static/fonts/material-design-iconic-font/css/material-design-iconic-font.css">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="../static/fonts/material-design-iconic-font/css/material-design-iconic-font.css">
 
-		<!-- DATE-PICKER -->
-		<link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
+    <!-- DATE-PICKER -->
+    <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
 
-		<!-- STYLE CSS -->
-		<link rel="stylesheet" href="../static/css/style.css">
-	</head>
-	<body>
-		<div class="wrapper">
-            <form action="" id="wizard">
-        		<!-- SECTION 1 -->
-                <h4></h4>
-                <section>
-                    <h3>Step 1</h3>
-                </section>
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Body Virtualisation APP - Login</title>
+</head>
 
-				<!-- SECTION 2 -->
-                <h4></h4>
-                <section>
-                	<h3>Step 2</h3>
-                  
-                </section>
+<body>
 
-                <!-- SECTION 3 -->
-                <h4></h4>
-                <section>
-                    <h3 style="margin-bottom: 16px;">Step 3</h3>
 
-                </section>
 
-                <!-- SECTION 4 -->
-                <h4></h4>
-                <section>
-                    <h3>Step 4</h3>
-                   
-                    
-                </section>
+    <div class="wrapper register-block">
+        <h3 class="login_header"> P50 - Body Visualization App </h3>
+
+        <div class="login">
+
+            <div class="login_old">
+
+                <h3>Have an account?</h3>
+                <input type="text" placeholder="Enter a unique name">
+                <button type="button"> 
+                    <a href="step3.html">
+                        Login
+                    </a>    
+                </button>
+            </div>
+
+            <div class="register_new">
+                <h3>New User</h3>
+                <input type="text" placeholder="Enter a unique name">
+                <button type="button"> 
+                    <a href="step2.html">
+                        Register
+                    </a>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- <div class="form">
+
+            <form class="register-form">
+                <div class="register-title">
+                    Register
+                </div>
+                <input type="text" placeholder="User Name">
+                <input type="text" placeholder="Password">
+                <input type="text" placeholder="Email">
+                <button type="button"> Register</button>
+                <p class="message">
+                    Already Registered?
+                    <a href="#">
+                        Login
+                    </a>
+                </p>
             </form>
-		</div>
+            <form class="login-form">
+                <div class="register-title">
+                    Login
+                </div>
+                <input type="text" placeholder="User Name">
+                <input type="password" placeholder="Password">
+                <button type="button"> Login </button>
+                <p class="message">
+                    Don't have an account?
+                    <a href="#">
+                        Register
+                    </a>
+                </p>
+                <p class="reset">
+                    Forgot password?
+                    <a href="./forgot_password.html">
+                        Reset
+                    </a>
+                </p>
+            </form>
+            </script>
+        </div> -->
+    </div>
 
-		<script src="../static/js/jquery-3.3.1.min.js"></script>
-		
-		<!-- JQUERY STEP -->
-		<script src="../static/js/jquery.steps.js"></script>
 
-		<script src="../static/js/main.js"></script>
 
-<!-- Template created and distributed by Colorlib -->
 </body>
+
 </html>
