@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/index.css">
     <title>Body Virtualisation APP - Login</title>
 </head>
 
@@ -20,74 +20,83 @@
 
 
 
-    <div class="wrapper register-block">
-        <h3 class="login_header"> P50 - Body Visualization App </h3>
+    <div class="container">
 
-        <div class="login">
-
-            <div class="login_old">
-
-                <h3>Have an account?</h3>
-                <input type="text" placeholder="Enter a unique name">
-                <button type="button"> 
-                    <a href="step3.html">
-                        Login
-                    </a>    
+        <div class="form-box">
+            <div class="login-box">
+                <h1>Login</h1>
+                <input class="modelname" type="text" placeholder="Login with your name">
+                <button>
+                    Login
                 </button>
             </div>
 
-            <div class="register_new">
-                <h3>New User</h3>
-                <input type="text" placeholder="Enter a unique name">
-                <button type="button"> 
-                    <a href="step2.html">
-                        Register
-                    </a>
+            <div class="register-box hidden">
+                <h1>Register</h1>
+                <input class="modelname" type="text" placeholder="Enter a unique name">
+                <button>
+                    Register
                 </button>
             </div>
+        </div>
+
+        <!-- Left Box: Login -->
+        <div class="con-box left">
+            <h2>
+                <span> BODY VISUALIZATION APP </span>
+            </h2>            
+
+         
+            <p>一些想说的话</p>
+            <img src="../static/images/yoimiya.jpg">
+            <p>
+                Already Have an account?
+            </p>
+            <button id="login">
+                Login
+            </button>
 
         </div>
 
-        <!-- <div class="form">
+        <!-- Right Box: Register -->
+        <div class="con-box right">
+            <h2>
+                <span> BODY VISUALIZATION APP </span>
+            </h2>
 
-            <form class="register-form">
-                <div class="register-title">
-                    Register
-                </div>
-                <input type="text" placeholder="User Name">
-                <input type="text" placeholder="Password">
-                <input type="text" placeholder="Email">
-                <button type="button"> Register</button>
-                <p class="message">
-                    Already Registered?
-                    <a href="#">
-                        Login
-                    </a>
-                </p>
-            </form>
-            <form class="login-form">
-                <div class="register-title">
-                    Login
-                </div>
-                <input type="text" placeholder="User Name">
-                <input type="password" placeholder="Password">
-                <button type="button"> Login </button>
-                <p class="message">
-                    Don't have an account?
-                    <a href="#">
-                        Register
-                    </a>
-                </p>
-                <p class="reset">
-                    Forgot password?
-                    <a href="./forgot_password.html">
-                        Reset
-                    </a>
-                </p>
-            </form>
-            </script>
-        </div> -->
+          
+            <p>一些想说的话</p>
+            <img src="../static/images/yoimiya.jpg">
+            <p>
+                Don't have an account?
+            </p>
+            <button id="register">
+                Register
+            </button>
+        </div>
     </div>
+
+    <!-- JS -->
+    <script>
+        //要操作到的元素
+        let login = document.getElementById("login");
+        let register = document.getElementById("register");
+        let form_box = document.getElementsByClassName("form-box")[0];
+        let register_box = document.getElementsByClassName("register-box")[0];
+        let login_box = document.getElementsByClassName("login-box")[0];
+        //点击去注册按钮点击事件
+        register.addEventListener('click',()=>{
+            form_box.style.transform='translateX(80%)';
+            login_box.classList.add('hidden');
+            register_box.classList.remove('hidden');
+        })
+        //点击去登录按钮点击事件
+        login.addEventListener('click',()=>{
+            form_box.style.transform='translateX(0%)';
+            register_box.classList.add('hidden');
+            login_box.classList.remove('hidden');
+        })
+    </script>
 
 
 

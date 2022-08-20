@@ -24,7 +24,7 @@ body {
     font-size: 14px;
     margin: 0;
     color: #999;
-    background: url("../images/backgroud.webp") no-repeat center center;
+    background: url("../images/backgroud.webp") no-repeat center;
     height: 100vh;
     background-size: cover;
     display: flex;
@@ -583,70 +583,6 @@ table.cart .product-remove a {
     }
 }
 
-/* Index page */
-
-.login {
-    width: 650px;
-    height: 400px;
-}
-
-.login_header {
-    font-size: 36px;
-}
-
-.login_old {
-    float: left;
-    background-color: pink;
-    width: 300px;
-    height: 400px;
-}
-
-.login h3 {
-    margin-top: 20px;
-}
-
-.login input {
-    margin-left: 25px;
-    margin-top: 50px;
-    border-radius: 10px;
-    width: 250px;
-    height: 50px;
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    padding-left: 10px;
-    font-size: 24px;
-    color: #666;
-    
-}
-
-.login button {
-    margin-left: 25px;
-    margin-top: 50px;
-    width: 250px;
-    height: 70px;
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    padding: 0;
-    border-radius: 10px; 
-}
-
-.login a{
-    display: block;
-    line-height: 70px;
-    font-size: 32px;
-}
-
-.login button:hover {
-    background-color: skyblue;
-}
-.register_new {
-    float: right;
-    width: 300px;
-    height: 400px;
-    background-color: red;
-}
 
 
 /*# sourceMappingURL=style.css.map */
