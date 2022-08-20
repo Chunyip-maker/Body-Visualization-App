@@ -25,7 +25,7 @@
         <div class="form-box">
             <div class="login-box">
                 <h1>Login</h1>
-                <input class="modelname" type="text" placeholder="Login with your name">
+                <input name="modelname" type="text" placeholder="Login with your name">
                 <button>
                     Login
                 </button>
@@ -33,7 +33,7 @@
 
             <div class="register-box hidden">
                 <h1>Register</h1>
-                <input class="modelname" type="text" placeholder="Enter a unique name">
+                <input name="modelname"  type="text" placeholder="Enter a unique name">
                 <button>
                     Register
                 </button>
@@ -78,19 +78,16 @@
 
     <!-- JS -->
     <script>
-        //要操作到的元素
         let login = document.getElementById("login");
         let register = document.getElementById("register");
         let form_box = document.getElementsByClassName("form-box")[0];
         let register_box = document.getElementsByClassName("register-box")[0];
         let login_box = document.getElementsByClassName("login-box")[0];
-        //点击去注册按钮点击事件
         register.addEventListener('click',()=>{
             form_box.style.transform='translateX(80%)';
             login_box.classList.add('hidden');
             register_box.classList.remove('hidden');
         })
-        //点击去登录按钮点击事件
         login.addEventListener('click',()=>{
             form_box.style.transform='translateX(0%)';
             register_box.classList.add('hidden');
