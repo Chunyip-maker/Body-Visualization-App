@@ -1,8 +1,6 @@
 import sqlite3
 import json
 
-#TODO
-# It just a example from info2222 about how to using sqlites3, may be imported by model #
 
 # This class is a simple handler for all of our SQL database actions
 # Practicing a good separation of concerns, we should only ever call
@@ -17,8 +15,8 @@ class SQLDatabase():
     '''
 
     # Get the database running
-    def __init__(self, database_arg="models.sqlite", check_same_thread=False):
-        self.conn = sqlite3.connect(database_arg)
+    def __init__(self, database_arg="models.sqlite"):
+        self.conn = sqlite3.connect(database_arg, check_same_thread=False)
         self.cur = self.conn.cursor()
 
     # SQLite 3 does not natively support multiple commands in a single statement
