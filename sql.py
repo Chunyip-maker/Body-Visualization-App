@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 #TODO
 # It just a example from info2222 about how to using sqlites3, may be imported by model #
@@ -16,7 +17,7 @@ class SQLDatabase():
     '''
 
     # Get the database running
-    def __init__(self, database_arg=":memory:"):
+    def __init__(self, database_arg="models.sqlite", check_same_thread=False):
         self.conn = sqlite3.connect(database_arg)
         self.cur = self.conn.cursor()
 
@@ -38,58 +39,70 @@ class SQLDatabase():
 
     # -----------------------------------------------------------------------------
 
-    # Sets up the database
-    # Default admin password
-    def database_setup(self, admin_password='admin'):
+    # Sets up the database, and the initial table BasicModels to record the model
+    def database_setup(self):
 
         # Clear the database if needed
-        self.execute("DROP TABLE IF EXISTS Users")
+        self.execute("DROP TABLE BasicModels IF EXISTS")
         self.commit()
 
         # Create the users table
-        self.execute("""CREATE TABLE Users(
-            Id INT,
-            username TEXT,
-            password TEXT,
-            admin INTEGER DEFAULT 0
+        self.execute("""CREATE TABLE BasicModels(
+            model_name TEXT NOT NULL,
+            age INT,
+            gender TEXT,
+            PRIMARY KEY(model_name)
         )""")
 
         self.commit()
-
-        # Add our admin user
-        self.add_user('admin', admin_pasword, admin=1)
+        print("\nDatabase successfullly set up.\n")
 
     # -----------------------------------------------------------------------------
-    # User handling
+    # Model Existence Check
     # -----------------------------------------------------------------------------
+    # Return True if the model already exists, otherwise false
+    def check_model_existence(self, model_name):
+        sql_query = """
+            SELECT 1
+            FROM BasicModels
+            WHERE model_name = '{model_name}'
+        """
+        sql_query = sql_query.format(model_name=model_name)
 
-    # Add a user to the database
-    def add_user(self, username, password, admin=0):
+        if self.cur.execute(sql_query).fetchone():
+            return True
+        else:
+            return False
+
+    # -----------------------------------------------------------------------------
+    # Human Model Basic Data Adding (model_name, age, gender)
+    # -----------------------------------------------------------------------------
+    # Add a model to the database table BasicModels
+    def add_basic_model(self, model_name,age, gender):
         sql_cmd = """
-                INSERT INTO Users
-                VALUES({id}, '{username}', '{password}', {admin})
+                INSERT INTO BasicModels
+                VALUES('{model_name}', '{age}', '{gender}')
             """
 
-        sql_cmd = sql_cmd.format(username=username, password=password, admin=admin)
-
+        sql_cmd = sql_cmd.format(model_name=model_name, age=age,gender=gender)
         self.execute(sql_cmd)
         self.commit()
         return True
 
     # -----------------------------------------------------------------------------
-
-    # Check login credentials
-    def check_credentials(self, username, password):
-        sql_query = """
-                SELECT 1 
-                FROM Users
-                WHERE username = '{username}' AND password = '{password}'
-            """
-
-        sql_query = sql_query.format(username=username, password=password)
-
-        # If our query returns
-        if cur.fetchone():
-            return True
-        else:
-            return False
+    #
+    # # Check login credentials
+    # def check_credentials(self, username, password):
+    #     sql_query = """
+    #             SELECT 1
+    #             FROM Users
+    #             WHERE username = '{username}' AND password = '{password}'
+    #         """
+    #
+    #     sql_query = sql_query.format(username=username, password=password)
+    #
+    #     # If our query returns
+    #     if self.cur.fetchone():
+    #         return True
+    #     else:
+    #         return False
