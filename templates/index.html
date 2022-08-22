@@ -23,7 +23,7 @@
     <div class="container">
 
         <div class="form-box">
-<!--            <div class="login-box">-->
+            <!--            <div class="login-box">-->
             <form class="login-box" action="/login" method='POST'>
                 <h1>Login</h1>
                 <input name="modelname" type="modelname" placeholder="Login with your name">
@@ -31,26 +31,26 @@
                     Login
                 </button>
             </form>
-<!--            </div>-->
+            <!--            </div>-->
 
-<!--            <div class="register-box hidden">-->
-                <form class="register-box hidden" action="/login" method='POST'>
-                    <h1>Register</h1>
-                    <input name="modelname"  type="modelname" placeholder="Enter a unique name">
-                    <button>
-                        Register
-                    </button>
-                </form>>
-<!--            </div>-->
+            <!--            <div class="register-box hidden">-->
+            <form class="register-box hidden" action="/login" method='POST'>
+                <h1>Register</h1>
+                <input name="modelname" type="modelname" placeholder="Enter a unique name">
+                <button>
+                    Register
+                </button>
+            </form>
+            <!--            </div>-->
         </div>
 
         <!-- Left Box: Login -->
         <div class="con-box left">
             <h2>
                 <span> BODY VISUALIZATION APP </span>
-            </h2>            
+            </h2>
 
-         
+
             <p>一些想说的话</p>
             <img src="../static/images/yoimiya.jpg">
             <p>
@@ -68,7 +68,7 @@
                 <span> BODY VISUALIZATION APP </span>
             </h2>
 
-          
+
             <p>一些想说的话</p>
             <img src="../static/images/yoimiya.jpg">
             <p>
@@ -87,13 +87,13 @@
         let form_box = document.getElementsByClassName("form-box")[0];
         let register_box = document.getElementsByClassName("register-box")[0];
         let login_box = document.getElementsByClassName("login-box")[0];
-        register.addEventListener('click',()=>{
-            form_box.style.transform='translateX(80%)';
+        register.addEventListener('click', () => {
+            form_box.style.transform = 'translateX(80%)';
             login_box.classList.add('hidden');
             register_box.classList.remove('hidden');
         })
-        login.addEventListener('click',()=>{
-            form_box.style.transform='translateX(0%)';
+        login.addEventListener('click', () => {
+            form_box.style.transform = 'translateX(0%)';
             register_box.classList.add('hidden');
             login_box.classList.remove('hidden');
         })

@@ -12,29 +12,38 @@
     <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/step1.css">
     <title>Body Virtualisation APP - Step 1 </title>
 </head>
 
 <body>
-     <div class="container">
+    <div class="container">
         <div class="form-box">
-            <form class="login-box" action="/step1" method='POST'>
+            <form class="register-box" action="/step1" method='POST'>
                 <h1>Step 1 </h1>
                 <input name="age" type="age" placeholder="input the model age">
                 <div class="gender">
-                        <p>Please choose your gender</p>
-                        <input type="radio" id="male" name="gender" value="male" required>
-                        <label for="male">Male</label>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label>
-                    </div>
+                    <p>Please choose your gender</p>
+                    <input class="mf" type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">
+                        <span>
+                            Male
+                        </span>
+                    </label>
+                    <input class="mf" type="radio" id="female" name="gender" value="female">
+                    <label for="female">
+                        <span>
+                            Female
+                        </span>
+                    </label>
+                </div>
                 <button>
                     Next Step
                 </button>
             </form>
         </div>
-     </div>
+    </div>
 
 </body>
+
 </html>
