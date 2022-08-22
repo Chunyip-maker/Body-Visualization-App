@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="../static/fonts/material-design-iconic-font/css/material-design-iconic-font.css">
+
+    <!-- DATE-PICKER -->
+    <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>Body Virtualisation APP - Step 1 </title>
 </head>
+
 <body>
-    <h1> This is Step 1</h1> 
+     <div class="container">
+        <div class="form-box">
+            <form class="login-box" action="/step1" method='POST'>
+                <h1>Step 1 </h1>
+                <input name="age" type="age" placeholder="input the model age">
+                <div class="gender">
+                        <p>Please choose your gender</p>
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                <button>
+                    Next Step
+                </button>
+            </form>
+        </div>
+     </div>
+
 </body>
 </html>

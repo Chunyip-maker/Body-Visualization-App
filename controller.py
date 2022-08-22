@@ -100,7 +100,7 @@ def complete_step1():
         gender = request.form.get('gender')
         model_name = human_model_details['model_name']
         model.add_a_basic_human_model(model_name,age,gender)
-        return redirect(url_for())
+        return redirect(url_for('complete_step2'))
 
 @app.route('/step2', methods=['GET','POST'])
 def complete_step2():

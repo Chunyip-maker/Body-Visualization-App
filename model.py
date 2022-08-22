@@ -14,5 +14,4 @@ class Model:
         return result
 
     def add_a_basic_human_model(self,model_name, age, gender):
-        self.add_a_basic_human_model(model_name,age,gender)
         self.database.add_basic_model(model_name,age,gender)
