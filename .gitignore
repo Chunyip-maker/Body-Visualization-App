@@ -16,6 +16,9 @@ dist/
 # Log files
 *.log
 
+# Sqlite files
+*.sqlite
+
 # Package files
 *.jar
 
