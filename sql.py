@@ -41,7 +41,7 @@ class SQLDatabase():
     def database_setup(self):
 
         # Clear the database if needed
-        self.execute("DROP TABLE BasicModels IF EXISTS")
+        self.execute("DROP TABLE IF EXISTS BasicModels ")
         self.commit()
 
         # Create the users table
@@ -53,7 +53,14 @@ class SQLDatabase():
         )""")
 
         self.commit()
+
+
+        # Add our admin model
+        if not self.check_model_existence('admin'):
+            self.add_basic_model('admin',20,'Male')
+
         print("\nDatabase successfullly set up.\n")
+
 
     # -----------------------------------------------------------------------------
     # Model Existence Check
