@@ -29,7 +29,8 @@
         import { OrbitControls } from '/static/js/OrbitControls.js'
         import Stats from '/static/js/stats.module.js'
 
-
+        //GUI not yet
+        let gui = new dat.GUI();
 
         let stats;
         const clock = new THREE.Clock();
@@ -88,12 +89,26 @@
                     if (child.type == "Bone") {
                         count += 1;
                         console.log(child);
+
+                        //add gui
+                        if (child.name == "Left_leg") {
+                            
+                            gui.add(child.scale, 'x',0, 2).name("Left Leg");
+                            gui.add(child.scale, 'z',0, 2).name("Left Leg");
+                        }
+
+                        if (child.name == "Right_leg") {
+                        
+                            gui.add(child.scale, 'x',0, 2).name("Right Leg");
+                            gui.add(child.scale, 'z',0, 2).name("Right Leg");
+                        }
                     }
                     
                     //test 
-                    if (child.name == "Left_leg" || child.name == "Right_leg") {
-                        child.scale.x = 2;
-                    }
+
+
+                    //add gui
+
 
 
                     if ( child.isMesh ) {
@@ -106,8 +121,7 @@
                 scene.add( object );
         } );
 
-        //GUI not yet
-        let gui = new dat.GUI();
+
 
 
         

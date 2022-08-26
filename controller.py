@@ -136,7 +136,7 @@ def complete_step2():
 @app.route('/step3', methods=['GET','POST'])
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
-    flash("Wellcome " + human_model_details['model_name'], 'success')
+    # flash("Wellcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
 
         return render_template('step3.html')
