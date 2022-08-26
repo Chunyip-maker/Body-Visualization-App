@@ -27,21 +27,17 @@
         import {GLTFLoader} from '/static/js/GLTFLoader.js';
 
 
-        
         //set up camera
         const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100);
-        camera.position.set(0,1,3);
+        camera.position.set(0,1,1.5);
 
         //set up scene, with white background color
         var scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
 
-
-        //quick start box model
-        const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-        const material = new THREE.MeshNormalMaterial();
-        const mesh = new THREE.Mesh( geometry, material );
-        //scene.add( mesh );
+        //light
+        var light = new THREE.HemisphereLight(0xffffff,0x000000,2);
+        scene.add(light);
 
         //set up render
         const renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -49,62 +45,54 @@
         renderer.setAnimationLoop( animation );
         document.body.appendChild( renderer.domElement );
 
-    
-        //set up loader
-        const loader = new GLTFLoader();
-        //set up texture
+
+        
+        //set up GLTF loader and texture
+        //const loader = new GLTFLoader();
         const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
         texture.flipY = false;
         texture.encoding = THREE.sRGBEncoding;
 
         //load model file
+        //let modelObject;
+        // let morphTargets = [];
+        // let tempVariable;
+        // loader.load('/static/model/test/Adult Female.gltf', (gltf) => {
+        //     modelObject = gltf.scene;
+        //     modelObject.traverse((child) => {
+        //         if (child.isMesh) {
+        //             child.material.metalness = 0;
+        //             child.material.vertexColors = false;
+        //             //child.material.map = texture;
+        //             //target the morph target
+        //             if (child.morphTargetDictionary) {
 
+        //                 morphTargets["helmets"] = [];
+        //                 morphTargets["helmets"].push({ child });
+
+        //             }
+        //         }
+        //     });
+        //     console.log(morphTargets);
+        //     scene.add(modelObject);
+        // });
         
-        let modelObject;
-        let morphTargets = [];
-        let tempVariable;
-        loader.load(`/static/model/astronaut/morphHelmet.gltf`, (gltf) => {
-            modelObject = gltf.scene;
-            modelObject.traverse((child) => {
-                if (child.isMesh) {
-                    child.material.metalness = 0;
-                    child.material.vertexColors = false;
-                    child.material.map = texture;
-                    //target the morph target
-                    if (child.morphTargetDictionary) {
+        //console.log(morphTargets.length);
 
-                        morphTargets["helmets"] = [];
-                        morphTargets["helmets"].push({ child });
-
-                    }
-                }
-            });
-            console.log(morphTargets);
-            scene.add(modelObject);
-        });
-        
-        console.log(morphTargets.length);
-        //set up light
-        var light = new THREE.HemisphereLight(0xffffff,0x000000,2);
-        scene.add(light);
         
         //missing png 
-        // let modelObject;
-        // const loader = new FBXLoader();
+        let modelObject;
+        const loader = new FBXLoader();
         
-        // loader.load( '/static/model/adult_female/model1/Adult Female.fbx', function ( object ) {
-        //     modelObject = object
-        //     scene.add( object );
+        loader.load( '/static/model/test/Dwarf_Idle.fbx', function ( object ) {
+            modelObject = object
+            scene.add( object );
 
-        // } );
+        } );
 
         //GUI
         let gui = new dat.GUI();
-        let influence = {};
-        const influences = {};
-        
-        const targets = morphTargets["helmets"];
-        console.log(morphTargets);
+
 
     
         // animation
