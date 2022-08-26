@@ -72,18 +72,34 @@
         let modelObject;
         const loader = new FBXLoader();
             loader.load( '/static/model/test/Dwarf_Idle.fbx', function ( object ) {
-
+                
+                
                 mixer = new THREE.AnimationMixer( object );
 
                 const action = mixer.clipAction( object.animations[ 0 ] );
                 action.play();
 
+
+                let count = 0;
                 object.traverse( function ( child ) {
+
+                    //output all bones to console
+                    if (child.type == "Bone") {
+                        count += 1;
+                        console.log(child);
+                    }
+                    
+                    //test 
+                    if (child.name == "Left_leg" || child.name == "Right_leg") {
+                        child.scale.x = 2;
+                    }
+
 
                     if ( child.isMesh ) {
                         child.castShadow = true;
                         child.receiveShadow = true;
                     }
+                    console.log(count);
                 } );
 
                 scene.add( object );
