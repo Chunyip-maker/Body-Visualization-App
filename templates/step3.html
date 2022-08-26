@@ -25,11 +25,20 @@
         import * as THREE from 'three';
         import { FBXLoader } from '/static/js/FBXLoader.js';
         import {GLTFLoader} from '/static/js/GLTFLoader.js';
+        import { OrbitControls } from '/static/js/OrbitControls.js'
+        import Stats from '/static/js/stats.module.js'
 
+
+
+        let stats;
+        const clock = new THREE.Clock();
+        
 
         //set up camera
         const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100);
         camera.position.set(0,1,1.5);
+
+
 
         //set up scene, with white background color
         var scene = new THREE.Scene();
@@ -42,16 +51,73 @@
         //set up render
         const renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.setAnimationLoop( animation );
         document.body.appendChild( renderer.domElement );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.shadowMap.enabled = true;
+        
+        
+        //set up stats
+        stats = new Stats();
+        document.body.appendChild( stats.dom );
+
+
+        //set up controller(enable user to control camera)
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.target.set(0, 1, 0)
+        
+        
+        //fbx loader
+        let mixer;
+        let modelObject;
+        const loader = new FBXLoader();
+            loader.load( '/static/model/test/Dwarf_Idle.fbx', function ( object ) {
+
+                mixer = new THREE.AnimationMixer( object );
+
+                const action = mixer.clipAction( object.animations[ 0 ] );
+                action.play();
+
+                object.traverse( function ( child ) {
+
+                    if ( child.isMesh ) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                } );
+
+                scene.add( object );
+        } );
+
+        //GUI not yet
+        let gui = new dat.GUI();
 
 
         
+
+        // animation
+        animate();
+        function animate() {
+
+            requestAnimationFrame( animate );
+            const delta = clock.getDelta();
+            if ( mixer ) mixer.update( delta );
+            renderer.render( scene, camera );
+            stats.update();
+
+        }
+
+
+
+
+        /*
+        Idea about using morph target to change diff part of the model.
+        */
         //set up GLTF loader and texture
         //const loader = new GLTFLoader();
-        const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
-        texture.flipY = false;
-        texture.encoding = THREE.sRGBEncoding;
+        // const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
+        // texture.flipY = false;
+        // texture.encoding = THREE.sRGBEncoding;
 
         //load model file
         //let modelObject;
@@ -78,32 +144,11 @@
         // });
         
         //console.log(morphTargets.length);
-
         
-        //missing png 
-        let modelObject;
-        const loader = new FBXLoader();
+        /*
+        end of morph example
+        */
         
-        loader.load( '/static/model/test/Dwarf_Idle.fbx', function ( object ) {
-            modelObject = object
-            scene.add( object );
-
-        } );
-
-        //GUI
-        let gui = new dat.GUI();
-
-
-    
-        // animation
-        function animation() {
-            requestAnimationFrame(animation);
-            modelObject.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
-
-        
-
     </script>
 
 </body>
