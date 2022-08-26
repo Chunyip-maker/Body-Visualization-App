@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% include 'flashed_message.html' %}
+
 <html lang="en">
 
 <head>
@@ -34,7 +36,7 @@
             <!--            </div>-->
 
             <!--            <div class="register-box hidden">-->
-            <form class="register-box hidden" action="/login" method='POST'>
+            <form class="register-box hidden" action="/register" method='POST'>
                 <h1>Register</h1>
                 <input name="modelname" type="modelname" placeholder="Enter a unique name">
                 <button>

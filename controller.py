@@ -24,13 +24,15 @@ human_model_details = {}            # Human model details kept for us, 比如mod
 app.config['SECRET_KEY'] = os.urandom(24)
 model = Model()
 
+#####################################################
+#   INDEX
+#####################################################
 @app.route('/')
 def index():
     """
     If already login( 即之前已输入过model name ), go to step3
     Otherwise prompt login
      """
-
     # 如果未登录
     if ('logged_in' not in session or not session['logged_in']):
         return redirect(url_for('login_page'))
@@ -39,6 +41,28 @@ def index():
     return render_template('step3.html',
                            session = session,
                            human_model_details = human_model_details)
+
+
+#####################################################
+#   REGISTER
+#####################################################
+@app.route('/register',methods = ['GET','POST'])
+def register_page():
+    """
+    Here handles the register page
+    Provides /register
+    - [GET] viewing the register page
+    - [POST] if submitting register detail - model name, check register
+    """
+    if request.method == 'GET':
+        return render_template('index.html')
+    else:
+        model_name = request.form.get('modelname')
+        if model.check_model_already_exists(model_name):
+            flash("The model name already exists, please log in or register other names ",'info')
+            return redirect(url_for('register_page'))
+        else:
+            return redirect(url_for('complete_step1'))
 
 
 #####################################################
@@ -58,21 +82,22 @@ def login_page():
 
     else:
         model_name = request.form.get('modelname') # 前端请用'modelname'
-
-        # No credential check, log user in
-        session['logged_in'] = True
-
-        # Store the user details for us to use throughout
-        global human_model_details
-        human_model_details['model_name'] = model_name
-
         if model.check_model_already_exists(model_name):
+            # No credential check, log user in
+            session['logged_in'] = True
+
+            # Store the user details for us to use throughout
+            global human_model_details
+            human_model_details['model_name'] = model_name
             # 如果该模型已存在,跳转到step3.html
             return redirect(url_for('complete_step3'))
-
         else:
-            # 如果该模型还未创建完成（name, age, gender都有），那么跳转到step1.html
-            return redirect(url_for('complete_step1'))
+            flash("Incorrect model name input, please try again or register",'warning')
+            return redirect(url_for('login_page'))
+
+        # else:
+        #     # 如果该模型还未创建完成（name, age, gender都有），那么跳转到step1.html
+        #     return redirect(url_for('complete_step1'))
 
 #####################################################
 #   LOGOUT
@@ -105,13 +130,13 @@ def complete_step1():
 @app.route('/step2', methods=['GET','POST'])
 def complete_step2():
     """ Handle the 3rd step of the body visualizer """
-
     if request.method == 'GET':
         return render_template('step2.html')
 
 @app.route('/step3', methods=['GET','POST'])
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
-
+    flash("Wellcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
+
         return render_template('step3.html')
