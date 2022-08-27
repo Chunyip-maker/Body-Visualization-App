@@ -73,7 +73,7 @@
         let mixer;
         let modelObject;
         const loader = new FBXLoader();
-            loader.load( '/static/model/test/Dwarf_Idle.fbx', function ( object ) {
+            loader.load( '/static/model/adult_male/model1/Idle.fbx', function ( object ) {
                 
                 
                 mixer = new THREE.AnimationMixer( object );
@@ -102,6 +102,8 @@
                             gui.add(child.scale, 'x',0, 2).name("Right Leg");
                             gui.add(child.scale, 'z',0, 2).name("Right Leg");
                         }
+
+
                     }
                     
                     //test 
