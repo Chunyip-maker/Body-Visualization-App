@@ -47,7 +47,7 @@
         scene.background = new THREE.Color(0xffffff);
 
         //light
-        var light = new THREE.HemisphereLight(0xffffff,0x000000,2);
+        var light = new THREE.HemisphereLight(0xffeeb1,0x080820,4);
         scene.add(light);
 
         //set up render
@@ -56,8 +56,11 @@
         document.body.appendChild( renderer.domElement );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.shadowMap.enabled = true;
-        
-        
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 2.3; 
+        let spotlight = new THREE.SpotLight(0xffa95c, 4);
+        spotlight.castShadow = true;
+        scene.add( spotlight );
         //set up stats
         stats = new Stats();
         document.body.appendChild( stats.dom );
@@ -73,7 +76,7 @@
         let mixer;
         let modelObject;
         const loader = new FBXLoader();
-            loader.load( '/static/model/adult_male/model1/Idle.fbx', function ( object ) {
+            loader.load( '/static/model/adult_male/model1/idle.fbx', function ( object ) {
                 
                 
                 mixer = new THREE.AnimationMixer( object );
@@ -133,6 +136,13 @@
         function animate() {
 
             requestAnimationFrame( animate );
+            spotlight.position.set(
+                camera.position.x + 10,
+                camera.position.y + 10,
+                camera.position.z + 10
+
+            )
+
             const delta = clock.getDelta();
             if ( mixer ) mixer.update( delta );
             renderer.render( scene, camera );
@@ -147,16 +157,16 @@
         Idea about using morph target to change diff part of the model.
         */
         //set up GLTF loader and texture
-        //const loader = new GLTFLoader();
-        // const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
-        // texture.flipY = false;
-        // texture.encoding = THREE.sRGBEncoding;
+        // const loader = new GLTFLoader();
+        // //const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
+        // // texture.flipY = false;
+        // // texture.encoding = THREE.sRGBEncoding;
 
-        //load model file
-        //let modelObject;
+        // //load model file
+        // let modelObject;
         // let morphTargets = [];
         // let tempVariable;
-        // loader.load('/static/model/test/Adult Female.gltf', (gltf) => {
+        // loader.load('/static/model/test/scifi_girl_v.01/scene.gltf', (gltf) => {
         //     modelObject = gltf.scene;
         //     modelObject.traverse((child) => {
         //         if (child.isMesh) {
