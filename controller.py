@@ -24,6 +24,9 @@ human_model_details = {}            # Human model details kept for us, 比如mod
 app.config['SECRET_KEY'] = os.urandom(24)
 model = Model()
 
+error_message = "No Special Characters Allowed ; # & ' < > -  , not empty input allowed and limit 50 characters!"
+
+
 #####################################################
 #   INDEX
 #####################################################
@@ -57,12 +60,23 @@ def register_page():
     if request.method == 'GET':
         return render_template('index.html')
     else:
+        #get model name
         model_name = request.form.get('modelname')
-        if model.check_model_already_exists(model_name):
-            flash("The model name already exists, please log in or register other names ",'info')
-            return redirect(url_for('register_page'))
+
+        if model.check_user_input(model_name):
+            #check the Special Characters
+            if model.check_model_already_exists(model_name):
+                # if the model name exists, recommend user to login or register another
+                flash("The model name already exists, please login or register other names ",'info')
+                return redirect(url_for('register_page'))
+            else:
+                # move on step1
+                return redirect(url_for('complete_step1'))
         else:
-            return redirect(url_for('complete_step1'))
+            #special character input detect
+            flash(error_message,'warning')
+            return redirect(url_for('register_page'))
+
 
 
 #####################################################
@@ -82,17 +96,25 @@ def login_page():
 
     else:
         model_name = request.form.get('modelname') # 前端请用'modelname'
-        if model.check_model_already_exists(model_name):
-            # No credential check, log user in
-            session['logged_in'] = True
+        print(model_name)
 
-            # Store the user details for us to use throughout
-            global human_model_details
-            human_model_details['model_name'] = model_name
-            # 如果该模型已存在,跳转到step3.html
-            return redirect(url_for('complete_step3'))
+        if model.check_user_input(model_name):
+
+            if model.check_model_already_exists(model_name):
+                # No credential check, log user in
+                session['logged_in'] = True
+
+                # Store the user details for us to use throughout
+                global human_model_details
+                human_model_details['model_name'] = model_name
+                # 如果该模型已存在,跳转到step3.html
+                return redirect(url_for('complete_step3'))
+            else:
+                flash("Incorrect model name input, please try again or register",'warning')
+                return redirect(url_for('login_page'))
         else:
-            flash("Incorrect model name input, please try again or register",'warning')
+            #special character input detect
+            flash(error_message,'warning')
             return redirect(url_for('login_page'))
 
         # else:
@@ -136,7 +158,6 @@ def complete_step2():
 @app.route('/step3', methods=['GET','POST'])
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
-    # flash("Wellcome " + human_model_details['model_name'], 'success')
+    # flash("welcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
-
         return render_template('step3.html')
