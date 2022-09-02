@@ -1,7 +1,7 @@
 """
 Route management.
 
-This provides all of the websites routes and handles what happens each
+This provides all the websites routes and handles what happens each
 time a browser hits each of the paths. This serves as the interaction
 between the browser and the database while rendering the HTML static
 to be displayed.
