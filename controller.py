@@ -165,3 +165,5 @@ def complete_step3():
     # flash("welcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
         return render_template('step3.html')
+    elif request.method == 'POST':
+        return render_template('step4.html') 
