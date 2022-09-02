@@ -112,3 +112,17 @@ ul li {
     display: inline-block;
     margin-right: 20px;
 }
+
+
+.next {
+    float: right;
+    margin-top: 30px;
+    width: 200px;
+    height: 100px;
+    background-color: pink;
+    border-radius: 20px;
+    font-family: Lato-Black;
+    line-height: 100px;
+    text-align: center;
+    font-size: 36px;
+}
