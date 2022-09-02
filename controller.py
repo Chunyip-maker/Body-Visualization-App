@@ -156,6 +156,8 @@ def complete_step2():
     """ Handle the 3rd step of the body visualizer """
     if request.method == 'GET':
         return render_template('step2.html')
+    elif request.method == 'POST':
+        return render_template('step3.html') 
 
 @app.route('/step3', methods=['GET','POST'])
 def complete_step3():

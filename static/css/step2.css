@@ -114,7 +114,7 @@ ul li {
 }
 
 
-.next {
+.next button{
     float: right;
     margin-top: 30px;
     width: 200px;
