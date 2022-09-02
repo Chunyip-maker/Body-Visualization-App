@@ -71,6 +71,8 @@ def register_page():
                 return redirect(url_for('register_page'))
             else:
                 # move on step1
+                global human_model_details
+                human_model_details['model_name'] = model_name
                 return redirect(url_for('complete_step1'))
         else:
             #special character input detect
