@@ -22,6 +22,7 @@ session = {}                        # Session information (logged in state)
 human_model_details = {}            # Human model details kept for us, 比如model的name
 
 app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SERVER_NAME'] = "localhost:5000"
 model = Model()
 
 error_message = "No Special Characters Allowed ; # & ' < > -  , not empty input allowed and limit 50 characters!"
