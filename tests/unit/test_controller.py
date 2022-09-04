@@ -7,7 +7,9 @@ import json
 
 class Test_Controller():
     MODEL_OBJ = {
-        "modelname":"alisa"
+        "modelname":"alisa",
+        "age":18,
+        "gender":"Female"
     }
 
     def setup(self):
@@ -33,19 +35,65 @@ class Test_Controller():
 
     def test_register_page_post(self):
         with self.client:
-            response = self.client.post(url_for('register_page'),data=MyTestCase.MODEL_OBJ)
-            # status_code = 302: redirected to another page
-            # self.assertEqual(302, response.status_code)
+            response = self.client.post(url_for('register_page'),data=Test_Controller.MODEL_OBJ)
             assert response.status_code == 302
 
-    def test_register_page_post(self):
+    def test_register_page_get(self):
         with self.client:
             response = self.client.get(url_for('register_page'))
             # self.assertEqual(200, response.status_code)
             assert response.status_code == 200
 
+    def test_login_page_get(self):
+        with self.client:
+            response = self.client.get(url_for('login_page'))
+            # check the status code
+            assert response.status_code == 200
 
+    def test_login_page_post(self):
+        with self.client:
+            response = self.client.post(url_for('register_page'),data=Test_Controller.MODEL_OBJ)
+            assert response.status_code == 302
 
+    def test_logout(self):
+        with self.client:
+            response = self.client.get(url_for("logout"))
+            login_status = session["logged_in"]
+            assert login_status == False
+            assert response.status_code == 302
+
+    def test_complete_step_1_get(self):
+        with self.client:
+            response = self.client.get(url_for('complete_step1'))
+            # check the status code
+            assert response.status_code == 200
+
+    def test_complete_step1_post(self):
+        with self.client:
+            response = self.client.post(url_for("complete_step1"), data=Test_Controller.MODEL_OBJ)
+            assert response.status_code == 302
+
+    def test_complete_step2_get(self):
+        with self.client:
+            response = self.client.get(url_for('complete_step2'))
+            # check the status code
+            assert response.status_code == 200
+
+    def test_complete_step2_post(self):
+        with self.client:
+            response = self.client.post(url_for("complete_step2"), data=Test_Controller.MODEL_OBJ)
+            assert response.status_code == 200
+
+    def test_complete_step3_get(self):
+        with self.client:
+            response = self.client.get(url_for('complete_step3'))
+            # check the status code
+            assert response.status_code == 200
+
+    def test_complete_step4_get(self):
+        with self.client:
+            response = self.client.post(url_for("complete_step3"))
+            assert response.status_code == 200
 
 if __name__ == '__main__':
     pytest.main(["-s", "test_controller.py"])
