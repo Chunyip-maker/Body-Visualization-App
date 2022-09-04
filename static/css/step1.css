@@ -11,6 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url("../images/background1.png");
+    background-size:cover
 }
 
 .container {
@@ -43,7 +44,7 @@ p {
     position: absolute;
     top: -10%;
     left: 2%;
-    background-color: rgb(192, 143, 198);
+    background-color: rgb(255,226,225);
     width: 350px;
     height: 600px;
     border-radius: 5px;
