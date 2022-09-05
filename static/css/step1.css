@@ -14,14 +14,6 @@ body {
     background-size:cover
 }
 
-.container {
-    background-color: white;
-    width: 800px;
-    height: 500px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
-    position: relative;
-}
-
 h1 {
     text-align: center;
     margin-bottom: 30px;
@@ -36,18 +28,16 @@ p {
     margin-bottom: 30px;
     text-transform: uppercase;
     color: #f6f6f6;
-    letter-spacing: 2px; 
+    letter-spacing: 2px;
     font-size: 16px;
 }
 
 .form-box {
-    position: absolute;
-    top: -10%;
-    left: 2%;
-    background-color: rgb(255,226,225);
-    width: 350px;
+    position: center;
+    background-color: transparent;
+    width: 900px;
     height: 600px;
-    border-radius: 5px;
+    border-radius: 12px;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
@@ -201,11 +191,11 @@ input[type="radio"] {
 }
 
 
-input:checked+label { 
+input:checked+label {
     background-color: skyblue;
     border: 1px solid skyblue;
     border-radius: 5px;
-} 
+}
 
 input:checked+label::after {
 
@@ -213,7 +203,7 @@ input:checked+label::after {
     /* border: 1px solid #fff; */
     /* border-top: none;
     border-left: none; */
-    
+
     transform: rotate(45deg)
 }
 
