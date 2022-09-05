@@ -16,8 +16,9 @@ body {
 
 .container {
     background-color: white;
-    width: 650px;
-    height: 450px;
+    border-radius: 12px;
+    width: 800px;
+    height: 520px;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
     position: relative;
 }
@@ -32,12 +33,12 @@ h1 {
 
 .form-box {
     position: absolute;
-    top: -10%;
+    top: -8%;
     left: 2%;
     background-color: rgb(255,226,225);
-    width: 350px;
-    height: 520px;
-    border-radius: 5px;
+    border-radius: 12px;
+    width: 440px;
+    height: 600px;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
@@ -96,23 +97,32 @@ input:focus::placeholder {
 
 
 .form-box button {
-    width: 70%;
+    width: 75%;
+    height: 60%;
     margin-top: 35px;
-    background-color: #f6f6f6;
+    background-color: rgb(255,226,225);
     outline: none;
-    border-radius: 10px;
-    padding:15px;
-    color: #a262ad;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding: 15px;
+    color: rgb(227,167,168);
     letter-spacing: 2px;
     font-size: 24px;
     cursor: pointer;
-
 }
 
 .form-box button:hover {
-    background-color: skyblue;
+    width: 75%;
+    height: 60%;
+    margin-top: 35px;
+    background-color: rgb(255,206,206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
     color: white;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.4s ease;
 }
 
 .con-box {
@@ -156,8 +166,8 @@ input:focus::placeholder {
 }
 
 .con-box img{
-    width: 250px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     opacity: 0.9;
 }
 
@@ -174,6 +184,6 @@ input:focus::placeholder {
 }
 
 .con-box button:hover {
-    background-color: skyblue;
+    background-color: #d3b7d8;
     color: #f6f6f6;
 }
