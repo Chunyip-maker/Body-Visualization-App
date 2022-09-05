@@ -19,33 +19,32 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="form-box">
-            <form class="register-box" action="/step1" method='POST'>
-                <h1>Step 1 </h1>
-                <input name="age" type="age" placeholder="input the model age">
-                <div class="gender">
-                    <p>Please choose your gender</p>
-                    <input class="mf" type="radio" id="male" name="gender" value="male" required>
-                    <label for="male">
-                        <span>
-                            Male
-                        </span>
-                    </label>
-                    <input class="mf" type="radio" id="female" name="gender" value="female">
-                    <label for="female">
-                        <span>
-                            Female
-                        </span>
-                    </label>
-                </div>
-                <button>
-                    Next Step
-                </button>
-            </form>
-        </div>
+    <div class="form-box">
+        <form class="register-box" action="/step1" method='POST'>
+            <h1>Step 1 </h1>
+            <div class="ageSlider">
+                <p>Please enter your age</p>
+                <input type="range" min="12" max="100" value="18" class="slider" id="ageRange" oninput="showAge.innerText=this.value">
+                <p id="showAge">18</p>
+            </div>
+            <div class="gender">
+                <p>Please choose your gender</p>
+                <input class="mf" type="radio" id="male" name="gender" value="male" required>
+                <label for="male">
+                    <img src="../static/images/male.png" alt="male">
+                </label>
+                <input class="mf" type="radio" id="female" name="gender" value="female">
+                <label for="female">
+                    <span>
+                        <img src="../static/images/female.png" alt="female">
+                    </span>
+                </label>
+            </div>
+            <button>
+                Next Step
+            </button>
+        </form>
     </div>
-
 </body>
 
 </html>
