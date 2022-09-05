@@ -3,6 +3,8 @@
 *{
     padding: 0;
     margin: 0;
+
+    font-family: "Comic Sans MS", serif;
 }
 
 body {
@@ -27,7 +29,8 @@ h1 {
     text-align: center;
     margin-bottom: 30px;
     text-transform: uppercase;
-    color: #f6f6f6;
+    color: rgb(227,167,168);
+    font-size: 65px;
     letter-spacing: 3px;
 }
 
@@ -71,7 +74,7 @@ h3 {
 input {
     background-color: transparent;
     width: 70%;
-    color: #fff;
+    color: black;
     border: none;
     border-bottom: 1px solid rgba(255,255,255,0.4);
     padding: 10px 0;
@@ -174,6 +177,7 @@ input:focus::placeholder {
 .con-box button {
     margin-top: 3%;
     background-color: #fff;
+    border-radius: 12px;
     color: #a262ad;
     border: 1px solid #d3b7d8;
     padding: 5px 10px;
@@ -185,5 +189,6 @@ input:focus::placeholder {
 
 .con-box button:hover {
     background-color: #d3b7d8;
+    border-radius: 12px;
     color: #f6f6f6;
 }
