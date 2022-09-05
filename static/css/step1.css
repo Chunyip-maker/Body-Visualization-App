@@ -215,4 +215,8 @@ input:checked+label::after {
     border-left: none; */
     
     transform: rotate(45deg)
-}  
+}
+
+.ageSlider {
+    position: relative;
+}
