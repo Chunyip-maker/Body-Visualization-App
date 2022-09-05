@@ -1,8 +1,8 @@
-/* Index page */
-
 *{
     padding: 0;
     margin: 0;
+
+    font-family: "Comic Sans MS", serif;
 }
 
 body {
@@ -19,6 +19,7 @@ h1 {
     margin-bottom: 30px;
     text-transform: uppercase;
     color: #f6f6f6;
+    font-size: 65px;
     letter-spacing: 3px;
 }
 
@@ -95,13 +96,16 @@ input:focus::placeholder {
 
 
 .form-box button {
-    width: 70%;
+    width: 50%;
     margin-top: 35px;
     background-color: #f6f6f6;
     outline: none;
-    border-radius: 10px;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
     padding:15px;
-    color: #a262ad;
+    color: rgb(227,167,168);
     letter-spacing: 2px;
     font-size: 24px;
     cursor: pointer;
@@ -109,79 +113,17 @@ input:focus::placeholder {
 }
 
 .form-box button:hover {
-    background-color: skyblue;
+    background-color: rgb(255,206,206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
     color: white;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.4s ease;
 }
-
-.con-box {
-    width: 50%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.con-box.left {
-    left: -2%;
-}
-
-.con-box.right{
-    right: -2%
-}
-
-.con-box h2 {
-    color: #8e9aaf;
-    font-size: 32px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-bottom: 4px;
-}
-
-.con-box p{
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: #8e9aaf;
-    text-align: center;
-}
-
-.con-box span{
-    color: #d3b7d8;
-}
-
-.con-box img{
-    width: 250px;
-    height: 200px;
-    opacity: 0.9;
-}
-
-.con-box button {
-    margin-top: 3%;
-    background-color: #fff;
-    color: #a262ad;
-    border: 1px solid #d3b7d8;
-    padding: 5px 10px;
-    letter-spacing: 1px;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.con-box button:hover {
-    background-color: skyblue;
-    color: #f6f6f6;
-}
-
 
 input.mf {
     margin-left: 20%;
 }
-
 
 input[type="radio"] {
     padding-left: 25%;
@@ -189,7 +131,6 @@ input[type="radio"] {
     height: 20px;
     /* opacity: 0; */
 }
-
 
 input:checked+label {
     background-color: skyblue;
