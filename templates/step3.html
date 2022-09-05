@@ -53,6 +53,10 @@
         import { OrbitControls } from '/static/js/OrbitControls.js'
         import Stats from '/static/js/stats.module.js'
 
+
+
+        //init
+
         //GUI not yet
         let gui = new dat.GUI();
 
@@ -65,17 +69,17 @@
         camera.position.set(0,2,3);
 
 
-
         //set up scene, with white background color
         var scene = new THREE.Scene();
         scene.background = new THREE.Color(0x3e44ba);
 
-        //light
+        //general light
         var light = new THREE.HemisphereLight(0xffeeb1,0x080820,4);
         scene.add(light);
 
         //set up render
         const renderer = new THREE.WebGLRenderer( { antialias: true } );
+        //render for texture which need alpha pipe
         //const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
@@ -86,9 +90,11 @@
         
 
 
+        //spotlight
         let spotlight = new THREE.SpotLight(0xffa95c, 4);
         spotlight.castShadow = true;
         scene.add( spotlight );
+
         //set up stats
         stats = new Stats();
         document.body.appendChild( stats.dom );
@@ -115,6 +121,7 @@
         } );
         
         //fbx loader
+        let boneMenu = [];
         
         let modelObject;
         const loader = new FBXLoader(loadingManager);
@@ -129,71 +136,41 @@
 
                 let count = 0;
                 object.traverse( function ( child ) {
-                    //child .material.transparent = false;
-                    //child .material.alphaTest = 0.5;
 
                     if (child instanceof THREE.Mesh) {
                         child.material.transparent = true;
                         child.material.side = THREE.DoubleSide;
                         child.material.alphaTest = 0.3;
                         console.log(child.name);
-                        if (child.name == "Body") {
-                            console.log(child.name);
-                            
-
-                        } else if (child.name == "Face") {
-                            // var Facebrow = new THREE.TextureLoader().load("/static/model/test/testG.vrm.textures/_07.png");
-                            // child.material.map = Facebrow;
-                            // child.material.needsUpdate = true;
-                            console.log(child.name);
-                        } else if (child.name == "Hair") {
-                            console.log(child.name);
-                        }
                         
+
+                        //Customization, dat gui
+
+                        // var Facebrow = new THREE.TextureLoader().load("/static/model/test/testG.vrm.textures/_07.png");
+                        // child.material.map = Facebrow;
+                        // child.material.needsUpdate = true;
                     }
 
+
+
+                    //add all bones to dat gui
                     if (child.type == "Bone") {
-                        //add gui
-                        //console.log(child.name);
-                        if (child.name == "Left_arm") {
-                            
-                            gui.add(child.scale, 'x',0, 2).name("Left Leg");
-                            gui.add(child.scale, 'z',0, 2).name("Left Leg");
-                        }
-
-                        if (child.name == "Right_arm") {
                         
-                            gui.add(child.scale, 'x',0, 2).name("Right Leg");
-                            gui.add(child.scale, 'z',0, 2).name("Right Leg");
+                        console.log(child.name);
+
+                        if ( !boneMenu.includes(child.name) ) {
+                            gui.add(child.scale, 'x',0, 2).name(child.name + "x");
+                            gui.add(child.scale, 'y',0, 2).name(child.name + "y");
+                            gui.add(child.scale, 'z',0, 2).name(child.name + "z");
                         }
 
-
+                        boneMenu.push(child.name);
                     }
                     
-                    //output all bones to console
-
-                    
-                    //test 
-
-
-                    //add gui
-
-
-
-                    // if ( child.isMesh ) {
-                    //     child.castShadow = true;
-                    //     child.receiveShadow = true;
-                    // }
-                    //console.log(count);
                 } );
-
                 scene.add( object );
         } );
 
-
-
-
-        
         
         // animation
         animate();
