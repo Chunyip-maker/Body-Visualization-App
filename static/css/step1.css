@@ -126,28 +126,23 @@ input.mf {
 }
 
 input[type="radio"] {
-    padding-left: 25%;
     width: 20px;
     height: 20px;
     /* opacity: 0; */
 }
 
 input:checked+label {
-    background-color: skyblue;
-    border: 1px solid skyblue;
+    background-color: rgb(210,245,235);
     border-radius: 5px;
-}
-
-input:checked+label::after {
-
-    content: "";
-    /* border: 1px solid #fff; */
-    /* border-top: none;
-    border-left: none; */
-
-    transform: rotate(45deg)
 }
 
 .ageSlider {
     position: relative;
+}
+
+.form-box img{
+    width: 60px;
+    height: 60px;
+    opacity: 1.0;
+    border-radius: 5px;
 }
