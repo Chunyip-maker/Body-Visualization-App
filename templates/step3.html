@@ -13,22 +13,6 @@
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="../static/css/step3.css">
     <title>Document</title>
-
-
-    <script type="importmap">
-        {
-            "imports": {
-            "three": "https://unpkg.com/three@0.143.0/build/three.module.js"
-            }
-        }
-    </script>
-
-
-    <script>
-    
-
-
-    </script>
 </head>
 <body>
     <h1> This is Step 3</h1>
@@ -40,10 +24,235 @@
         </button>
     </form>
 
-    <script type="module">
-        import {THREEController} from '/static/js/THREEController.js';
-        const control = new THREEController();
-        control.init();
+
+
+
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+        "three": "https://unpkg.com/three@0.143.0/build/three.module.js"
+        }
+    }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js" integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="module">
+
+        //quick start https://github.com/mrdoob/three.js/
+        import * as THREE from 'three';
+        import { FBXLoader } from '/static/js/FBXLoader.js';
+        import {GLTFLoader} from '/static/js/GLTFLoader.js';
+        import { OrbitControls } from '/static/js/OrbitControls.js'
+        import Stats from '/static/js/stats.module.js'
+
+
+
+        //init
+
+        //GUI not yet
+        let gui = new dat.GUI();
+
+        let stats, mixer;
+        const clock = new THREE.Clock();
+        
+
+        //set up camera
+        const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100);
+        camera.position.set(0,2,3);
+
+
+        //set up scene, with white background color
+        var scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x3e44ba);
+
+        //general light
+        var light = new THREE.HemisphereLight(0xffeeb1,0x080820,4);
+        scene.add(light);
+
+        //set up render
+        const renderer = new THREE.WebGLRenderer( { antialias: true } );
+        //render for texture which need alpha pipe
+        //const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: true });
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.shadowMap.enabled = true;
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 2.3; 
+        
+
+
+        //spotlight
+        let spotlight = new THREE.SpotLight(0xffa95c, 4);
+        spotlight.castShadow = true;
+        scene.add( spotlight );
+
+        //set up stats
+        stats = new Stats();
+        document.body.appendChild( stats.dom );
+
+
+        //set up controller(enable user to control camera)
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.target.set(0, 1, 0)
+        
+
+        
+        const loadingManager = new THREE.LoadingManager();
+        loadingManager.setURLModifier( function( url ) {
+
+            // this function is called for each asset request
+            if (url.length > 100) {
+                url = url.substring(69, 116);
+                console.log(url);
+            }
+            console.log(url);
+            return url;
+
+        } );
+        
+        //fbx loader
+        let boneMenu = [];
+        
+        let modelObject;
+        const loader = new FBXLoader(loadingManager);
+            loader.load( '/static/model/test/Idle (11).fbx', function ( object ) {
+                
+                
+                mixer = new THREE.AnimationMixer( object );
+
+                const action = mixer.clipAction( object.animations[ 0 ] );
+                action.play();
+
+
+                let count = 0;
+                object.traverse( function ( child ) {
+
+                    if (child instanceof THREE.Mesh) {
+                        child.material.transparent = true;
+                        child.material.side = THREE.DoubleSide;
+                        child.material.alphaTest = 0.3;
+                        console.log(child.name);
+                        
+
+                        //Customization, dat gui
+
+                        // var Facebrow = new THREE.TextureLoader().load("/static/model/test/testG.vrm.textures/_07.png");
+                        // child.material.map = Facebrow;
+                        // child.material.needsUpdate = true;
+                    }
+
+
+
+                    //add all bones to dat gui
+                    if (child.type == "Bone") {
+                        
+                        console.log(child.name);
+
+                        if ( !boneMenu.includes(child.name) ) {
+                            gui.add(child.scale, 'x',0, 2).name(child.name + "x");
+                            gui.add(child.scale, 'y',0, 2).name(child.name + "y");
+                            gui.add(child.scale, 'z',0, 2).name(child.name + "z");
+                        }
+
+                        boneMenu.push(child.name);
+                    }
+                    
+                } );
+                scene.add( object );
+        } );
+
+        
+        // animation
+        animate();
+        function animate() {
+
+            requestAnimationFrame( animate );
+            spotlight.position.set(
+                camera.position.x + 10,
+                camera.position.y + 10,
+                camera.position.z + 10
+            )
+
+            const delta = clock.getDelta();
+            if ( mixer ) mixer.update( delta );
+            renderer.render( scene, camera );
+            stats.update();
+
+        }
+
+
+
+
+        /*
+        Idea about using morph target to change diff part of the model.
+        */
+        //set up GLTF loader and texture
+        
+        //const texture = new THREE.TextureLoader().load("/static/model/astronaut/textures/AStronoaut_Baked_baseColor.png");
+        // texture.flipY = false;
+        // texture.encoding = THREE.sRGBEncoding;
+        
+        //load model file
+        // const loader = new GLTFLoader();
+        // let modelObject;
+        // let morphTargets = [];
+        // let tempVariable;
+        // loader.load('/static/model/test/ok.glb', (gltf) => {
+        //     modelObject = gltf.scene;
+
+        //     mixer = new THREE.AnimationMixer( modelObject );
+
+        //     const action = mixer.clipAction( gltf.animations[ 0 ] );
+        //     action.play();
+
+        //     modelObject.traverse((child) => {
+        //         if (child.isMesh) {
+        //             child.material.metalness = 0;
+        //             child.material.vertexColors = false;
+        //             child.castShadow = true;
+        //             child.receiveShadow = true;
+                    
+        //             //target the morph target
+        //             // if (child.morphTargetDictionary) {
+
+        //             //     morphTargets["helmets"] = [];
+        //             //     morphTargets["helmets"].push({ child });
+
+        //             // }
+        //         }
+        //         console.log(child.name);
+        //         if (child.type == "Bone") {
+        //                 //add gui
+        //                 if (child.name == "Left_leg86") {
+                            
+        //                     gui.add(child.scale, 'x',0, 2).name("Left Leg");
+        //                     gui.add(child.scale, 'z',0, 2).name("Left Leg");
+        //                 }
+
+        //                 if (child.name == "Right_leg93") {
+                        
+        //                     gui.add(child.scale, 'x',0, 2).name("Right Leg");
+        //                     gui.add(child.scale, 'z',0, 2).name("Right Leg");
+        //                 }
+
+
+        //             }
+        //     });
+        //     console.log(morphTargets);
+        //     scene.add(modelObject);
+        // });
+        
+        // console.log(morphTargets.length);
+        
+        /*
+        end of morph example
+        */
+        
+    </script>
+
 </body>
 </html>
