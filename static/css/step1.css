@@ -121,8 +121,14 @@ input:focus::placeholder {
     transition: background-color 0.4s ease;
 }
 
+/* .gender {
+    padding-left: 20%;
+} */
+
+
 input.mf {
-    margin-left: 20%;
+    margin-left: 10%;
+    margin-right: 5%;
 }
 
 input[type="radio"] {
