@@ -76,16 +76,16 @@ input {
     width: 70%;
     color: black;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 2px solid #c57b7b;
     padding: 10px 0;
-    text-indent: 20px;
+    text-indent: 15%;
     margin: 8px 0;
     font-size: 18px;
     letter-spacing: 2px;
 }
 
 input::placeholder {
-    color: #fff;
+    color: purple;
 }
 
 input:focus{
