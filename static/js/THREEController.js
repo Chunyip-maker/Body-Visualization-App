@@ -108,7 +108,7 @@ class THREEController {
                 url = url.substring(69, 116);
                 console.log(url);
             }
-            console.log(url);
+            //console.log(url);
             return url;
 
         } );
@@ -118,7 +118,7 @@ class THREEController {
         
         let modelObject;
         const loader = new FBXLoader(loadingManager);
-            loader.load( '/static/model/test/Idle (11).fbx', ( object ) => {
+        loader.load( '/static/model/test/Idle (11).fbx', ( object ) => {
                 
                 
                 this.mixer = new THREE.AnimationMixer( object );
@@ -128,7 +128,7 @@ class THREEController {
 
 
                 let count = 0;
-                object.traverse( function ( child ) {
+                object.traverse( ( child ) => {
 
                     if (child instanceof THREE.Mesh) {
                         child.material.transparent = true;
@@ -142,6 +142,7 @@ class THREEController {
                         // var Facebrow = new THREE.TextureLoader().load("/static/model/test/testG.vrm.textures/_07.png");
                         // child.material.map = Facebrow;
                         // child.material.needsUpdate = true;
+
                     }
 
                     //add all bones to dat gui
@@ -149,10 +150,12 @@ class THREEController {
                         
                         //console.log(child.name);
 
+                        //update gui
                         if ( !boneMenu.includes(child.name) ) {
-                            gui.add(child.scale, 'x',0, 2).name(child.name + " X");
-                            gui.add(child.scale, 'y',0, 2).name(child.name + " Y");
-                            gui.add(child.scale, 'z',0, 2).name(child.name + " Z");
+                            let boneFolder = gui.addFolder(child.name);
+                            boneFolder.add(child.scale, 'x',0, 2).name(child.name + " X");
+                            boneFolder.add(child.scale, 'y',0, 2).name(child.name + " Y");
+                            boneFolder.add(child.scale, 'z',0, 2).name(child.name + " Z");
                         }
 
                         boneMenu.push(child.name);
@@ -166,8 +169,16 @@ class THREEController {
         // animation
         this.animate();
 
-    }
 
+        //gui update
+        let displayFolder = gui.addFolder("Display");
+        const material = new MeshPhongMaterial();
+        displayFolder.addColor(this.background_1, "color").onChange((color) => {
+            this.scene.background = new THREE.Color(this.background_1.color);
+        });
+
+    
+    }
 
 
 };
