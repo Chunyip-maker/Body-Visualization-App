@@ -143,6 +143,21 @@ class THREEController {
                         // child.material.map = Facebrow;
                         // child.material.needsUpdate = true;
 
+                        if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
+
+                            
+                            let temp = "/static/model/old_male/model1/Old Male.vrm.textures/_12.png"
+                            const bottom = ["1","2","3",temp];
+
+                            gui.add({ bottom: bottom[0]}, "bottom")
+                            .options(bottom)
+                            .onChange((val) => {
+                                var newTexture = new THREE.TextureLoader().load(val);
+                                child.material.map = newTexture;
+                                child.material.needsUpdate = true;
+                            });
+                            //N00_001_01_Bottoms_01_CLOTH_(Instance)
+                        }
                     }
 
                     //add all bones to dat gui
