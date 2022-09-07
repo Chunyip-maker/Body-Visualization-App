@@ -78,7 +78,7 @@ input {
     border: none;
     border-bottom: 2px solid #c57b7b;
     padding: 10px 0;
-    text-indent: 15%;
+    text-align: center;
     margin: 8px 0;
     font-size: 18px;
     letter-spacing: 2px;
@@ -86,6 +86,8 @@ input {
 
 input::placeholder {
     color: purple;
+    text-align: left;
+    text-indent: 15%;
 }
 
 input:focus{
