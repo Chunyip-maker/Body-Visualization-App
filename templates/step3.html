@@ -153,10 +153,10 @@
 
         //animation
         group.add(loadModel);
-        // console.log(loadModel.children);
-        // mixer = new THREE.AnimationMixer( loadModel );
-        // const action = mixer.clipAction( loadModel.animations[ 0 ] );
-        // action.play();
+        console.log(loadModel.children);
+        mixer = new THREE.AnimationMixer( loadModel );
+        const action = mixer.clipAction( loadModel.animations[ 0 ] );
+        action.play();
         //end animation
 
 
@@ -221,7 +221,9 @@
                         //         console.log(child);
                         //     }
                         // });
+                        console.log(loadModel.children[11]);
                         loadModel.children[11] = temp;
+                        console.log(temp);
                         group.clear();
                         group.add(loadModel);
                         // mixer = new THREE.AnimationMixer( loadModel );
