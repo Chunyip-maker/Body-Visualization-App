@@ -12,6 +12,7 @@ import flask
 from flask import *
 from model import *
 import os
+import datetime
 
 "may be useful when the name of 'static' and 'templates' files change"
 # app = flask.Flask(__name__, template_folder='templates', static_folder='static')
@@ -149,7 +150,7 @@ def complete_step1():
         age = request.form.get('age')
         gender = request.form.get('gender')
         model_name = human_model_details['model_name']
-        print("{},{},{}".format(model_name,age,gender))
+        # print("{},{},{}".format(model_name,age,gender))
         model.add_a_basic_human_model(model_name,age,gender)
         return redirect(url_for('complete_step2'))
 
@@ -168,4 +169,22 @@ def complete_step3():
     if request.method == 'GET':
         return render_template('step3.html')
     elif request.method == 'POST':
+        # 提交7项参数入库
+        model_name = human_model_details['model_name']
+        update_time = str(datetime.datetime.now()) # 参数入库的时间戳
+        height = request.form.get('height')
+        if height is None: # 成年人不能改变身高，默认值为0
+            height=0
+        weight = request.form.get('weight')
+        thigh = request.form.get('thigh') # 大腿
+        shank = request.form.get('shank') # 小腿
+        hip = request.form.get('hip') # 臀围
+        upper_arm = request.form.get('upper_arm') # 胳膊
+        fore_arm = request.form.get('fore_arm') # 小臂
+        waist = request.form.get('waist')
+        chest = request.form.get('chest')
+
+        # print("{},{},{}".format(model_name,update_time,height))
+        model.add_new_body_measurment_record(model_name,update_time,height,weight,
+                                             thigh,shank,hip,upper_arm,fore_arm,waist,chest)
         return render_template('step4.html') 

@@ -25,3 +25,11 @@ class Model:
             if i in string:
                 return False
         return True
+
+    def add_new_body_measurment_record(self, model_name, update_time, height, weight,
+                                       thigh, shank, hip, upper_arm, fore_arm, waist, chest
+                                       ):
+        result=self.database.add_new_body_measurement_record_with_time(model_name,update_time,height,weight,thigh,
+                                            shank,hip,upper_arm,fore_arm,waist,chest)
+        return result
+

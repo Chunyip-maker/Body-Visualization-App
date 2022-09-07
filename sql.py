@@ -45,11 +45,28 @@ class SQLDatabase():
         self.commit()
 
         # Create the users table
-        self.execute("""CREATE TABLE BasicModels(
+        self.execute("""
+        CREATE TABLE BasicModels(
             model_name TEXT NOT NULL,
             age INT,
             gender TEXT,
-            PRIMARY KEY(model_name)
+            PRIMARY KEY(model_name));
+            
+        CREATE TABLE ModelParameters(
+            model_name TEXT NOT NULL,
+            update_time TEXT,
+            height REAL,
+            weight REAL,
+            thigh REAL,
+            shank REAL,
+            hip REAL,
+            upper_arm REAL,
+            fore_arm REAL,
+            waist REAL,
+            chest REAL,
+            PRIMARY KEY(model_name, update_time),
+            FOREIGN KEY (model_name) REFERENCES BasicModels(model_name)
+        );
         )""")
 
         self.commit()
@@ -93,6 +110,33 @@ class SQLDatabase():
         self.execute(sql_cmd)
         self.commit()
         return True
+
+    # -----------------------------------------------------------------------------
+    # Add a new record of a model's body measurement with timestamp
+    # -----------------------------------------------------------------------------
+    def add_new_body_measurement_record_with_time(self,model_name, update_time, height, weight,
+                                       thigh, shank, hip, upper_arm, fore_arm, waist, chest
+                                       ):
+        sql_cmd = """
+            INSERT INTO ModelParameters
+            VALUES('{model_name}', '{update_time}','{height}','{weight}', '{thigh}',
+            '{shank}','{hip}','{upper_arm}','{fore_arm}','{waist}','{chest}')
+        """
+        sql_cmd = sql_cmd.format(model_name=model_name,
+                                 update_time=update_time,
+                                 height=height,
+                                 weight=weight,
+                                 thigh=thigh,
+                                 shank=shank,
+                                 hip=hip,
+                                 upper_arm=upper_arm,
+                                 fore_arm=fore_arm,
+                                 waist=waist,
+                                 chest=chest)
+        self.execute(sql_cmd)
+        self.commit()
+        return True
+
 
     # -----------------------------------------------------------------------------
     #
