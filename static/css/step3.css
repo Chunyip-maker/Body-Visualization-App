@@ -5,7 +5,8 @@
 
 
 body {
-    background-image: url("../images/backgroud.webp");
+    background-image: url("../images/background1.png");
+    background-size:cover
 }
 
 /* Font */
@@ -21,96 +22,13 @@ body {
     src: url('../fonts/lato/Lato-Light.ttf');
 }
 
-/* Title */
-.title {
 
-    width: 100%;
-    height: 100px;
-    /* overflow: hidden; */
-    background-color: blue;
-    text-align: center;
-    margin: center;
-}
-
-.title h1 {
-    vertical-align: middle;
-    line-height: 100px;
-    font-family: Lato-Black;
-    letter-spacing: 3px;
-    color: white;
-}
-
-/* Main Area*/
-.main {
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1000px;
+.model {
+    float: right;
+    width: 300px;
     height: 500px;
-}
-.main .left{
-    float: left;
-    width: 400px;
-    height: 500px;
-    border-width: 1px;
-    background-color: blue;
-}
+    background-color: pink;
 
-
-.main .left h1{
-    color: white;
-}
-
-
-/* Right */
-
-.main .right {
-    float: left;
-    width: 500px;
-    height: 500px;
-    margin-left: 50px;
-}
-
-/* Clothes */
-
-.clothes {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
-}
-
-/* Hair */
-.hair {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
-}
-
-/* Hair Color */
-.hair_color {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
-}
-
-
-
-ul {
-    list-style: none;
-    margin: auto;
-    display: inline-block;
-    margin-left: 30px;
-}
-
-ul li {
-    display: inline-block;
-    margin-right: 20px;
 }
 
 

@@ -3,6 +3,8 @@
 *{
     padding: 0;
     margin: 0;
+
+    font-family: "Comic Sans MS", serif;
 }
 
 body {
@@ -10,13 +12,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("../images/backgroud.webp");
+    background-image: url("../images/background0.png");
+    background-size:cover
 }
 
 .container {
     background-color: white;
-    width: 650px;
-    height: 450px;
+    border-radius: 12px;
+    width: 800px;
+    height: 520px;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
     position: relative;
 }
@@ -25,18 +29,19 @@ h1 {
     text-align: center;
     margin-bottom: 30px;
     text-transform: uppercase;
-    color: #f6f6f6;
+    color: rgb(227,167,168);
+    font-size: 65px;
     letter-spacing: 3px;
 }
 
 .form-box {
     position: absolute;
-    top: -10%;
+    top: -8%;
     left: 2%;
-    background-color: rgb(192, 143, 198);
-    width: 350px;
-    height: 520px;
-    border-radius: 5px;
+    background-color: rgb(255,226,225);
+    border-radius: 12px;
+    width: 440px;
+    height: 600px;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
@@ -69,18 +74,20 @@ h3 {
 input {
     background-color: transparent;
     width: 70%;
-    color: #fff;
+    color: black;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 2px solid #c57b7b;
     padding: 10px 0;
-    text-indent: 20px;
+    text-align: center;
     margin: 8px 0;
     font-size: 18px;
     letter-spacing: 2px;
 }
 
 input::placeholder {
-    color: #fff;
+    color: purple;
+    text-align: left;
+    text-indent: 15%;
 }
 
 input:focus{
@@ -95,23 +102,32 @@ input:focus::placeholder {
 
 
 .form-box button {
-    width: 70%;
+    width: 75%;
+    height: 60%;
     margin-top: 35px;
-    background-color: #f6f6f6;
+    background-color: rgb(255,226,225);
     outline: none;
-    border-radius: 10px;
-    padding:15px;
-    color: #a262ad;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding: 15px;
+    color: rgb(227,167,168);
     letter-spacing: 2px;
     font-size: 24px;
     cursor: pointer;
-
 }
 
 .form-box button:hover {
-    background-color: skyblue;
+    width: 75%;
+    height: 60%;
+    margin-top: 35px;
+    background-color: rgb(255,206,206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
     color: white;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.4s ease;
 }
 
 .con-box {
@@ -155,14 +171,15 @@ input:focus::placeholder {
 }
 
 .con-box img{
-    width: 250px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     opacity: 0.9;
 }
 
 .con-box button {
     margin-top: 3%;
     background-color: #fff;
+    border-radius: 12px;
     color: #a262ad;
     border: 1px solid #d3b7d8;
     padding: 5px 10px;
@@ -173,6 +190,7 @@ input:focus::placeholder {
 }
 
 .con-box button:hover {
-    background-color: skyblue;
+    background-color: #d3b7d8;
+    border-radius: 12px;
     color: #f6f6f6;
 }
