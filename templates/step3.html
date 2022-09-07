@@ -35,14 +35,187 @@
     </form>
 
     <script type="module">
-        import {THREEController} from '/static/js/THREEController.js';
-        const control = new THREEController();
-        control.init();
-    </script>
+
+        import * as THREE from 'three';
+        import { FBXLoader } from '/static/js/FBXLoader.js';
+        import { OrbitControls } from '/static/js//OrbitControls.js';
+        import Stats from '/static/js/stats.module.js';
+        import { Scene } from '/static/js//three.module.js';
+        import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
+        import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+
+        //init
+
+        const background_1 = {
+         "color": 0x3e44ba
+        };
+
+        //GUI not yet
+        let gui = new dat.GUI();
+        console.log("init run");
+        let stats, mixer;
+        const clock = new THREE.Clock();
+
+        //set up camera
+        const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 100);
+        camera.position.set(0,2,3);
 
 
+        //set up scene, with white background color
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(background_1.color);
+
+        //general light
+        var light = new THREE.HemisphereLight(0xffeeb1,0x080820,4);
+        scene.add(light);
+
+        //set up render
+        const renderer = new THREE.WebGLRenderer( { antialias: true } );
+        //render for texture which need alpha pipe
+        //const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: true });
+        renderer.setSize( window.innerWidth , window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        //this.renderer.setAnimationLoop(this.animation);
+        renderer.shadowMap.enabled = true;
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 2.3; 
+
+
+
+        //spotlight
+        const spotlight = new THREE.SpotLight(0xffa95c, 4);
+        spotlight.castShadow = true;
+        scene.add( spotlight );
+
+        //set up stats
+        stats = new Stats();
+        document.body.appendChild( stats.dom );
+
+
+        //set up controller(enable user to control camera)
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.target.set(0, 1, 0)
+
+
+
+        const loadingManager = new THREE.LoadingManager();
+        loadingManager.setURLModifier( ( url ) => {
+
+            // this function is called for each asset request
+            if (url.length > 100) {
+                url = url.substring(69, 116);
+                console.log(url);
+            }
+            //console.log(url);
+            return url;
+
+        } );
+
+        //fbx loader
+        let boneMenu = [];
         
+        let modelObject;
+        const loader = new FBXLoader(loadingManager);
+        loader.load( '/static/model/test/Idle (11).fbx', ( object ) => {
+                
+                modelObject = object;
+                mixer = new THREE.AnimationMixer( object );
+
+                const action = mixer.clipAction( object.animations[ 0 ] );
+                action.play();
+
+
+                let count = 0;
+                object.traverse( ( child ) => {
+
+                    if (child instanceof THREE.Mesh) {
+                        child.material.transparent = true;
+                        child.material.side = THREE.DoubleSide;
+                        child.material.alphaTest = 0.3;
+                        console.log(child.name);
+                        
+
+                        //Customization, dat gui
+
+                        // var Facebrow = new THREE.TextureLoader().load("/static/model/test/testG.vrm.textures/_07.png");
+                        // child.material.map = Facebrow;
+                        // child.material.needsUpdate = true;
+
+                        if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
+
+                            
+                            let temp = "/static/model/old_male/model1/Old Male.vrm.textures/_12.png"
+                            const bottom = ["1","2","3",temp];
+
+                            gui.add({ bottom: bottom[0]}, "bottom")
+                            .options(bottom)
+                            .onChange((val) => {
+                                var newTexture = new THREE.TextureLoader().load(val);
+                                child.material.map = newTexture;
+                                child.material.needsUpdate = true;
+                            });
+                            //N00_001_01_Bottoms_01_CLOTH_(Instance)
+                        }
+                    }
+
+                    //add all bones to dat gui
+                    if (child.type == "Bone") {
+                        
+                        //console.log(child.name);
+
+                        //update gui
+                        if ( !boneMenu.includes(child.name) ) {
+                            let boneFolder = gui.addFolder(child.name);
+                            boneFolder.add(child.scale, 'x',0, 2).name(child.name + " X");
+                            boneFolder.add(child.scale, 'y',0, 2).name(child.name + " Y");
+                            boneFolder.add(child.scale, 'z',0, 2).name(child.name + " Z");
+                        }
+
+                        boneMenu.push(child.name);
+                    }
+                    
+                } );
+                scene.add( object );
+                console.log(modelObject);
+                return modelObject;
+        } );
+
+        console.log(modelObject);
+        // animation
+        animate();
+
+
+        //gui update
+        let displayFolder = gui.addFolder("Display");
+        const material = new MeshPhongMaterial();
+        displayFolder.addColor(background_1, "color").onChange((color) => {
+            scene.background = new THREE.Color(background_1.color);
+        });
+
+
+    function animate() {
+        requestAnimationFrame( animate );
+        
+        spotlight.position.set(
+            camera.position.x + 10,
+            camera.position.y + 10,
+            camera.position.z + 10
+        )
+
+        const delta = clock.getDelta();
+        if ( mixer ) mixer.update( delta );
+        renderer.render( scene, camera );
+        stats.update();
+
+    }
+
+    
+    
+
     </script>
+
 
     </div>
 
