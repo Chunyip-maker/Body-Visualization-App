@@ -22,7 +22,7 @@ session = {}                        # Session information (logged in state)
 human_model_details = {}            # Human model details kept for us, 比如model的name
 
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SERVER_NAME'] = "localhost:5000"
+app.config['SERVER_NAME'] = "127.0.0.1:5000"
 model = Model()
 
 error_message = "No Special Characters Allowed ; # & ' < > -  , not empty input allowed and limit 50 characters!"
@@ -149,6 +149,7 @@ def complete_step1():
         age = request.form.get('age')
         gender = request.form.get('gender')
         model_name = human_model_details['model_name']
+        print("{},{},{}".format(model_name,age,gender))
         model.add_a_basic_human_model(model_name,age,gender)
         return redirect(url_for('complete_step2'))
 
