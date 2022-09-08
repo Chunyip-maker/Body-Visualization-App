@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: "Comic Sans MS", serif;
 }
 
 
@@ -23,18 +24,128 @@ body {
 }
 
 
-.model {
-    float: right;
-    width: 300px;
-    height: 500px;
-    background-color: pink;
 
+/* Main Area*/
+.main {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1100px;
+    height: 500px;
+}
+.main .left{
+    float: left;
+    width: 500px;
+    height: 600px;
+    border-width: 1px;
+    background-color: blue;
 }
 
 
+.main .left h1{
+    color: white;
+}
+
+
+/* Right */
+
+.main .right {
+    float: right;
+    width: 500px;
+    height: 600px;
+    margin-left: 50px;
+    background-color: pink;
+}
+
+
+input {
+    background-color: transparent;
+    width: 50%;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding: 10px 0;
+    text-indent: 10%;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+input::placeholder {
+    color: #fff;
+}
+
+input:focus{
+    outline: none;
+    border-bottom: 2px solid black;
+    transition: 0.5s;
+}
+
+input:focus::placeholder {
+    opacity: 0;
+}
+
+
+.form-box button {
+    width: 50%;
+    margin-top: 35px;
+    background-color: #f6f6f6;
+    outline: none;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding:15px;
+    color: rgb(227,167,168);
+    letter-spacing: 2px;
+    font-size: 24px;
+    cursor: pointer;
+
+}
+
+.form-box button:hover {
+    background-color: rgb(255,206,206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    transition: background-color 0.4s ease;
+}
+
+span {
+    margin-top: 5px;
+    margin-left: 20px;
+    text-transform: uppercase;
+    color: black;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+
+
+input.mf {
+    margin-left: 10%;
+    margin-right: 5%;
+}
+
+
+input:checked+label {
+    background-color: rgb(210,245,235);
+    border-radius: 5px;
+}
+
+.slider-box {
+    overflow: hidden;
+    display: flex;
+    width: 400px;
+    height: 40px;
+    padding: 0;
+}
+
+
+
 .next button{
-    float: left;
+    float: right;
     margin-top: 30px;
+    
     width: 200px;
     height: 100px;
     background-color: pink;
