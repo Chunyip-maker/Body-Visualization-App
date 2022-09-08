@@ -1,4 +1,0 @@
-Skin color
-White: #FEE2CA
-Yellow: 
-Black: 
