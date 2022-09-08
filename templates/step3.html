@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="../static/css/step3.css">
+{#    <link rel="stylesheet" href="../static/css/step3.css">#}
     <title>Document</title>
 
     <script type="importmap">
@@ -39,69 +39,58 @@
         <div class="right">
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a1" oninput="b1.innerText=this.value">
-                <span id="b1">18</span>   
-                <span >No.1</span>   
-            </div>
-          
-            
-
-
-
-            <div class="slider-box">
-                
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a2" oninput="b2.innerText=this.value">
-                <span id="b2">18</span>   
-                <span >No.2</span>   
+                <input type="range" name="height" min="120" max="210" value="165" class="slider" id="a1" oninput="b1.innerText=this.value">
+                <span id="b1">165</span>
+                <span >height</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a3" oninput="b3.innerText=this.value">
-                <span id="b3">18</span>   
-                <span >No.3</span>   
+                <input type="range" name="weight" min="30" max="100" value="65" class="slider" id="a2" oninput="b2.innerText=this.value">
+                <span id="b2">65</span>
+                <span >weight</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a4" oninput="b4.innerText=this.value">
-                <span id="b4">18</span>   
-                <span >No.4</span>   
+                <input type="range" name="chest" min="75" max="101" value="88" class="slider" id="a3" oninput="b3.innerText=this.value">
+                <span id="b3">88</span>
+                <span >chest</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a5" oninput="b5.innerText=this.value">
-                <span id="b5">18</span>   
-                <span >No.5</span>   
+                <input type="range" name="waist" min="40" max="70" value="55" class="slider" id="a4" oninput="b4.innerText=this.value">
+                <span id="b4">55</span>
+                <span >waist</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a6" oninput="b6.innerText=this.value">
-                <span id="b6">18</span>   
-                <span >No.6</span>   
+                <input type="range" name="hip" min="75" max="101" value="88" class="slider" id="a5" oninput="b5.innerText=this.value">
+                <span id="b5">88</span>
+                <span >hip</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a7" oninput="b7.innerText=this.value">
-                <span id="b7">18</span>   
-                <span >No.7</span>   
+                <input type="range" name="arm_girth" min="12" max="34" value="23" class="slider" id="a6" oninput="b6.innerText=this.value">
+                <span id="b6">23</span>
+                <span >arm_girth</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a8" oninput="b8.innerText=this.value">
-                <span id="b8">18</span>   
-                <span >No.8</span>   
+                <input type="range" name="thigh" min="40" max="70" value="55" class="slider" id="a7" oninput="b7.innerText=this.value">
+                <span id="b7">55</span>
+                <span >thigh</span>
             </div>
 
             <div class="slider-box">
                 
-                <input type="range" name="age" min="12" max="100" value="18" class="slider" id="a9" oninput="b9.innerText=this.value">
-                <span id="b9">18</span>   
-                <span >No.9</span>   
+                <input type="range" name="shank" min="25" max="49" value="37" class="slider" id="a8" oninput="b8.innerText=this.value">
+                <span id="b8">37</span>
+                <span >shank</span>
             </div>
 
         </div>
@@ -112,20 +101,6 @@
             Next
         </button>
     </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -231,10 +206,10 @@
 
 
         //Async loader!
-        const fbxLoader = new FBXLoader().setPath( '/static/model/test/' );
+        const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
         const [loadModel, tempModel] = await Promise.all( [
-            fbxLoader.loadAsync( 'Idle (11).fbx' ),
-            fbxLoader.loadAsync( 'Idle (12).fbx' )
+            fbxLoader.loadAsync( 'Breathing Idle.fbx' ),
+            fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
         ] );
 
 
@@ -264,11 +239,16 @@
 
             if (child.type == "Bone") {
                     
-                    if ( !boneMenu.includes(child.name) ) {
+                    if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
                         let boneFolder = gui.addFolder(child.name);
-                        boneFolder.add(child.scale, 'x',0, 2).name(child.name + " X");
-                        boneFolder.add(child.scale, 'y',0, 2).name(child.name + " Y");
-                        boneFolder.add(child.scale, 'z',0, 2).name(child.name + " Z");
+                        boneFolder.add(child.scale, 'x',0.8, 1.2).name("Scale" + " X");
+                        boneFolder.add(child.scale, 'y',0.8, 1.2).name("Scale" + " Y");
+                        boneFolder.add(child.scale, 'z',0.8, 1.2).name("Scale" + " Z");
+                        boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
+                        boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
+                        boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
+                        console.log(child.name);
+                        console.log(child);
                     }
 
                     boneMenu.push(child.name);
