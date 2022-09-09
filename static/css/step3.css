@@ -41,6 +41,14 @@ body {
     background-color: blue;
 }
 
+.main #canvas{
+    float: left;
+    width: 500px;
+    height: 600px;
+    border-width: 1px;
+    background-color: blue;
+}
+
 
 .main .left h1{
     color: white;
