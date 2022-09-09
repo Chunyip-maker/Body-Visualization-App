@@ -18,6 +18,17 @@
     <title>Body Virtualisation APP - Step 1 </title>
     <title>Step 2</title>
 
+
+    <!-- three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+            "three": "https://unpkg.com/three@0.143.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type = "module" src="/static/js/THREEControllerS2.js"></script>  
 </head>
 
 <body>
@@ -31,10 +42,8 @@
 
     <!-- Main Area -->
     <div class="main">
-        <div class="left">
-            <h1>
-                To be added
-            </h1>
+        <div id="canvas">
+            
         </div>
         <div class="right">
             <div class="clothes">
@@ -47,6 +56,11 @@
                     </li>
                     <li><label for="cont_01"><img src="../static/images/step-4.png" class="img" id="img_01" /></label>
                     </li>
+                    <!-- example -->
+                    <input id="testButton" type = "button"  
+                            name="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/old_male/model1/Old Male.vrm.textures/_12.png" 
+                            value = "change" > 
+                    <!-- end example -->
                 </ul>
             </div>
             <div class="hair">

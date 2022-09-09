@@ -57,6 +57,14 @@ body {
     background-color: blue;
 }
 
+.main #canvas{
+    float: left;
+    width: 400px;
+    height: 500px;
+    border-width: 1px;
+    background-color: blue;
+}
+
 
 .main .left h1{
     color: white;
