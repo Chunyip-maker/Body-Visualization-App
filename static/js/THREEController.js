@@ -135,9 +135,9 @@ async function init(canvasID, modelName) {
                 
                 if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
                     let boneFolder = gui.addFolder(child.name);
-                    boneFolder.add(child.scale, 'x',0.8, 1.2).name("Scale" + " X");
-                    boneFolder.add(child.scale, 'y',0.8, 1.2).name("Scale" + " Y");
-                    boneFolder.add(child.scale, 'z',0.8, 1.2).name("Scale" + " Z");
+                    boneFolder.add(child.scale, 'x', 0.9, 1.1).name("Scale" + " X");
+                    boneFolder.add(child.scale, 'y',0.9, 1.1).name("Scale" + " Y");
+                    boneFolder.add(child.scale, 'z',0.9, 1.1).name("Scale" + " Z");
                     boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
                     boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
                     boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
@@ -204,115 +204,234 @@ function animate() {
 
 }
 
+//API of modify bones
 
-function TextureChange(targetTextureName, newTexturePath) {
+document.getElementById("a1").oninput = function changeHeight(){
+    let index = calculateTransformation(1);
+
     loadModel.traverse( child => {
-        if (child instanceof THREE.Mesh) {
-            
-            if (child.name == targetTextureName) {
+        if (child.type == "Bone") {
 
-                var newTexture = new THREE.TextureLoader().load(newTexturePath);
-                child.material.map = newTexture;
-                child.material.needsUpdate = true;
+                if ( child.name == "") {
 
-            }
+                }
+
+        }
+    })
+}
+
+document.getElementById("a2").oninput = function changeWeight(){
+    let index = calculateTransformation(2);
+
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+
+                if ( child.name == "") {
+
+                }
+
         }
     })
 }
 
 
-
-
-
-
-//API of modify bones
-
-document.getElementById("a1").oninput = function changeHeight(){
-    console.log("111");
-    let value = document.getElementById("a1").value;
-    document.getElementById("b1").innerText = value;
-
-    loadModel.traverse( child => {
-
-    })
-}
-
-document.getElementById("a2").oninput = function changeWeight(){
-    console.log("111");
-    let value = document.getElementById("a2").value;
-    document.getElementById("b2").innerText = value;
-
-    loadModel.traverse( child => {
-
-    })
-}
-
-
 document.getElementById("a3").oninput = function changeChest(){
-    console.log("111");
-    let value = document.getElementById("a3").value;
-    document.getElementById("b3").innerText = value;
+    let index = calculateTransformation(3);
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "") {
+
+                }
+
+        }
     })
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
-    console.log("111");
-    let value = document.getElementById("a4").value;
-    document.getElementById("b4").innerText = value;
+    let index = calculateTransformation(4);
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "") {
+
+                }
+
+        }
     })
 }
 
 document.getElementById("a5").oninput = function changeHip(){
-    console.log("111");
-    let value = document.getElementById("a5").value;
-    document.getElementById("b5").innerText = value;
+    let index = calculateTransformation(5);
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "") {
+
+                }
+
+        }
     })
 }
 
 document.getElementById("a6").oninput = function changeArm(){
-    console.log("111");
-    let value = document.getElementById("a6").value;
-    document.getElementById("b6").innerText = value;
+    let index = calculateTransformation(6);
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "") {
+
+                }
+
+        }
     })
 }
 
 document.getElementById("a7").oninput = function changeThigh(){
-    console.log("111");
-    let value = document.getElementById("a7").value;
-    document.getElementById("b7").innerText = value;
+    let index = calculateTransformation(7);
+
+    let countLeftLeg = 0;
+    let countLeftKnee = 0;
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "Left_leg" && countLeftLeg == 0) {
+                    // console.log("------------");
+                    // console.log("leg before:");
+                    // console.log(child.scale.x);
+                    child.scale.x += index;
+                    child.scale.z += index;
+                    // console.log("leg after:");
+                    // console.log(child.scale.x);
+                    // console.log("------------");
+                    countLeftLeg++;
+                }
+                if ( child.name == "Right_leg") {
+                    child.scale.x += index;
+                    child.scale.z += index;
+                }
+                if ( child.name == "Left_knee" && countLeftKnee == 0) {
+                    // console.log("=========");
+                    // console.log("knee before:");
+                    // console.log(child.scale.x);
+                    // child.scale.x -= index;
+                    // child.scale.z -= index;
+                    // console.log("knee after:");
+                    // console.log(child.scale.x);
+                    // console.log(child);
+                    // console.log("=========");
+                    countLeftKnee++;
+                }
+                if ( child.name == "Right_knee") {
+                    // child.scale.x -= index;
+                    // child.scale.z -= index;
+                }
+        }
     })
 }
 
 document.getElementById("a8").oninput = function changeShank(){
-    console.log("111");
-    let value = document.getElementById("a8").value;
-    document.getElementById("b8").innerText = value;
+    let index = calculateTransformation(8);
 
     loadModel.traverse( child => {
+        if (child.type == "Bone") {
 
+                if ( child.name == "Left_knee") {
+                    child.scale.x += index;
+                    child.scale.z += index;
+                }
+                if ( child.name == "Right_knee") {
+                    child.scale.x += index;
+                    child.scale.z += index;
+                }
+        }
     })
 }
 
 
-//clean texture, add gui, temp
+/* Get the information from the document and return index of actual scale*/
+function calculateTransformation(id){
+    let value = document.getElementById("a" + id).value;
+    document.getElementById("b"  + id).innerText = value;
+    let min = document.getElementById("a"  + id).min;
+    let max = document.getElementById("a"  + id).max;
+    let variance = value - getHistoryValue(id);
+    let index = getScaleIndex(min, max, variance);
+    setHistoryValue(id, value);
+    return index;
+}
 
 
+let history_value_1 = document.getElementById("a1").value;
+let history_value_2 = document.getElementById("a2").value;
+let history_value_3 = document.getElementById("a3").value;
+let history_value_4 = document.getElementById("a4").value;
+let history_value_5 = document.getElementById("a5").value;
+let history_value_6 = document.getElementById("a6").value;
+let history_value_7 = document.getElementById("a7").value;
+let history_value_8 = document.getElementById("a8").value;
 
+/* Get the history value input*/
+function getHistoryValue(id){
+    switch (id){
+        case 1:
+            return history_value_1;
+        case 2:
+            return history_value_2;
+        case 3:
+            return history_value_3;
+        case 4:
+            return history_value_4;
+        case 5:
+            return history_value_5;
+        case 6:
+            return history_value_6;
+        case 7:
+            return history_value_7;
+        case 8:
+            return history_value_8;
+    }
+}
 
+/* Set the history value input*/
+function setHistoryValue(id, value){
+    switch (id){
+        case 1:
+            history_value_1 = value;
+            break;
+        case 2:
+            history_value_2 = value;
+            break;
+        case 3:
+            history_value_3 = value;
+            break;
+        case 4:
+            history_value_4 = value;
+            break;
+        case 5:
+            history_value_5 = value;
+            break;
+        case 6:
+            history_value_6 = value;
+            break;
+        case 7:
+            history_value_7 = value;
+            break;
+        case 8:
+            history_value_8 = value;
+            break;
+    }
+}
 
-//gui.hide();
+/* Calculate the actual scale index to transform the model*/
+function getScaleIndex(min, max, value){
+    //range = 0.9 - 1.1, index = scale number
+    let percentage = value / (max - min);
+    let actualIndex = percentage * (0.2);
+    return actualIndex;
+}

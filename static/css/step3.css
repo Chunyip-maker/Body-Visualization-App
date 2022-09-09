@@ -119,14 +119,14 @@ input:focus::placeholder {
     transition: background-color 0.4s ease;
 }
 
-span {
-    margin-top: 5px;
-    margin-left: 20px;
-    text-transform: uppercase;
-    color: black;
-    letter-spacing: 2px;
-    font-size: 16px;
-}
+/*span {*/
+/*    margin-top: 5px;*/
+/*    margin-left: 20px;*/
+/*    text-transform: uppercase;*/
+/*    color: black;*/
+/*    letter-spacing: 2px;*/
+/*    font-size: 16px;*/
+/*}*/
 
 
 input.mf {
