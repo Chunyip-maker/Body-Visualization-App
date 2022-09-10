@@ -42,7 +42,7 @@ async function init(canvasID, modelName) {
     camera.position.set(1.66,2.05,3.61);
     //camera.rotation.set(-0.34, 0.51, 0.17);
     camera.lookAt(0,1,0);
-    console.log(camera);
+    //console.log(camera);
 
 
     //scene set up, background color debug use only
@@ -117,10 +117,72 @@ async function init(canvasID, modelName) {
         fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
     ] );
 
+    //Set the range for different age group, default adult male
+    //{Height, Weight, Chest, Waist, Hip, Arm girth, Thigh, Shank}
+    //Should be in range of {50, 60, 20, 20, 20, 15, 18, 18}
+    //min & max
+    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 40, 58, 22, 40);
+    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 37, 45, 20, 38);
+    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 48, 66, 30, 48);
+    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 45, 63, 28, 46);
+    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
+    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
+    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+
+    function selectGroup(agegroup){
+        switch (agegroup){
+            case 1:
+                setRange(teenagerMale);
+                break;
+            case 2:
+                setRange(teenagerFemale);
+                break;
+            case 3:
+                setRange(adultMale);
+                break;
+            case 4:
+                setRange(adultFemale);
+                break;
+            case 5:
+                setRange(middleMale);
+                break;
+            case 6:
+                setRange(middleFemale);
+                break;
+            case 7:
+                setRange(oldMale);
+                break;
+            case 8:
+                setRange(oldFemale);
+                break;
+        }
+    }
+
+    function setRange(rangeList){
+        setRangeById(1, rangeList[0], rangeList[1]);
+        setRangeById(2, rangeList[2], rangeList[3]);
+        setRangeById(3, rangeList[4], rangeList[5]);
+        setRangeById(4, rangeList[6], rangeList[7]);
+        setRangeById(5, rangeList[8], rangeList[9]);
+        setRangeById(6, rangeList[10], rangeList[11]);
+        setRangeById(7, rangeList[12], rangeList[13]);
+        setRangeById(8, rangeList[14], rangeList[15]);
+    }
+
+    function setRangeById(id, min, max){
+        document.getElementById("a" + id).min = min;
+        document.getElementById("a" + id).max = max;
+        document.getElementById("a" + id).value = (max + min)/2;
+        document.getElementById("b" + id).innerText = (max + min)/2;
+    }
+
+    selectGroup(3);
+
 
     //animation
     group.add(loadModel);
-    console.log(loadModel.children);
+    //console.log(loadModel.children);
     mixer = new THREE.AnimationMixer( loadModel );
     action = mixer.clipAction( loadModel.animations[ 0 ] );
     action.play();
@@ -141,8 +203,8 @@ async function init(canvasID, modelName) {
                     boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
                     boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
                     boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
-                    console.log(child.name);
-                    console.log(child);
+                    // console.log(child.name);
+                    // console.log(child);
                 }
 
                 boneMenu.push(child.name);
@@ -203,6 +265,7 @@ function animate() {
     stats.update();
 
 }
+
 
 //API of modify bones
 
@@ -301,31 +364,30 @@ document.getElementById("a7").oninput = function changeThigh(){
         if (child.type == "Bone") {
 
                 if ( child.name == "Left_leg" && countLeftLeg == 0) {
-                    // console.log("------------");
-                    // console.log("leg before:");
-                    // console.log(child.scale.x);
+                    console.log("------------");
+                    console.log("leg before:");
+                    console.log(child);
                     child.scale.x += index;
                     child.scale.z += index;
-                    // console.log("leg after:");
-                    // console.log(child.scale.x);
-                    // console.log("------------");
+                    console.log("leg after:");
+                    console.log(child);
+                    console.log("------------");
                     countLeftLeg++;
+                }
+                if ( child.name == "Left_knee" && countLeftKnee == 0) {
+                    console.log("=========");
+                    console.log("knee before:");
+                    console.log(child);
+                    child.scale.x -= index;
+                    child.scale.z -= index;
+                    console.log("knee after:");
+                    console.log(child);
+                    console.log("=========");
+                    countLeftKnee++;
                 }
                 if ( child.name == "Right_leg") {
                     child.scale.x += index;
                     child.scale.z += index;
-                }
-                if ( child.name == "Left_knee" && countLeftKnee == 0) {
-                    // console.log("=========");
-                    // console.log("knee before:");
-                    // console.log(child.scale.x);
-                    // child.scale.x -= index;
-                    // child.scale.z -= index;
-                    // console.log("knee after:");
-                    // console.log(child.scale.x);
-                    // console.log(child);
-                    // console.log("=========");
-                    countLeftKnee++;
                 }
                 if ( child.name == "Right_knee") {
                     // child.scale.x -= index;
@@ -338,16 +400,21 @@ document.getElementById("a7").oninput = function changeThigh(){
 document.getElementById("a8").oninput = function changeShank(){
     let index = calculateTransformation(8);
 
+    let countRightKnee = 0;
+    let countLeftKnee = 0;
+
     loadModel.traverse( child => {
         if (child.type == "Bone") {
 
-                if ( child.name == "Left_knee") {
+                if ( child.name == "Left_knee" && countLeftKnee == 0) {
                     child.scale.x += index;
                     child.scale.z += index;
+                    countLeftKnee++;
                 }
-                if ( child.name == "Right_knee") {
+                if ( child.name == "Right_knee" && countRightKnee == 0) {
                     child.scale.x += index;
                     child.scale.z += index;
+                    countRightKnee++;
                 }
         }
     })
