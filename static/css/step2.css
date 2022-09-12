@@ -84,8 +84,9 @@ body {
 /* Image */
 
 .img {
-    width: 100px;
-    height: auto;
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
 }
 
 
