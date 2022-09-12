@@ -1,6 +1,8 @@
 * {
     padding: 0;
     margin: 0;
+    
+    font-family: "Comic Sans MS", serif;
 }
 
 
@@ -9,18 +11,6 @@ body {
     background-size:cover
 }
 
-/* Font */
-
-@font-face {
-    font-family:'Lato-Black';
-    src: url('../fonts/lato/Lato-Black.ttf');
-}
-
-
-@font-face {
-    font-family:'Lato-Light';
-    src: url('../fonts/lato/Lato-Light.ttf');
-}
 
 /* Title */
 .title {
@@ -28,7 +18,9 @@ body {
     width: 100%;
     height: 100px;
     /* overflow: hidden; */
-    background-color: blue;
+    background-color: transparent;
+    font-size: 30px;
+    color: #f6f6f6;
     text-align: center;
     margin: center;
 }
@@ -36,7 +28,6 @@ body {
 .title h1 {
     vertical-align: middle;
     line-height: 100px;
-    font-family: Lato-Black;
     letter-spacing: 3px;
     color: white;
 }
@@ -87,6 +78,7 @@ body {
     width: 80px;
     height: 60px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 
@@ -132,16 +124,28 @@ ul li {
     margin-right: 20px;
 }
 
-
-.next button{
+.next button {
     float: right;
     margin-top: 30px;
-    width: 200px;
-    height: 100px;
-    background-color: pink;
-    border-radius: 20px;
-    font-family: Lato-Black;
-    line-height: 100px;
-    text-align: center;
-    font-size: 36px;
+    width: 50%;
+    background-color: #f6f6f6;
+    outline: none;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding:15px;
+    color: rgb(227,167,168);
+    letter-spacing: 2px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.next button:hover {
+    background-color: rgb(255,206,206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    transition: background-color 0.4s ease;
 }
