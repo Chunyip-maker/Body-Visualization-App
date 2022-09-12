@@ -7,6 +7,7 @@
 
 
 body {
+    height: 100vh;
     background-image: url("../images/background1.png");
     background-size:cover
 }
@@ -14,9 +15,9 @@ body {
 
 /* Title */
 .title {
-
     width: 100%;
     height: 100px;
+
     /* overflow: hidden; */
     background-color: transparent;
     font-size: 30px;
@@ -34,7 +35,7 @@ body {
 
 /* Main Area*/
 .main {
-    margin-top: 100px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     width: 1000px;
@@ -75,15 +76,22 @@ body {
 /* Button Images */
 
 .img_button {
-    width: 100px;
-    height: 100px;
+    width: 85px;
+    height: 85px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
 .img {
-    width: 100px;
-    height: 75px;
+    width: 85px;
+    height: 60px;
+    border-radius: 10px;
     object-fit: cover;
+}
+
+.bottom_text {
+    color: rgb(211,157,158);
+    font-size: 10px;
 }
 
 
@@ -114,7 +122,6 @@ body {
     background-color: white;
     border-radius: 25px;
 }
-
 
 
 ul {
