@@ -142,24 +142,52 @@ function TextureChange(targetTextureName, newTexturePath) {
     })
 }
 
+function readInput(input){
+    input = input.split(",");
+    console.log(input[0], input[1]);
+    TextureChange(input[0], input[1]);
+
+}
+
 
 //API of modify bones
 
-let count = 0;
-document.getElementById("testButton").onclick = function testButton(){
-    //console.log("111");
-    var input = document.getElementById("testButton").name;
-    input = input.split(",");
-    console.log(input[0], input[1]);
-    if (count % 2 == 0) {
-        TextureChange(input[0], input[1]);
-        count += 1;
-    } else {
-        count = 0;
-        TextureChange(input[1], input[0]);
-    }
-    
+//let count = 0;
+//document.getElementById("testButton").onclick = function testButton(){
+//    //console.log("111");
+//    var input = document.getElementById("testButton").name;
+//    input = input.split(",");
+//    console.log(input[0], input[1]);
+//    if (count % 2 == 0) {
+//        TextureChange(input[0], input[1]);
+//        count += 1;
+//    } else {
+//        count = 0;
+//        TextureChange(input[1], input[0]);
+//    }
+//}
+
+document.getElementById("hair_style_1").oninput = function hair_style_1(){
+    var input = document.getElementById("hair_style_1").value;
+    readInput(input);
 }
+
+document.getElementById("hair_style_2").oninput = function hair_style_2(){
+    var input = document.getElementById("hair_style_2").value;
+    readInput(input);
+}
+
+document.getElementById("bot_1").onclick = function bot_1(){
+    var input = document.getElementById("bot_1").value;
+    readInput(input);
+}
+
+document.getElementById("bot_2").onclick = function bot_2(){
+    var input = document.getElementById("bot_2").value;
+    readInput(input);
+}
+
+
 
 
 //clean texture, add gui, temp
