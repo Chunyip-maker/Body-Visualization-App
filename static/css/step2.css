@@ -80,6 +80,15 @@ body {
     margin-left: 50px;
 }
 
+
+/* Image */
+
+.img {
+    width: 100px;
+    height: auto;
+}
+
+
 /* Clothes */
 
 .clothes {
