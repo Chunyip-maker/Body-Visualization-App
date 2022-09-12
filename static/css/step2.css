@@ -36,18 +36,11 @@ body {
 
 /* Main Area*/
 .main {
-    margin-top: 30px;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     width: 1000px;
     height: 500px;
-}
-.main .left{
-    float: left;
-    width: 400px;
-    height: 500px;
-    border-width: 1px;
-    background-color: blue;
 }
 
 .main #canvas{
@@ -55,12 +48,7 @@ body {
     width: 400px;
     height: 500px;
     border-width: 1px;
-    background-color: blue;
-}
-
-
-.main .left h1{
-    color: white;
+    background-color: transparent;
 }
 
 
@@ -70,7 +58,8 @@ body {
     float: left;
     width: 500px;
     height: 500px;
-    margin-left: 50px;
+    margin-top: -15px;
+    margin-left: 20px;
 }
 
 
@@ -96,32 +85,33 @@ body {
 }
 
 
-/* Clothes */
-
-.clothes {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
+/* Button positions */
+.hair_colour {
+    position: relative;
+    top: -100px;
+    left: 250px;
 }
 
-/* Hair */
-.hair {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
+.clothing_style {
+    position: relative;
+    top: -90px;
 }
 
-/* Hair Color */
-.hair_color {
-    margin-top: 50px;
-    width: 500px;
-    height: 75px;
-    background-color: white;
-    border-radius: 25px;
+.top {
+    position: relative;
+    top: -190px;
+    left: 250px;
+}
+
+.bot {
+    position: relative;
+    top: -190px;
+    left: 250px;
+}
+
+.skin_colour {
+    position: relative;
+    top: -180px;
 }
 
 
@@ -130,16 +120,19 @@ ul {
     margin: auto;
     display: inline-block;
     margin-left: 30px;
+    margin-top: 15px;
 }
 
 ul li {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .next button {
     float: right;
-    margin-top: 30px;
+    margin-top: -150px;
+    margin-right: -75px;
+
     width: 50%;
     background-color: #f6f6f6;
     outline: none;
