@@ -22,6 +22,7 @@ body {
     background-color: transparent;
     font-size: 30px;
     color: #f6f6f6;
+    text-shadow: rgb(166,199,208) 3px 0 0, rgb(166,199,208) 0 3px 0, rgb(166,199,208) -3px 0 0, rgb(166,199,208) 0 -3px 0;
     text-align: center;
     margin: center;
 }
