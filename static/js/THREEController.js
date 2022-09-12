@@ -275,9 +275,13 @@ document.getElementById("a1").oninput = function changeHeight(){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
 
-                if ( child.name == "") {
-
-                }
+                // if ( child.name == "Spine") {
+                //     console.log(child);
+                // }
+                //
+                // if ( child.name == "Hips") {
+                //     console.log(child);
+                // }
 
         }
     })
@@ -359,42 +363,37 @@ document.getElementById("a7").oninput = function changeThigh(){
 
     let countLeftLeg = 0;
     let countLeftKnee = 0;
+    let countRightLeg = 0;
+    let countRightKnee = 0;
 
     loadModel.traverse( child => {
         if (child.type == "Bone") {
 
                 if ( child.name == "Left_leg" && countLeftLeg == 0) {
-                    console.log("------------");
-                    console.log("leg before:");
-                    console.log(child);
                     child.scale.x += index;
                     child.scale.z += index;
-                    console.log("leg after:");
-                    console.log(child);
-                    console.log("------------");
                     countLeftLeg++;
                 }
                 if ( child.name == "Left_knee" && countLeftKnee == 0) {
-                    console.log("=========");
-                    console.log("knee before:");
-                    console.log(child);
-                    child.scale.x -= index;
-                    child.scale.z -= index;
-                    console.log("knee after:");
-                    console.log(child);
-                    console.log("=========");
-                    countLeftKnee++;
-                }
-                if ( child.name == "Right_leg") {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                }
-                if ( child.name == "Right_knee") {
                     // child.scale.x -= index;
                     // child.scale.z -= index;
+                    //console.log(child.scale.x);
+                    countLeftKnee++;
+                }
+                if ( child.name == "Right_leg" && countRightLeg == 0) {
+                    child.scale.x += index;
+                    child.scale.z += index;
+                    countRightLeg++;
+                }
+                if ( child.name == "Right_knee" && countLeftKnee == 0) {
+                    // child.scale.x -= index;
+                    // child.scale.z -= index;
+                    //console.log(child.scale.x);
+                    countRightKnee++;
                 }
         }
     })
+
 }
 
 document.getElementById("a8").oninput = function changeShank(){
