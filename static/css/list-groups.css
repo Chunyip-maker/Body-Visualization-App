@@ -4,7 +4,7 @@
   /*width: 85px;*/
   /*height: 85px;*/
   /*border-radius: 10px;*/
-  /*cursor: pointer;*/
+  cursor: pointer;
 
 }
 
@@ -27,11 +27,19 @@
   clip: rect(0, 0, 0, 0);
 }
 .list-group-item-check:hover + .list-group-item {
-  background-color: var(--bs-light);
+  /* color: var(--bs-light); */
+  color: #fff;
+  border-style: solid;
+  border-width: 3px;
+  border-color: purple;
+  background-color: rgb(211,157,158);
+  
 }
 .list-group-item-check:checked + .list-group-item {
-  color: #fff;
-  background-color: var(--bs-blue);
+  /* color: #fff; */
+  color: var(--bs-light);
+  background-color: rgb(211,157,158);
+  /* background-color: var(--bs-blue); */
 }
 .list-group-item-check[disabled] + .list-group-item,
 .list-group-item-check:disabled + .list-group-item {
