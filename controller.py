@@ -123,10 +123,13 @@ def login_page():
                 # Store the user details for us to use throughout
                 # global human_model_details
                 # human_model_details['model_name'] = model_name
-                response.set_cookie('model_name', model_name)
+
+                resp = make_response(redirect(url_for('complete_step3')))
+                resp.set_cookie('model_name', model_name)
+                return resp
 
                 # 如果该模型已存在,跳转到step3.html
-                return redirect(url_for('complete_step3'))
+                # return redirect(url_for('complete_step3'))
             else:
                 flash("Incorrect model name input, please try again or register", 'warning')
                 return redirect(url_for('login_page'))
@@ -201,7 +204,7 @@ def complete_step2():
         # insert data to database
         model.add_a_basic_human_model(model_name, age, gender)
         basic_model = model.define_basic_model(int(age), gender)
-        return render_template('step2.html',basic_model = basic_model)
+        return render_template('step2.html', basic_model=basic_model)
     elif request.method == 'POST':
         # 如果未登录 -- 未完成注册系统都不识别为登录成功
         if 'logged_in' not in session or not session['logged_in']:
@@ -218,16 +221,21 @@ def complete_step2():
             # model.add_a_basic_human_model(model_name, age, gender)
             # basic_model = model.define_basic_model(int(age), gender)
 
-            hair_color = request.form.get('hair_color')  # 头发颜色
-            skin_color = request.form.get('skin_color')  # 皮肤颜色
-            top_dress = request.form.get('top_dress')  # 上衣
-            bottom_dress = request.form.get('bottom_dress')  # 下装
-            print(request.form.get("hair_style"))
-            print(request.form.get("bot"))
+            hair_color = request.form.get('hair_colour')  # 头发颜色
+            skin_color = request.form.get('skin_colour')  # 皮肤颜色
+            top_dress = request.form.get('top')  # 上衣
+            bottom_dress = request.form.get('bot')  # 下装
+
+            # hair_color = model.split_mesh_name(hair_color)
+            # skin_color = model.split_mesh_name(skin_color)
+            # top_dress = model.split_mesh_name(top_dress)
+            # bottom_dress = model.split_mesh_name(bottom_dress)
+
             model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
 
-            textures_file_path = model.search_model_texture_file_path(model_name)
-            basic_model_file_path = model.search_basic_model_file_path(model_name)
+            # 暂时没用
+            # textures_file_path = model.search_model_texture_file_path(model_name)
+            # basic_model_file_path = model.search_basic_model_file_path(model_name)
             return redirect(url_for('complete_step3'))
         else:
             return redirect(url_for('complete_step3'))
@@ -242,7 +250,10 @@ def complete_step3():
 
     # flash("welcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
-        return render_template('step3.html')
+        model_name = request.cookies.get('model_name')
+        print(model_name)
+        model_texture = model.search_model_texture_file_path(model_name)
+        return render_template('step3.html', model_texture=model_texture)
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']
@@ -263,7 +274,9 @@ def complete_step3():
                                              thigh, shank, hip, upper_arm, waist, chest)
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
-@app.route('/step4',methods=['GET'])
+
+
+@app.route('/step4', methods=['GET'])
 def complete_step4():
     """ Generate a health report """
     # 如果未登录
@@ -274,4 +287,3 @@ def complete_step4():
         model_name = request.cookies.get('model_name')
         last_two_records = model.search_last_two_body_measurement_records(model_name)
         return render_template('step4.html')
-
