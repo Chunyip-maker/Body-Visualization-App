@@ -216,9 +216,9 @@ async function init(canvasID, modelName) {
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            console.log(child);
-            console.log(child.name);
-            console.log("----------");
+            // console.log(child);
+            // console.log(child.name);
+            // console.log("----------");
 
             let url = "/static/model/test2/texture_test/";
 
@@ -329,7 +329,6 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
-
 }
 
 
@@ -337,154 +336,64 @@ function animate() {
 
 document.getElementById("a1").oninput = function changeHeight(){
     let index = calculateTransformation(1);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                // if ( child.name == "Spine") {
-                //     console.log(child);
-                // }
-                //
-                // if ( child.name == "Hips") {
-                //     console.log(child);
-                // }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
     let index = calculateTransformation(2);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
-
 
 document.getElementById("a3").oninput = function changeChest(){
     let index = calculateTransformation(3);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
     let index = calculateTransformation(4);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
     let index = calculateTransformation(5);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a6").oninput = function changeArm(){
     let index = calculateTransformation(6);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a7").oninput = function changeThigh(){
     let index = calculateTransformation(7);
-
-    let countLeftLeg = 0;
-    let countLeftKnee = 0;
-    let countRightLeg = 0;
-    let countRightKnee = 0;
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "Left_leg" && countLeftLeg == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countLeftLeg++;
-                }
-                if ( child.name == "Left_knee" && countLeftKnee == 0) {
-                    // child.scale.x -= index;
-                    // child.scale.z -= index;
-                    //console.log(child.scale.x);
-                    countLeftKnee++;
-                }
-                if ( child.name == "Right_leg" && countRightLeg == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countRightLeg++;
-                }
-                if ( child.name == "Right_knee" && countLeftKnee == 0) {
-                    // child.scale.x -= index;
-                    // child.scale.z -= index;
-                    //console.log(child.scale.x);
-                    countRightKnee++;
-                }
-        }
-    })
-
+    changeScale(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index)
 }
 
 document.getElementById("a8").oninput = function changeShank(){
     let index = calculateTransformation(8);
+    changeScale(["Left_knee", "Right_knee"], [], index)
+}
 
-    let countRightKnee = 0;
-    let countLeftKnee = 0;
-
+/* Scale up and scale down the bones in the list */
+function changeScale(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
-
-                if ( child.name == "Left_knee" && countLeftKnee == 0) {
+                if ( scaleUpBones.includes(child.name)) {
                     child.scale.x += index;
                     child.scale.z += index;
-                    countLeftKnee++;
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
                 }
-                if ( child.name == "Right_knee" && countRightKnee == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countRightKnee++;
+                if ( scaleDownBones.includes(child.name)) {
+                    child.scale.x -= index;
+                    child.scale.z -= index;
+                    child.position.z -= (index/15);
+                    let i = scaleDownBones.indexOf(child.name);
+                    scaleDownBones.splice(i, 1);
                 }
         }
     })
 }
-
 
 /* Get the information from the document and return index of actual scale*/
 function calculateTransformation(id){
