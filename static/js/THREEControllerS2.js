@@ -95,6 +95,16 @@ async function init(canvasID, modelName) {
         fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
     ] );
 
+    var input = document.getElementById("hair_colour_1").value;
+    readInput(input);
+    var input = document.getElementById("top_1").value;
+    readInput(input);
+    var input = document.getElementById("bot_1").value;
+    readInput(input);
+    var input = document.getElementById("skin_colour_1").value;
+    readInput(input);
+
+
 
     //animation
     group.add(loadModel);
@@ -114,6 +124,8 @@ async function init(canvasID, modelName) {
         }
     })
     animate();
+
+
 }
 
 
@@ -170,21 +182,23 @@ function readInput(input){
 //    }
 //}
 
-document.getElementById("hair_style_1").oninput = function hair_style_1(){
-    var input = document.getElementById("hair_style_1").value;
-    readInput(input);
-}
 
-document.getElementById("hair_style_2").oninput = function hair_style_2(){
-    var input = document.getElementById("hair_style_2").value;
-    readInput(input);
-}
+
+//document.getElementById("hair_style_1").oninput = function hair_style_1(){
+//    var input = document.getElementById("hair_style_1").value;
+//    readInput(input);
+//}
+//
+//document.getElementById("hair_style_2").oninput = function hair_style_2(){
+//    var input = document.getElementById("hair_style_2").value;
+//    readInput(input);
+//}
+
 
 document.getElementById("hair_colour_1").onclick = function hair_colour_1(){
     var input = document.getElementById("hair_colour_1").value;
     readInput(input);
 }
-
 document.getElementById("hair_colour_2").onclick = function hair_colour_2(){
     var input = document.getElementById("hair_colour_2").value;
     readInput(input);
@@ -195,15 +209,15 @@ document.getElementById("hair_colour_3").onclick = function hair_colour_3(){
     readInput(input);
 }
 
-document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
-    var input = document.getElementById("clothing_style_1").value;
-    readInput(input);
-}
-
-document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
-    var input = document.getElementById("clothing_style_2").value;
-    readInput(input);
-}
+//document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
+//    var input = document.getElementById("clothing_style_1").value;
+//    readInput(input);
+//}
+//
+//document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
+//    var input = document.getElementById("clothing_style_2").value;
+//    readInput(input);
+//}
 
 document.getElementById("top_1").onclick = function top_1(){
     var input = document.getElementById("top_1").value;
