@@ -95,6 +95,16 @@ async function init(canvasID, modelName) {
         fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
     ] );
 
+    var input = document.getElementById("hair_colour_1").value;
+    readInput(input);
+    var input = document.getElementById("top_1").value;
+    readInput(input);
+    var input = document.getElementById("bot_1").value;
+    readInput(input);
+    var input = document.getElementById("skin_colour_1").value;
+    readInput(input);
+
+
 
     //animation
     group.add(loadModel);
@@ -114,6 +124,8 @@ async function init(canvasID, modelName) {
         }
     })
     animate();
+
+
 }
 
 
@@ -130,7 +142,7 @@ function animate() {
 function TextureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
-            
+
             if (child.name == targetTextureName) {
 
                 var newTexture = new THREE.TextureLoader().load(newTexturePath);
@@ -144,9 +156,12 @@ function TextureChange(targetTextureName, newTexturePath) {
 
 function readInput(input){
     input = input.split(",");
-    console.log(input[0], input[1]);
-    TextureChange(input[0], input[1]);
-
+//    console.log(input[0], input[1]);
+//    TextureChange(input[0], input[1]);
+    for (let i = 0; i < input.length; i+=2) {
+        TextureChange(input[i], input[i+1]);
+        console.log(input[i], input[i+1]);
+    }
 }
 
 
@@ -167,13 +182,55 @@ function readInput(input){
 //    }
 //}
 
-document.getElementById("hair_style_1").oninput = function hair_style_1(){
-    var input = document.getElementById("hair_style_1").value;
+
+
+//document.getElementById("hair_style_1").oninput = function hair_style_1(){
+//    var input = document.getElementById("hair_style_1").value;
+//    readInput(input);
+//}
+//
+//document.getElementById("hair_style_2").oninput = function hair_style_2(){
+//    var input = document.getElementById("hair_style_2").value;
+//    readInput(input);
+//}
+
+
+document.getElementById("hair_colour_1").onclick = function hair_colour_1(){
+    var input = document.getElementById("hair_colour_1").value;
+    readInput(input);
+}
+document.getElementById("hair_colour_2").onclick = function hair_colour_2(){
+    var input = document.getElementById("hair_colour_2").value;
     readInput(input);
 }
 
-document.getElementById("hair_style_2").oninput = function hair_style_2(){
-    var input = document.getElementById("hair_style_2").value;
+document.getElementById("hair_colour_3").onclick = function hair_colour_3(){
+    var input = document.getElementById("hair_colour_3").value;
+    readInput(input);
+}
+
+//document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
+//    var input = document.getElementById("clothing_style_1").value;
+//    readInput(input);
+//}
+//
+//document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
+//    var input = document.getElementById("clothing_style_2").value;
+//    readInput(input);
+//}
+
+document.getElementById("top_1").onclick = function top_1(){
+    var input = document.getElementById("top_1").value;
+    readInput(input);
+}
+
+document.getElementById("top_2").onclick = function top_2(){
+    var input = document.getElementById("top_2").value;
+    readInput(input);
+}
+
+document.getElementById("top_3").onclick = function top_3(){
+    var input = document.getElementById("top_3").value;
     readInput(input);
 }
 
@@ -187,6 +244,25 @@ document.getElementById("bot_2").onclick = function bot_2(){
     readInput(input);
 }
 
+document.getElementById("bot_3").onclick = function bot_3(){
+    var input = document.getElementById("bot_3").value;
+    readInput(input);
+}
+
+document.getElementById("skin_colour_1").onclick = function skin_colour_1(){
+    var input = document.getElementById("skin_colour_1").value;
+    readInput(input);
+}
+
+document.getElementById("skin_colour_2").onclick = function skin_colour_2(){
+    var input = document.getElementById("skin_colour_2").value;
+    readInput(input);
+}
+
+document.getElementById("skin_colour_3").onclick = function skin_colour_3(){
+    var input = document.getElementById("skin_colour_3").value;
+    readInput(input);
+}
 
 
 
