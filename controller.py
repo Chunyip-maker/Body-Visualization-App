@@ -210,9 +210,9 @@ def complete_step2():
             model_name = request.cookies.get('model_name')
             #
             # # define basic model
-            # age = request.cookies.get('age')
-            # gender = request.cookies.get('gender')
-            # # basic_model = model.define_basic_model(int(age), gender)
+            age = request.cookies.get('age')
+            gender = request.cookies.get('gender')
+            basic_model = model.define_basic_model(int(age), gender)
             #
             # # insert data to database
             # model.add_a_basic_human_model(model_name, age, gender)
