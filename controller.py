@@ -190,26 +190,40 @@ def complete_step2():
         return redirect(url_for('complete_step3'))
 
     if request.method == 'GET':
-        return render_template('step2.html')
+        # load model name
+        model_name = request.cookies.get('model_name')
+
+        # define basic model
+        age = request.cookies.get('age')
+        gender = request.cookies.get('gender')
+        # basic_model = model.define_basic_model(int(age), gender)
+
+        # insert data to database
+        model.add_a_basic_human_model(model_name, age, gender)
+        basic_model = model.define_basic_model(int(age), gender)
+        return render_template('step2.html',basic_model = basic_model)
     elif request.method == 'POST':
         # 如果未登录 -- 未完成注册系统都不识别为登录成功
         if 'logged_in' not in session or not session['logged_in']:
             session['logged_in'] = True
-            # load model name
+            # # load model name
             model_name = request.cookies.get('model_name')
-
-            # define basic model
-            age = request.cookies.get('age')
-            gender = request.cookies.get('gender')
-            basic_model = model.define_basic_model(int(age), gender)
-
-            # insert data to database
-            model.add_a_basic_human_model(model_name, age, gender)
+            #
+            # # define basic model
+            # age = request.cookies.get('age')
+            # gender = request.cookies.get('gender')
+            # # basic_model = model.define_basic_model(int(age), gender)
+            #
+            # # insert data to database
+            # model.add_a_basic_human_model(model_name, age, gender)
+            # basic_model = model.define_basic_model(int(age), gender)
 
             hair_color = request.form.get('hair_color')  # 头发颜色
             skin_color = request.form.get('skin_color')  # 皮肤颜色
             top_dress = request.form.get('top_dress')  # 上衣
             bottom_dress = request.form.get('bottom_dress')  # 下装
+            print(request.form.get("hair_style"))
+            print(request.form.get("bot"))
             model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
 
             textures_file_path = model.search_model_texture_file_path(model_name)
