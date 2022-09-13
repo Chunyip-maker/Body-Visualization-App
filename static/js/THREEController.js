@@ -216,14 +216,18 @@ async function init(canvasID, modelName) {
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            console.log(child.name);
-            
+            // console.log(child);
+            // console.log(child.name);
+            // console.log("----------");
+
+            let url = "/static/model/test2/texture_test/";
 
             if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
 
-                
-                let temp = "/static/model/old_male/model1/Old Male.vrm.textures/_12.png"
-                const bottom = ["1","2","3",temp];
+                let texture1 =  url + "sample.vrm.textures/_12.png";
+                let texture2 =  url + "option1/_12.png";
+                let texture3 =  url + "option2/_12.png";
+                const bottom = [texture1,texture2,texture3];
 
                 gui.add({ bottom: bottom[0]}, "bottom")
                 .options(bottom)
@@ -231,22 +235,84 @@ async function init(canvasID, modelName) {
                     var newTexture = new THREE.TextureLoader().load(val);
                     child.material.map = newTexture;
                     child.material.needsUpdate = true;
+                    console.log(child);
                 });
 
             }
 
-            if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
 
-                
-                let temp = "/static/model/old_male/model1/Old Male.vrm.textures/_12.png"
-                const bottom = ["1","2","3",temp];
+            if (child.name == "N00_000_Hair_00_HAIR_(Instance)") {
 
-                gui.add({ bottom: bottom[0]}, "bottom")
-                .options(bottom)
+
+                let texture1 =  url + "sample.vrm.textures/_15.png";
+                let texture2 =  url + "option1/_15.png";
+                let texture3 =  url + "option2/_15.png";
+                const hair = [texture1,texture2,texture3];
+
+                gui.add({ hair: hair[0]}, "hair")
+                .options(hair)
                 .onChange((val) => {
                     var newTexture = new THREE.TextureLoader().load(val);
                     child.material.map = newTexture;
                     child.material.needsUpdate = true;
+                    console.log(child);
+                });
+
+            }
+
+            if (child.name == "N00_000_00_Body_00_SKIN_(Instance)") {
+
+
+                let texture1 =  url + "sample.vrm.textures/_10.png";
+                let texture2 =  url + "option1/_10.png";
+                let texture3 =  url + "option2/_10.png";
+                const body = [texture1,texture2,texture3];
+
+                gui.add({ body: body[0]}, "body")
+                .options(body)
+                .onChange((val) => {
+                    var newTexture = new THREE.TextureLoader().load(val);
+                    child.material.map = newTexture;
+                    child.material.needsUpdate = true;
+                    console.log(child);
+                });
+
+            }
+
+            if (child.name == "N00_000_00_Face_00_SKIN_(Instance)") {
+
+
+                let texture1 =  url + "sample.vrm.textures/_04.png";
+                let texture2 =  url + "option1/_04.png";
+                let texture3 =  url + "option2/_04.png";
+                const face = [texture1,texture2,texture3];
+
+                gui.add({ face: face[0]}, "face")
+                .options(face)
+                .onChange((val) => {
+                    var newTexture = new THREE.TextureLoader().load(val);
+                    child.material.map = newTexture;
+                    child.material.needsUpdate = true;
+                    console.log(child);
+                });
+
+            }
+
+            if (child.name == "N00_004_01_Tops_01_CLOTH_(Instance)") {
+
+
+                let texture1 =  url + "sample.vrm.textures/_14.png";
+                let texture2 =  url + "option1/_14.png";
+                let texture3 =  url + "option2/_14.png";
+                const cloth = [texture1,texture2,texture3];
+
+                gui.add({ cloth: cloth[0]}, "cloth")
+                .options(cloth)
+                .onChange((val) => {
+                    var newTexture = new THREE.TextureLoader().load(val);
+                    child.material.map = newTexture;
+                    child.material.needsUpdate = true;
+                    console.log(child);
                 });
 
             }
@@ -263,7 +329,6 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
-
 }
 
 
@@ -271,154 +336,64 @@ function animate() {
 
 document.getElementById("a1").oninput = function changeHeight(){
     let index = calculateTransformation(1);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                // if ( child.name == "Spine") {
-                //     console.log(child);
-                // }
-                //
-                // if ( child.name == "Hips") {
-                //     console.log(child);
-                // }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
     let index = calculateTransformation(2);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
-
 
 document.getElementById("a3").oninput = function changeChest(){
     let index = calculateTransformation(3);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
     let index = calculateTransformation(4);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
     let index = calculateTransformation(5);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a6").oninput = function changeArm(){
     let index = calculateTransformation(6);
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "") {
-
-                }
-
-        }
-    })
+    changeScale([], [], index);
 }
 
 document.getElementById("a7").oninput = function changeThigh(){
     let index = calculateTransformation(7);
-
-    let countLeftLeg = 0;
-    let countLeftKnee = 0;
-    let countRightLeg = 0;
-    let countRightKnee = 0;
-
-    loadModel.traverse( child => {
-        if (child.type == "Bone") {
-
-                if ( child.name == "Left_leg" && countLeftLeg == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countLeftLeg++;
-                }
-                if ( child.name == "Left_knee" && countLeftKnee == 0) {
-                    // child.scale.x -= index;
-                    // child.scale.z -= index;
-                    //console.log(child.scale.x);
-                    countLeftKnee++;
-                }
-                if ( child.name == "Right_leg" && countRightLeg == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countRightLeg++;
-                }
-                if ( child.name == "Right_knee" && countLeftKnee == 0) {
-                    // child.scale.x -= index;
-                    // child.scale.z -= index;
-                    //console.log(child.scale.x);
-                    countRightKnee++;
-                }
-        }
-    })
-
+    changeScale(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index)
 }
 
 document.getElementById("a8").oninput = function changeShank(){
     let index = calculateTransformation(8);
+    changeScale(["Left_knee", "Right_knee"], [], index)
+}
 
-    let countRightKnee = 0;
-    let countLeftKnee = 0;
-
+/* Scale up and scale down the bones in the list */
+function changeScale(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
-
-                if ( child.name == "Left_knee" && countLeftKnee == 0) {
+                if ( scaleUpBones.includes(child.name)) {
                     child.scale.x += index;
                     child.scale.z += index;
-                    countLeftKnee++;
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
                 }
-                if ( child.name == "Right_knee" && countRightKnee == 0) {
-                    child.scale.x += index;
-                    child.scale.z += index;
-                    countRightKnee++;
+                if ( scaleDownBones.includes(child.name)) {
+                    child.scale.x -= index;
+                    child.scale.z -= index;
+                    child.position.z -= (index/15);
+                    let i = scaleDownBones.indexOf(child.name);
+                    scaleDownBones.splice(i, 1);
                 }
         }
     })
 }
-
 
 /* Get the information from the document and return index of actual scale*/
 function calculateTransformation(id){
