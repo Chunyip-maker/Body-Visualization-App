@@ -275,23 +275,27 @@ function setRangeById(id, min, max){
 
 document.getElementById("a1").oninput = function changeHeight(){
     let index = calculateTransformation(1, 0.2);
-    changeScale([], [], index);
+    changeScaleX(["Hips"], [], index);
+    changeScaleY(["Hips"], [], index);
+    changeScaleZ(["Hips"], [], index);
+
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
-    let index = calculateTransformation(2, 0.2);
-    changeScale([], [], index);
+    let index = calculateTransformation(2, 0.1);
+    changeScaleX(["Hips"], [], index);
+    changeScaleZ(["Hips"], [], index);
 }
 
 document.getElementById("a3").oninput = function changeChest(){
     let index = calculateTransformation(3, 0.2);
-    changeScaleZ(["Upper_Chest"], [], index);
+    changeScaleZ(["Upper_Chest"], ["Neck"], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
     let index = calculateTransformation(4, 0.2);
-    changeScaleX(["Spine"], ["Upper_Chest"], index);
-    changeScaleZ(["Spine"], ["Upper_Chest"], index);
+    changeScaleX(["Spine"], ["Chest"], index);
+    changeScaleZ(["Spine"], ["Chest"], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
@@ -300,7 +304,7 @@ document.getElementById("a5").oninput = function changeHip(){
 }
 
 document.getElementById("a6").oninput = function changeArm(){
-    let index = calculateTransformation(6, 0.3);
+    let index = calculateTransformation(6, 0.4);
     changeScaleX(["Left_arm", "Right_arm"], [], index);
     changeScaleZ(["Left_arm", "Right_arm"], [], index);
 }
@@ -329,10 +333,7 @@ function changeScaleX(scaleUpBones, scaleDownBones, index){
                     for(let j = 0; j < child.children.length; j++){
                         if(child.children[j].name.indexOf("J_Sec") == - 1 && scaleDownBones.includes(child.children[j].name)){
                             let test = 2 - index;
-                            console.log(child.children[j].scale.x);
                             child.children[j].scale.x += (test - child.children[j].scale.x);
-                            console.log(child.children[j].scale.x);
-                            console.log("---------------");
                         }
                     }
                 }
@@ -353,6 +354,26 @@ function changeScaleZ(scaleUpBones, scaleDownBones, index){
                        if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
                            let test = 2 - index;
                            child.children[j].scale.z += (test - child.children[j].scale.z);
+                       }
+                    }
+                }
+
+        }
+    })
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleY(scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.y += (index - child.scale.y);
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+                    for(let j = 0; j < child.children.length; j++){
+                       if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
+                           let test = 2 - index;
+                           child.children[j].scale.y += (test - child.children[j].scale.y);
                        }
                     }
                 }
@@ -442,8 +463,8 @@ function getScaleIndex(min, max, value, range){
     return actualIndex;
 }
 
-/* chang texture called by init funtion */
-function TextureChange(targetTextureName, newTexturePath) {
+/* change texture called by init funtion */
+function textureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
 
@@ -461,7 +482,7 @@ function TextureChange(targetTextureName, newTexturePath) {
 function readInput(input){
     input = input.split(",");
     for (let i = 0; i < input.length; i+=2) {
-        TextureChange(input[i], input[i+1]);
-        console.log(input[i], input[i+1]);
+        textureChange(input[i], input[i+1]);
+        //console.log(input[i], input[i+1]);
     }
 }
