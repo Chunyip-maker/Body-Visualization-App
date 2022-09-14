@@ -202,7 +202,7 @@ def complete_step2():
         # basic_model = model.define_basic_model(int(age), gender)
 
         # insert data to database
-        model.add_a_basic_human_model(model_name, age, gender)
+        # model.add_a_basic_human_model(model_name, age, gender)
         basic_model = model.define_basic_model(int(age), gender)
         return render_template('step2.html', basic_model=basic_model)
     elif request.method == 'POST':
@@ -218,7 +218,7 @@ def complete_step2():
             basic_model = model.define_basic_model(int(age), gender)
             #
             # # insert data to database
-            # model.add_a_basic_human_model(model_name, age, gender)
+            model.add_a_basic_human_model(model_name, age, gender)
             # basic_model = model.define_basic_model(int(age), gender)
 
             hair_color = request.form.get('hair_colour')  # 头发颜色
