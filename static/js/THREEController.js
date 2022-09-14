@@ -16,6 +16,8 @@ let loadModel, tempModel, action;
 //test version for model under /static/model/test2/ folder only
 init("canvas", "Breathing Idle2.fbx");
 
+
+
 async function init(canvasID, modelName) {
 
     //canvas set up
@@ -125,8 +127,14 @@ async function init(canvasID, modelName) {
     readInput(top_dress);
     readInput(bottom_dress);
 
+
+
+
+
     //Set the range for different age group, default adult male
     selectGroup(3); //change this by checking the url of model
+
+
 
     //animation
     group.add(loadModel);
@@ -136,6 +144,18 @@ async function init(canvasID, modelName) {
     action.play();
     //end animation
 
+    //debug use, should be called after the init finished.
+    //all gui in this part will be remove later
+    //current gui for debug only
+    loadModel.traverse( child => {
+
+        if (child instanceof THREE.Mesh) {
+
+            child.material.transparent = true;
+            child.material.side = THREE.DoubleSide;
+            child.material.alphaTest = 0.5;
+        }
+    })
     animate();
 }
 
