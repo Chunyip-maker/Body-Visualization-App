@@ -124,6 +124,15 @@ body {
     background-color: white;
 }
 
+.comparison .left img{
+    width: 400px;
+    height: 600px;
+}
+.comparison .right img {
+    width: 400px;
+    height: 600px;
+}
+
 .comparison .right{
     float: right;
     width: 400px;
