@@ -117,6 +117,20 @@ async function init(canvasID, modelName) {
         fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
     ] );
 
+    //Read database store texture
+    var hair_color = document.getElementById("hair_color").innerText;
+    var skin_color = document.getElementById("skin_color").innerText;
+    var top_dress = document.getElementById("top_dress").innerText;
+    var bottom_dress = document.getElementById("bottom_dress").innerText;
+    readInput(hair_color);
+    readInput(skin_color);
+    readInput(top_dress);
+    readInput(bottom_dress);
+
+
+
+
+
     //Set the range for different age group, default adult male
     selectGroup(3); //change this by checking the url of model
 
@@ -426,4 +440,28 @@ function getScaleIndex(min, max, value, range){
     let percentageIndex = (value - average) / (max - min);
     let actualIndex = percentageIndex * (range) + 1;
     return actualIndex;
+}
+
+/* chang texture called by init funtion */
+function TextureChange(targetTextureName, newTexturePath) {
+    loadModel.traverse( child => {
+        if (child instanceof THREE.Mesh) {
+
+            if (child.name == targetTextureName) {
+
+                var newTexture = new THREE.TextureLoader().load(newTexturePath);
+                child.material.map = newTexture;
+                child.material.needsUpdate = true;
+
+            }
+        }
+    })
+}
+
+function readInput(input){
+    input = input.split(",");
+    for (let i = 0; i < input.length; i+=2) {
+        TextureChange(input[i], input[i+1]);
+        console.log(input[i], input[i+1]);
+    }
 }
