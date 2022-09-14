@@ -15,6 +15,8 @@
 
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="../static/css/step2.css">
+    <link href="../static/css/list-groups.css" rel="stylesheet"
+
     <title>Body Virtualisation APP - Step 2</title>
     <title>Step 2</title>
 
@@ -32,12 +34,11 @@
 </head>
 
 <body>
-
-
     <!-- Title -->
     <div class="title">
-        <h1> Customise your model! <h1>
+        <h1> Customise your model! {{ basic_model }}</h1>
     </div>
+
 
 
     <!-- Main Area -->
@@ -45,103 +46,123 @@
         <div id="canvas">
         </div>
 
+
+
+
         <div class="right">
+            <form class="next" action="/step2" method='POST'>
+
             <div class="hair_style">
                 <ul>
                     <li>
-                        <button class="img_button" id="testButton"
-                                name="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/old_male/model1/Old Male.vrm.textures/_12.png" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">hair style 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="hair_style" id="hair_style_1"
+                               value="" checked>
+                        <label class="list-group-item"
+                               for="hair_style_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">hair style 1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="hair_style_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">hair style 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="hair_style" id="hair_style_2"
+                               value="">
+                        <label class="list-group-item"
+                               for="hair_style_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair style 2</div>
+
+                        </label>
                     </li>
                 </ul>
             </div>
-
             <div class="hair_colour">
                 <ul>
                     <li>
-                        <button class="img_button" id="hair_colour_1"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">hair colour 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_1"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_15.png" checked>
+                        <label class="list-group-item"
+                               for="hair_colour_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">hair colour 1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="hair_colour_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">hair colour 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_2"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/option1/_15.png">
+                        <label class="list-group-item"
+                               for="hair_colour_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair colour 2</div>
+
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="hair_colour_3"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">hair colour 3</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_3"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/option2/_15.png">
+                        <label class="list-group-item"
+                               for="hair_colour_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair colour 3</div>
+
+                        </label>
                     </li>
                 </ul>
             </div>
-
             <div class="clothing_style">
                 <ul>
                     <li>
-                        <button class="img_button" id="clothing_style_1"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">clothing style 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="clothing_style" id="clothing_style_1"
+                               value="" checked>
+                        <label class="list-group-item"
+                               for="clothing_style_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">clothing style 1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="clothing_style_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">clothing style 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="clothing_style" id="clothing_style_2"
+                               value="">
+                        <label class="list-group-item"
+                               for="clothing_style_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">clothing style 2</div>
+
+                        </label>
                     </li>
+
                 </ul>
             </div>
 
             <div class="top">
                 <ul>
                     <li>
-                        <button class="img_button" id="top_1"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">top 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_1"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_14.png" checked>
+                        <label class="list-group-item"
+                               for="top_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">top 1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="top_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">top 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_2"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/option1/_14.png">
+                        <label class="list-group-item"
+                               for="top_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">top 2</div>
+
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="top_3"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">top 3</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_3"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/option2/_14.png">
+                        <label class="list-group-item"
+                               for="top_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">top 3</div>
+
+                        </label>
                     </li>
                 </ul>
             </div>
@@ -149,62 +170,72 @@
             <div class="bot">
                 <ul>
                     <li>
-                        <button class="img_button" id="bot_1"
-                                name="" 
-                                value="change" >
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">bot 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_1"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_12.png" checked>
+                        <label class="list-group-item"
+                               for="bot_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">bot 1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="bot_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">bot 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_2"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/option1/_12.png">
+                        <label class="list-group-item"
+                               for="bot_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">bot 2</div>
+
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="bot_3"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">bot 3</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_3"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/option2/_12.png">
+                        <label class="list-group-item"
+                               for="bot_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">bot 2</div>
+
+                        </label>
                     </li>
+
                 </ul>
             </div>
 
-            <div class="skin_colour">
+             <div class="skin_colour">
                 <ul>
                     <li>
-                        <button class="img_button" id="skin_colour_1"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">skin colour 1</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_1"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_10.png,N00_000_00_Face_00_SKIN_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_04.png" checked>
+                        <label class="list-group-item"
+                               for="skin_colour_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">skin_colour_1</div>
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="skin_colour_2"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">skin colour 2</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_2"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/option1/_10.png,N00_000_00_Face_00_SKIN_(Instance), /static/model/test2/texture_test/option1/_04.png">
+                        <label class="list-group-item"
+                               for="skin_colour_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">skin_colour_2</div>
+
+                        </label>
                     </li>
                     <li>
-                        <button class="img_button" id="skin_colour_3"
-                                name="" 
-                                value="change" > 
-                                <img src="../static/images/hair_style_1.png" class="img">
-                                <div class="bottom_text">skin colour 3</div>
-                        </button>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_3"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/option2/_10.png,N00_000_00_Face_00_SKIN_(Instance),  /static/model/test2/texture_test/option2/_04.png">
+                        <label class="list-group-item"
+                               for="skin_colour_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">skin_colour_3</div>
+
+                        </label>
                     </li>
                 </ul>
             </div>
-
-            <form class="next" action="/step2" method='POST'>
+{#            <form class="next" action="/step2" method='POST'>#}
                 <button>
                     Next Step
                 </button>

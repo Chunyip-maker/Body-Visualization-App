@@ -239,14 +239,20 @@ class SQLDatabase():
     #  Search Model Texture file path
     # -----------------------------------------------------------------------------
     def search_model_texture_file_path(self,model_name):
+
+        # sql_query = """
+        #                     SELECT file_path
+        #                     FROM  Textures  JOIN ModelAppearance
+        #                     WHERE model_name = '{model_name}'
+        #                 """
         sql_query = """
-                            SELECT file_path
-                            FROM  Textures  JOIN ModelAppearance 
-                            WHERE model_name = '{model_name}'
-                        """
+                                    SELECT hair_color,skin_color,top_dress,bottom_dress
+                                    FROM  ModelAppearance 
+                                    WHERE model_name = '{model_name}'
+                                """
         sql_query = sql_query.format(model_name=model_name)
         self.execute(sql_query)
-        return self.cur.fetchall()
+        return self.cur.fetchall()[0]
 
     # -----------------------------------------------------------------------------
     # Last two body measurement records

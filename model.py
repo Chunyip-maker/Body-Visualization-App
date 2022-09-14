@@ -60,18 +60,26 @@ class Model:
 
         return result
 
-    def search_basic_model_file_path(self,model_name):
+    def search_basic_model_file_path(self, model_name):
         return self.database.search_basic_model_file_path(model_name)
 
-    def search_model_texture_file_path(self,model_name):
+    def search_model_texture_file_path(self, model_name):
         return self.database.search_model_texture_file_path(model_name)
 
-    def search_last_two_body_measurement_records(self,model_name):
+    def search_last_two_body_measurement_records(self, model_name):
         return self.database.search_last_two_body_measurement_records(model_name)
 
+    # def split_mesh_name(self, texture_name):
+    #     tmp = texture_name.strip().split(',')
+    #     i = 1
+    #     result = []
+    #     while i < len(tmp):
+    #         result.append(tmp[i])
+    #         i += 2
+    #     return ','.join(result)
 
-# model = Model()
+model = Model()
 # print(str(datetime.datetime.now()).split('.')[0])
 # print(model.database.search_last_two_body_measurement_records('admin'))
 # print(model.database.search_basic_model_file_path('admin'))
-# print(model.database.search_model_texture_file_path('admin'))
+print(model.search_model_texture_file_path('admin'))
