@@ -13,7 +13,7 @@
 
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="../static/css/step3.css">
-    <title>Document</title>
+    <title>Body Virtualisation APP - Step 3</title>
 
     <script type="importmap">
         {
@@ -28,10 +28,10 @@
 
 <body>
     <h1> This is Step 3</h1>
-    <p id = "hair_color" style="display: none"  >{{ model_texture[0] }}</p>
-    <p id = "skin_color" style="display: none"  >{{ model_texture[1] }}</p>
-    <p id = "top_dress" style="display: none"  >{{ model_texture[2] }}</p>
-    <p id = "bottom_dress" style="display: none"  >{{ model_texture[3] }}</p>
+    <p id="hair_color" style="display: none">{{ model_texture[0] }}</p>
+    <p id="skin_color" style="display: none">{{ model_texture[1] }}</p>
+    <p id="top_dress" style="display: none">{{ model_texture[2] }}</p>
+    <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
 
 
     <!-- Main Area -->
@@ -45,8 +45,6 @@
             <div class="slider-box">
                 <div class="slider">
                     <input type="range" name="height" min="120" max="210" value="165" class="slider" id="a1">
-
-
                 </div>
                 <span id="b1"></span>
                 <span>height</span>
@@ -126,6 +124,28 @@
             </div>
 
 
+            <script>
+                const rangeInputs = document.querySelectorAll('input[type="range"]')
+                const numberInput = document.querySelector('input[type="number"]')
+
+                function handleInputChange(e) {
+                    let target = e.target
+                    if (e.target.type !== 'range') {
+                        target = document.getElementById('range')
+                    }
+                    const min = target.min
+                    const max = target.max
+                    const val = target.value
+
+                    target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+                }
+
+                rangeInputs.forEach(input => {
+                    input.addEventListener('input', handleInputChange)
+                })
+
+                numberInput.addEventListener('input', handleInputChange)
+            </script>
 
         </div>
 

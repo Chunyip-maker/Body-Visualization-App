@@ -30,7 +30,7 @@ body {
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    width: 1100px;
+    width: 1200px;
     height: 500px;
 }
 .main .left{
@@ -38,7 +38,7 @@ body {
     width: 500px;
     height: 600px;
     border-width: 1px;
-    background-color: blue;
+    background-color: white;
 }
 
 .main #canvas{
@@ -46,7 +46,7 @@ body {
     width: 500px;
     height: 600px;
     border-width: 1px;
-    background-color: blue;
+    background-color: white;
 }
 
 
@@ -59,16 +59,19 @@ body {
 
 .main .right {
     float: left;
-    width: 500px;
-    height: 600px;
+    width: 550px;
+    margin-top: 50px;
+    height: 500px;
     margin-left: 50px;
     background-color: pink;
+    border-radius: 20px;
 }
 
 
 
 span {
     margin-left: 50px;
+    font-size: 20px;
 }
 
 
@@ -78,8 +81,9 @@ span {
 
 .slider {
     float: left;
+    margin-top: 10px;
     width: 300px;
-    height: 60px;
+    height: 40x;
     padding: 0px;
 }
 
@@ -90,12 +94,90 @@ span {
 }
 
 
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    background-image: linear-gradient(greenyellow, #0044ff);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+  }
+  
+  /* Input Thumb */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: rgb(92, 128, 98);
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: darkgreen;
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+  }
+  
+  input[type="range"]::-ms-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #ff4500;
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background: darkgreen;
+  }
+  
+  input[type="range"]::-moz-range-thumb:hover {
+    background: darkgreen;
+  }
+  
+  input[type="range"]::-ms-thumb:hover {
+    background: darkgreen;
+  }
+  
+  /* Input Track */
+  input[type=range]::-webkit-slider-runnable-track  {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+  
+  input[type=range]::-moz-range-track {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+  
+  input[type="range"]::-ms-track {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
 
 
 
 .next button{
     float: right;
-    margin-top: 30px;
+    margin-top: 150px;
     
     width: 200px;
     height: 100px;
@@ -109,7 +191,8 @@ span {
 
 .logout button{
     float: right;
-    margin-top: 30px;
+    margin-top: 150px;
+    margin-right: 50px;
 
 
     width: 200px;
