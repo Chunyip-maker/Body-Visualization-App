@@ -118,66 +118,8 @@ async function init(canvasID, modelName) {
     ] );
 
     //Set the range for different age group, default adult male
-    //{Height, Weight, Chest, Waist, Hip, Arm girth, Thigh, Shank}
-    //Should be in range of {50, 60, 20, 20, 20, 15, 18, 18}
-    //min & max
-    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 40, 58, 22, 40);
-    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 37, 45, 20, 38);
-    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 48, 66, 30, 48);
-    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 45, 63, 28, 46);
-    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
-    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
-    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
-    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+    selectGroup(3); //change this by checking the url of model
 
-    function selectGroup(agegroup){
-        switch (agegroup){
-            case 1:
-                setRange(teenagerMale);
-                break;
-            case 2:
-                setRange(teenagerFemale);
-                break;
-            case 3:
-                setRange(adultMale);
-                break;
-            case 4:
-                setRange(adultFemale);
-                break;
-            case 5:
-                setRange(middleMale);
-                break;
-            case 6:
-                setRange(middleFemale);
-                break;
-            case 7:
-                setRange(oldMale);
-                break;
-            case 8:
-                setRange(oldFemale);
-                break;
-        }
-    }
-
-    function setRange(rangeList){
-        setRangeById(1, rangeList[0], rangeList[1]);
-        setRangeById(2, rangeList[2], rangeList[3]);
-        setRangeById(3, rangeList[4], rangeList[5]);
-        setRangeById(4, rangeList[6], rangeList[7]);
-        setRangeById(5, rangeList[8], rangeList[9]);
-        setRangeById(6, rangeList[10], rangeList[11]);
-        setRangeById(7, rangeList[12], rangeList[13]);
-        setRangeById(8, rangeList[14], rangeList[15]);
-    }
-
-    function setRangeById(id, min, max){
-        document.getElementById("a" + id).min = min;
-        document.getElementById("a" + id).max = max;
-        document.getElementById("a" + id).value = (max + min)/2;
-        document.getElementById("b" + id).innerText = (max + min)/2;
-    }
-
-    selectGroup(3);
 
 
     //animation
@@ -203,8 +145,8 @@ async function init(canvasID, modelName) {
                     boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
                     boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
                     boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
-                    // console.log(child.name);
-                    // console.log(child);
+                    console.log(child.name);
+                    console.log(child);
                 }
 
                 boneMenu.push(child.name);
@@ -235,91 +177,13 @@ async function init(canvasID, modelName) {
                     var newTexture = new THREE.TextureLoader().load(val);
                     child.material.map = newTexture;
                     child.material.needsUpdate = true;
-                    console.log(child);
+                    //console.log(child);
                 });
 
             }
-
-
-            if (child.name == "N00_000_Hair_00_HAIR_(Instance)") {
-
-
-                let texture1 =  url + "sample.vrm.textures/_15.png";
-                let texture2 =  url + "option1/_15.png";
-                let texture3 =  url + "option2/_15.png";
-                const hair = [texture1,texture2,texture3];
-
-                gui.add({ hair: hair[0]}, "hair")
-                .options(hair)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    console.log(child);
-                });
-
-            }
-
-            if (child.name == "N00_000_00_Body_00_SKIN_(Instance)") {
-
-
-                let texture1 =  url + "sample.vrm.textures/_10.png";
-                let texture2 =  url + "option1/_10.png";
-                let texture3 =  url + "option2/_10.png";
-                const body = [texture1,texture2,texture3];
-
-                gui.add({ body: body[0]}, "body")
-                .options(body)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    console.log(child);
-                });
-
-            }
-
-            if (child.name == "N00_000_00_Face_00_SKIN_(Instance)") {
-
-
-                let texture1 =  url + "sample.vrm.textures/_04.png";
-                let texture2 =  url + "option1/_04.png";
-                let texture3 =  url + "option2/_04.png";
-                const face = [texture1,texture2,texture3];
-
-                gui.add({ face: face[0]}, "face")
-                .options(face)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    console.log(child);
-                });
-
-            }
-
-            if (child.name == "N00_004_01_Tops_01_CLOTH_(Instance)") {
-
-
-                let texture1 =  url + "sample.vrm.textures/_14.png";
-                let texture2 =  url + "option1/_14.png";
-                let texture3 =  url + "option2/_14.png";
-                const cloth = [texture1,texture2,texture3];
-
-                gui.add({ cloth: cloth[0]}, "cloth")
-                .options(cloth)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    console.log(child);
-                });
-
-            }
-
         }
-        })
-        animate();
+    })
+    animate();
 }
 
 
@@ -331,79 +195,165 @@ function animate() {
     stats.update();
 }
 
+//Functions of selecting range
+//{Height, Weight, Chest, Waist, Hip, Arm girth, Thigh, Shank}
+//Should be in range of {50, 60, 20, 20, 20, 15, 18, 18}
+//min & max
+function selectGroup(agegroup){
+
+    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 40, 58, 22, 40);
+    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 37, 45, 20, 38);
+    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 48, 66, 30, 48);
+    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 45, 63, 28, 46);
+    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
+    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
+    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+    switch (agegroup){
+        case 1:
+            setRange(teenagerMale);
+            break;
+        case 2:
+            setRange(teenagerFemale);
+            break;
+        case 3:
+            setRange(adultMale);
+            break;
+        case 4:
+            setRange(adultFemale);
+            break;
+        case 5:
+            setRange(middleMale);
+            break;
+        case 6:
+            setRange(middleFemale);
+            break;
+        case 7:
+            setRange(oldMale);
+            break;
+        case 8:
+            setRange(oldFemale);
+            break;
+   }
+}
+
+function setRange(rangeList){
+    setRangeById(1, rangeList[0], rangeList[1]);
+    setRangeById(2, rangeList[2], rangeList[3]);
+    setRangeById(3, rangeList[4], rangeList[5]);
+    setRangeById(4, rangeList[6], rangeList[7]);
+    setRangeById(5, rangeList[8], rangeList[9]);
+    setRangeById(6, rangeList[10], rangeList[11]);
+    setRangeById(7, rangeList[12], rangeList[13]);
+    setRangeById(8, rangeList[14], rangeList[15]);
+}
+
+function setRangeById(id, min, max){
+    document.getElementById("a" + id).min = min;
+    document.getElementById("a" + id).max = max;
+    document.getElementById("a" + id).value = (max + min)/2;
+    document.getElementById("b" + id).innerText = (max + min)/2;
+}
+
+
 
 //API of modify bones
 
 document.getElementById("a1").oninput = function changeHeight(){
-    let index = calculateTransformation(1);
+    let index = calculateTransformation(1, 0.2);
     changeScale([], [], index);
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
-    let index = calculateTransformation(2);
+    let index = calculateTransformation(2, 0.2);
     changeScale([], [], index);
 }
 
 document.getElementById("a3").oninput = function changeChest(){
-    let index = calculateTransformation(3);
-    changeScale([], [], index);
+    let index = calculateTransformation(3, 0.2);
+    changeScaleZ(["Upper_Chest"], [], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
-    let index = calculateTransformation(4);
-    changeScale([], [], index);
+    let index = calculateTransformation(4, 0.2);
+    changeScaleX(["Spine"], ["Upper_Chest"], index);
+    changeScaleZ(["Spine"], ["Upper_Chest"], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
-    let index = calculateTransformation(5);
-    changeScale([], [], index);
+    let index = calculateTransformation(5, 0.2);
+    changeScaleZ(["Hips"], ["Left_leg", "Right_leg", "Spine"], index);
 }
 
 document.getElementById("a6").oninput = function changeArm(){
-    let index = calculateTransformation(6);
-    changeScale([], [], index);
+    let index = calculateTransformation(6, 0.3);
+    changeScaleX(["Left_arm", "Right_arm"], [], index);
+    changeScaleZ(["Left_arm", "Right_arm"], [], index);
 }
 
 document.getElementById("a7").oninput = function changeThigh(){
-    let index = calculateTransformation(7);
-    changeScale(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index)
+    let index = calculateTransformation(7, 0.3);
+    changeScaleX(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
+    changeScaleZ(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
 }
 
 document.getElementById("a8").oninput = function changeShank(){
-    let index = calculateTransformation(8);
-    changeScale(["Left_knee", "Right_knee"], [], index)
+    let index = calculateTransformation(8, 0.3);
+    changeScaleX(["Left_knee", "Right_knee"], [], index);
+    changeScaleZ(["Left_knee", "Right_knee"], [], index);
 }
 
 /* Scale up and scale down the bones in the list */
-function changeScale(scaleUpBones, scaleDownBones, index){
+function changeScaleX(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
                 if ( scaleUpBones.includes(child.name)) {
-                    child.scale.x += index;
-                    child.scale.z += index;
+                    child.scale.x += (index - child.scale.x);
                     let i = scaleUpBones.indexOf(child.name);
                     scaleUpBones.splice(i, 1);
+
+                    for(let j = 0; j < child.children.length; j++){
+                        if(child.children[j].name.indexOf("J_Sec") == - 1 && scaleDownBones.includes(child.children[j].name)){
+                            let test = 2 - index;
+                            console.log(child.children[j].scale.x);
+                            child.children[j].scale.x += (test - child.children[j].scale.x);
+                            console.log(child.children[j].scale.x);
+                            console.log("---------------");
+                        }
+                    }
                 }
-                if ( scaleDownBones.includes(child.name)) {
-                    child.scale.x -= index;
-                    child.scale.z -= index;
-                    child.position.z -= (index/15);
-                    let i = scaleDownBones.indexOf(child.name);
-                    scaleDownBones.splice(i, 1);
+
+        }
+    })
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleZ(scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.z += (index - child.scale.z);
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+                    for(let j = 0; j < child.children.length; j++){
+                       if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
+                           let test = 2 - index;
+                           child.children[j].scale.z += (test - child.children[j].scale.z);
+                       }
+                    }
                 }
+
         }
     })
 }
 
 /* Get the information from the document and return index of actual scale*/
-function calculateTransformation(id){
+function calculateTransformation(id, range){
     let value = document.getElementById("a" + id).value;
     document.getElementById("b"  + id).innerText = value;
-    let min = document.getElementById("a"  + id).min;
-    let max = document.getElementById("a"  + id).max;
-    let variance = value - getHistoryValue(id);
-    let index = getScaleIndex(min, max, variance);
-    setHistoryValue(id, value);
+    let min = parseInt(document.getElementById("a"  + id).min);
+    let max = parseInt(document.getElementById("a"  + id).max);
+    let index = getScaleIndex(min, max, value, range);
     return index;
 }
 
@@ -470,9 +420,10 @@ function setHistoryValue(id, value){
 }
 
 /* Calculate the actual scale index to transform the model*/
-function getScaleIndex(min, max, value){
-    //range = 0.9 - 1.1, index = scale number
-    let percentage = value / (max - min);
-    let actualIndex = percentage * (0.2);
+function getScaleIndex(min, max, value, range){
+    //Ex: range = [0.85, 1.15] = 0.3
+    let average = (min + max) / 2;
+    let percentageIndex = (value - average) / (max - min);
+    let actualIndex = percentageIndex * (range) + 1;
     return actualIndex;
 }
