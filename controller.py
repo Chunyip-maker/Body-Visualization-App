@@ -18,9 +18,6 @@ import os
 
 app = flask.Flask(__name__)
 
-# session = {}  # Session information (logged in state)
-# human_model_details = {}  # Human model details kept for us, 比如model的name
-
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SERVER_NAME'] = "127.0.0.1:5000"
 model = Model()
@@ -43,9 +40,6 @@ def index():
         return redirect(url_for('login_page'))
 
     # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
-    # return render_template('step3.html',
-    #                        session=session,
-    #                        human_model_details=human_model_details)
     return redirect(url_for('complete_step3'))
 
 
@@ -154,7 +148,6 @@ def logout():
     """
     if 'logged_in' in session:
         session.pop('logged_in')
-    # session['logged_in'] = False
     return redirect(url_for('index'))
 
 
@@ -203,7 +196,7 @@ def complete_step2():
 
         # insert data to database
         model.add_a_basic_human_model(model_name, age, gender)
-        basic_model = model.define_basic_model(int(age), gender)
+        basic_model = model.define_basic_model(age, gender)
         return render_template('step2.html', basic_model=basic_model)
     elif request.method == 'POST':
         # 如果未登录 -- 未完成注册系统都不识别为登录成功
@@ -215,8 +208,7 @@ def complete_step2():
             # # define basic model
             age = request.cookies.get('age')
             gender = request.cookies.get('gender')
-            basic_model = model.define_basic_model(int(age), gender)
-            #
+            basic_model = model.define_basic_model(age, gender)
             # # insert data to database
             # model.add_a_basic_human_model(model_name, age, gender)
             # basic_model = model.define_basic_model(int(age), gender)
@@ -245,13 +237,15 @@ def complete_step2():
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
     # 如果未登录
+    # print("~"*20+session['logged_in']+"~"*20)
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login_page'))
 
     # flash("welcome " + human_model_details['model_name'], 'success')
     if request.method == 'GET':
+        # print("~"*45)
         model_name = request.cookies.get('model_name')
-        print(model_name)
+        # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
         return render_template('step3.html', model_texture=model_texture)
     elif request.method == 'POST':
@@ -276,7 +270,7 @@ def complete_step3():
         return redirect(url_for('complete_step4'))
 
 
-@app.route('/step4', methods=['GET'])
+@app.route('/step4', methods=['GET','POST'])
 def complete_step4():
     """ Generate a health report """
     # 如果未登录
