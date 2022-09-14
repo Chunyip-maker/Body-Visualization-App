@@ -61,10 +61,13 @@ body {
     float: left;
     width: 550px;
     margin-top: 50px;
+    padding-left: 50px;
     height: 500px;
     margin-left: 50px;
-    background-color: pink;
+    /* background-color: pink; */
     border-radius: 20px;
+    border-style: solid;
+    border-width: 4px;
 }
 
 
@@ -82,7 +85,7 @@ span {
 .slider {
     float: left;
     margin-top: 10px;
-    width: 300px;
+    width: 250px;
     height: 40x;
     padding: 0px;
 }
@@ -99,8 +102,8 @@ input[type="range"] {
     width: 200px;
     height: 20px;
     background: rgba(255, 255, 255, 0.6);
-    border-radius: 5px;
-    background-image: linear-gradient(greenyellow, #0044ff);
+    border-radius: 6px;
+    background-image: linear-gradient(rgb(211, 230, 106), #2935da);
     background-size: 50% 100%;
     background-repeat: no-repeat;
   }
@@ -108,10 +111,10 @@ input[type="range"] {
   /* Input Thumb */
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 21px;
+    width: 21px;
     border-radius: 50%;
-    background: rgb(92, 128, 98);
+    background: rgb(157, 192, 163);
     cursor: ew-resize;
     box-shadow: 0 0 2px 0 #555;
     transition: background .3s ease-in-out;
@@ -119,10 +122,10 @@ input[type="range"] {
   
   input[type="range"]::-moz-range-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 21px;
+    width: 21px;
     border-radius: 50%;
-    background: darkgreen;
+    background-image: linear-gradient(rgb(211, 230, 106), #3553a7);
     cursor: ew-resize;
     box-shadow: 0 0 2px 0 #555;
     transition: background .3s ease-in-out;
@@ -130,25 +133,25 @@ input[type="range"] {
   
   input[type="range"]::-ms-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 21px;
+    width: 21px;
     border-radius: 50%;
-    background: #ff4500;
+    background: rgb(0, 100, 92);
     cursor: ew-resize;
     box-shadow: 0 0 2px 0 #555;
     transition: background .3s ease-in-out;
   }
   
   input[type="range"]::-webkit-slider-thumb:hover {
-    background: darkgreen;
+    background: rgb(0, 100, 92);
   }
   
   input[type="range"]::-moz-range-thumb:hover {
-    background: darkgreen;
+    background: rgb(0, 100, 92);
   }
   
   input[type="range"]::-ms-thumb:hover {
-    background: darkgreen;
+    background: rgb(0, 100, 92);
   }
   
   /* Input Track */
