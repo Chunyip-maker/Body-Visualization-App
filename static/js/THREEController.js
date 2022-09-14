@@ -16,8 +16,6 @@ let loadModel, tempModel, action;
 //test version for model under /static/model/test2/ folder only
 init("canvas", "Breathing Idle2.fbx");
 
-
-
 async function init(canvasID, modelName) {
 
     //canvas set up
@@ -127,14 +125,8 @@ async function init(canvasID, modelName) {
     readInput(top_dress);
     readInput(bottom_dress);
 
-
-
-
-
     //Set the range for different age group, default adult male
     selectGroup(3); //change this by checking the url of model
-
-
 
     //animation
     group.add(loadModel);
@@ -144,59 +136,6 @@ async function init(canvasID, modelName) {
     action.play();
     //end animation
 
-    //debug use, should be called after the init finished.
-    //all gui in this part will be remove later
-    //current gui for debug only
-    loadModel.traverse( child => {
-
-        if (child.type == "Bone") {
-                
-                if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
-                    let boneFolder = gui.addFolder(child.name);
-                    boneFolder.add(child.scale, 'x', 0.9, 1.1).name("Scale" + " X");
-                    boneFolder.add(child.scale, 'y',0.9, 1.1).name("Scale" + " Y");
-                    boneFolder.add(child.scale, 'z',0.9, 1.1).name("Scale" + " Z");
-                    boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
-                    boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
-                    boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
-                    console.log(child.name);
-                    console.log(child);
-                }
-
-                boneMenu.push(child.name);
-            }
-
-        if (child instanceof THREE.Mesh) {
-
-
-            child.material.transparent = true;
-            child.material.side = THREE.DoubleSide;
-            child.material.alphaTest = 0.5;
-            // console.log(child);
-            // console.log(child.name);
-            // console.log("----------");
-
-            let url = "/static/model/test2/texture_test/";
-
-            if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
-
-                let texture1 =  url + "sample.vrm.textures/_12.png";
-                let texture2 =  url + "option1/_12.png";
-                let texture3 =  url + "option2/_12.png";
-                const bottom = [texture1,texture2,texture3];
-
-                gui.add({ bottom: bottom[0]}, "bottom")
-                .options(bottom)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    //console.log(child);
-                });
-
-            }
-        }
-    })
     animate();
 }
 

@@ -34,7 +34,7 @@ async function init(canvasID, modelName) {
     camera.position.set(1.66,2.05,3.61);
     //camera.rotation.set(-0.34, 0.51, 0.17);
     camera.lookAt(0,1,0);
-    console.log(camera);
+    //console.log(camera);
 
 
     //scene set up, background color debug use only
@@ -108,7 +108,7 @@ async function init(canvasID, modelName) {
 
     //animation
     group.add(loadModel);
-    console.log(loadModel.children);
+    //console.log(loadModel.children);
     mixer = new THREE.AnimationMixer( loadModel );
     action = mixer.clipAction( loadModel.animations[ 0 ] );
     action.play();
@@ -119,7 +119,7 @@ async function init(canvasID, modelName) {
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            console.log(child.name);
+            //console.log(child.name);
     
         }
     })
@@ -160,7 +160,7 @@ function readInput(input){
 //    TextureChange(input[0], input[1]);
     for (let i = 0; i < input.length; i+=2) {
         TextureChange(input[i], input[i+1]);
-        console.log(input[i], input[i+1]);
+        //console.log(input[i], input[i+1]);
     }
 }
 
