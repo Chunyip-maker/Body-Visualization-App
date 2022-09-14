@@ -4,7 +4,7 @@ import { OrbitControls } from '/static/js//OrbitControls.js';
 import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
-import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+//import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
 
 //init
 
@@ -28,7 +28,7 @@ async function init(canvasID, modelName) {
 
 
     //GUI debug only, will remove later
-    let gui = new dat.GUI();
+    //let gui = new dat.GUI();
     console.log("init run");
     const background_1 = {
     "color": 0xffffff
@@ -103,7 +103,7 @@ async function init(canvasID, modelName) {
 
 
     //background color menu, debug only
-    let displayFolder = gui.addFolder("Display");
+    //let displayFolder = gui.addFolder("Display");
     const material = new MeshPhongMaterial();
     displayFolder.addColor(background_1, "color").onChange((color) => {
         scene.background = new THREE.Color(background_1.color);
