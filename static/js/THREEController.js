@@ -4,7 +4,8 @@ import { OrbitControls } from '/static/js//OrbitControls.js';
 import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
-import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+
+//import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
 
 //init
 
@@ -28,7 +29,7 @@ async function init(canvasID, modelName) {
 
 
     //GUI debug only, will remove later
-    let gui = new dat.GUI();
+    //let gui = new dat.GUI();
     console.log("init run");
     const background_1 = {
     "color": 0xffffff
@@ -103,11 +104,11 @@ async function init(canvasID, modelName) {
 
 
     //background color menu, debug only
-    let displayFolder = gui.addFolder("Display");
-    const material = new MeshPhongMaterial();
-    displayFolder.addColor(background_1, "color").onChange((color) => {
-        scene.background = new THREE.Color(background_1.color);
-    });
+    //let displayFolder = gui.addFolder("Display");
+    // const material = new MeshPhongMaterial();
+    // displayFolder.addColor(background_1, "color").onChange((color) => {
+    //     scene.background = new THREE.Color(background_1.color);
+    // });
 
 
     //Async loader!
@@ -149,52 +150,11 @@ async function init(canvasID, modelName) {
     //current gui for debug only
     loadModel.traverse( child => {
 
-        if (child.type == "Bone") {
-                
-                if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
-                    let boneFolder = gui.addFolder(child.name);
-                    boneFolder.add(child.scale, 'x', 0.9, 1.1).name("Scale" + " X");
-                    boneFolder.add(child.scale, 'y',0.9, 1.1).name("Scale" + " Y");
-                    boneFolder.add(child.scale, 'z',0.9, 1.1).name("Scale" + " Z");
-                    boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
-                    boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
-                    boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
-                    console.log(child.name);
-                    console.log(child);
-                }
-
-                boneMenu.push(child.name);
-            }
-
         if (child instanceof THREE.Mesh) {
-
 
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            // console.log(child);
-            // console.log(child.name);
-            // console.log("----------");
-
-            let url = "/static/model/test2/texture_test/";
-
-            if (child.name == "N00_001_01_Bottoms_01_CLOTH_(Instance)") {
-
-                let texture1 =  url + "sample.vrm.textures/_12.png";
-                let texture2 =  url + "option1/_12.png";
-                let texture3 =  url + "option2/_12.png";
-                const bottom = [texture1,texture2,texture3];
-
-                gui.add({ bottom: bottom[0]}, "bottom")
-                .options(bottom)
-                .onChange((val) => {
-                    var newTexture = new THREE.TextureLoader().load(val);
-                    child.material.map = newTexture;
-                    child.material.needsUpdate = true;
-                    //console.log(child);
-                });
-
-            }
         }
     })
     animate();
@@ -275,23 +235,27 @@ function setRangeById(id, min, max){
 
 document.getElementById("a1").oninput = function changeHeight(){
     let index = calculateTransformation(1, 0.2);
-    changeScale([], [], index);
+    changeScaleX(["Hips"], [], index);
+    changeScaleY(["Hips"], [], index);
+    changeScaleZ(["Hips"], [], index);
+
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
-    let index = calculateTransformation(2, 0.2);
-    changeScale([], [], index);
+    let index = calculateTransformation(2, 0.1);
+    changeScaleX(["Hips"], [], index);
+    changeScaleZ(["Hips"], [], index);
 }
 
 document.getElementById("a3").oninput = function changeChest(){
     let index = calculateTransformation(3, 0.2);
-    changeScaleZ(["Upper_Chest"], [], index);
+    changeScaleZ(["Upper_Chest"], ["Neck"], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
     let index = calculateTransformation(4, 0.2);
-    changeScaleX(["Spine"], ["Upper_Chest"], index);
-    changeScaleZ(["Spine"], ["Upper_Chest"], index);
+    changeScaleX(["Spine"], ["Chest"], index);
+    changeScaleZ(["Spine"], ["Chest"], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
@@ -300,7 +264,7 @@ document.getElementById("a5").oninput = function changeHip(){
 }
 
 document.getElementById("a6").oninput = function changeArm(){
-    let index = calculateTransformation(6, 0.3);
+    let index = calculateTransformation(6, 0.4);
     changeScaleX(["Left_arm", "Right_arm"], [], index);
     changeScaleZ(["Left_arm", "Right_arm"], [], index);
 }
@@ -329,10 +293,7 @@ function changeScaleX(scaleUpBones, scaleDownBones, index){
                     for(let j = 0; j < child.children.length; j++){
                         if(child.children[j].name.indexOf("J_Sec") == - 1 && scaleDownBones.includes(child.children[j].name)){
                             let test = 2 - index;
-                            console.log(child.children[j].scale.x);
                             child.children[j].scale.x += (test - child.children[j].scale.x);
-                            console.log(child.children[j].scale.x);
-                            console.log("---------------");
                         }
                     }
                 }
@@ -353,6 +314,26 @@ function changeScaleZ(scaleUpBones, scaleDownBones, index){
                        if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
                            let test = 2 - index;
                            child.children[j].scale.z += (test - child.children[j].scale.z);
+                       }
+                    }
+                }
+
+        }
+    })
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleY(scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.y += (index - child.scale.y);
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+                    for(let j = 0; j < child.children.length; j++){
+                       if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
+                           let test = 2 - index;
+                           child.children[j].scale.y += (test - child.children[j].scale.y);
                        }
                     }
                 }
@@ -442,8 +423,8 @@ function getScaleIndex(min, max, value, range){
     return actualIndex;
 }
 
-/* chang texture called by init funtion */
-function TextureChange(targetTextureName, newTexturePath) {
+/* change texture called by init funtion */
+function textureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
 
@@ -461,7 +442,7 @@ function TextureChange(targetTextureName, newTexturePath) {
 function readInput(input){
     input = input.split(",");
     for (let i = 0; i < input.length; i+=2) {
-        TextureChange(input[i], input[i+1]);
-        console.log(input[i], input[i+1]);
+        textureChange(input[i], input[i+1]);
+        //console.log(input[i], input[i+1]);
     }
 }

@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url("../images/background1.png");
-    background-size:cover
+    background-size:cover;
 }
 
 h1 {
@@ -19,7 +19,7 @@ h1 {
     margin-bottom: 30px;
     text-transform: uppercase;
     color: #f6f6f6;
-    font-size: 65px;
+    font-size: 46px;
     letter-spacing: 3px;
 }
 
@@ -35,7 +35,8 @@ p {
 
 .form-box {
     position: center;
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: rgb(185, 148, 154);
     width: 900px;
     height: 600px;
     border-radius: 12px;

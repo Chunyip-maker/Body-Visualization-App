@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { FBXLoader } from '/static/js/FBXLoader.js';
+import { GLTFLoader } from '/static/js/GLTFLoader.js';
 import { OrbitControls } from '/static/js//OrbitControls.js';
 import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
@@ -16,77 +17,70 @@ let loadModel, tempModel, action;
 //test version for model under /static/model/test2/ folder only
 init("canvas", "Breathing Idle2.fbx");
 
+function sceneInit(canvasID) {
+        //canvas set up
+        canvas = document.getElementById(canvasID);
+        //document.body.appendChild(canvas);
+        canvasWidth = document.getElementById(canvasID).clientWidth;
+        canvasHeight = document.getElementById(canvasID).clientHeight;
 
+        clock = new THREE.Clock();
+
+        //set up camera
+        camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
+        camera.position.set(1.66,2.05,3.61);
+        //camera.rotation.set(-0.34, 0.51, 0.17);
+        camera.lookAt(0,1,0);
+        //console.log(camera);
+
+        //scene set up, background color debug use only
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+        
+        //set up render
+        renderer = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
+        renderer.setSize( canvasWidth , canvasHeight );
+        document.body.appendChild( renderer.domElement );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.shadowMap.enabled = true;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1; 
+        canvas.appendChild(renderer.domElement);
+
+        //light
+        const light = new THREE.AmbientLight(0xffffff,0.8);
+        light.position.set(10.0, 10.0, 10.0).normalize();
+        scene.add(light);
+        var light2 = new THREE.DirectionalLight(0xffffff,1);
+        light2.position.set(0, 3, 2);
+        light2.castShadow = true;
+        scene.add(light2);
+        var light3 = new THREE.DirectionalLight(0xffffff,1);
+        light3.position.set(0, 0, 2);
+        light3.castShadow = true;
+        scene.add(light3);
+
+
+        //grid
+        const gridHelper = new THREE.GridHelper(10, 10);
+        gridHelper.receiveShadow = true;
+        scene.add(gridHelper);
+
+        //set up stats
+        stats = new Stats();
+        document.body.appendChild( stats.dom );
+
+        //set up controller(enable user to control camera)
+        controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.target.set(0, 1, 0)
+        controls.update()
+}
 
 async function init(canvasID, modelName) {
 
-    //canvas set up
-    canvas = document.getElementById(canvasID);
-    //document.body.appendChild(canvas);
-    canvasWidth = document.getElementById(canvasID).clientWidth;
-    canvasHeight = document.getElementById(canvasID).clientHeight;
-
-    
-    clock = new THREE.Clock();
-
-    //set up camera
-    camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
-    camera.position.set(1.66,2.05,3.61);
-    //camera.rotation.set(-0.34, 0.51, 0.17);
-    camera.lookAt(0,1,0);
-    console.log(camera);
-
-
-    //scene set up, background color debug use only
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
-    
-    //set up render
-    renderer = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
-    renderer.setSize( canvasWidth , canvasHeight );
-    document.body.appendChild( renderer.domElement );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.shadowMap.enabled = true;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1; 
-    canvas.appendChild(renderer.domElement);
-
-
-
-    //light
-    const light = new THREE.AmbientLight(0xffffff,0.8);
-    light.position.set(10.0, 10.0, 10.0).normalize();
-    scene.add(light);
-    var light2 = new THREE.DirectionalLight(0xffffff,1);
-    light2.position.set(0, 3, 2);
-    light2.castShadow = true;
-    scene.add(light2);
-    var light3 = new THREE.DirectionalLight(0xffffff,1);
-    light3.position.set(0, 0, 2);
-    light3.castShadow = true;
-    scene.add(light3);
-
-
-    //grid
-    const gridHelper = new THREE.GridHelper(10, 10);
-    gridHelper.receiveShadow = true;
-    scene.add(gridHelper);
-
-
-    //set up stats
-    stats = new Stats();
-    document.body.appendChild( stats.dom );
-
-    //set up controller(enable user to control camera)
-    controls = new OrbitControls(camera, renderer.domElement)
-    controls.enableDamping = true
-    controls.target.set(0, 1, 0)
-    controls.update()
-
-
-
-    group = new THREE.Group();
-    scene.add(group);
+    // group = new THREE.Group();
+    sceneInit(canvasID);
 
     //Async loader!
     const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
@@ -104,28 +98,27 @@ async function init(canvasID, modelName) {
     var input = document.getElementById("skin_colour_1").value;
     readInput(input);
 
-
-
-    //animation
-    group.add(loadModel);
-    console.log(loadModel.children);
-    mixer = new THREE.AnimationMixer( loadModel );
-    action = mixer.clipAction( loadModel.animations[ 0 ] );
-    action.play();
-    //end animation
     loadModel.traverse( child => {
 
         if (child instanceof THREE.Mesh) {
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            console.log(child.name);
+            //console.log(child.name);
     
         }
     })
+    scene.add(loadModel);
+    setFbxAnimation(loadModel);
+    
+}
+
+function setFbxAnimation(model) {
+    //animation
+    mixer = new THREE.AnimationMixer( model );
+    action = mixer.clipAction( model.animations[ 0 ] );
+    action.play();
     animate();
-
-
 }
 
 
@@ -135,7 +128,6 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
-
 }
 
 
@@ -160,30 +152,12 @@ function readInput(input){
 //    TextureChange(input[0], input[1]);
     for (let i = 0; i < input.length; i+=2) {
         TextureChange(input[i], input[i+1]);
-        console.log(input[i], input[i+1]);
+        //console.log(input[i], input[i+1]);
     }
 }
 
 
 //API of modify bones
-
-//let count = 0;
-//document.getElementById("testButton").onclick = function testButton(){
-//    //console.log("111");
-//    var input = document.getElementById("testButton").name;
-//    input = input.split(",");
-//    console.log(input[0], input[1]);
-//    if (count % 2 == 0) {
-//        TextureChange(input[0], input[1]);
-//        count += 1;
-//    } else {
-//        count = 0;
-//        TextureChange(input[1], input[0]);
-//    }
-//}
-
-
-
 //document.getElementById("hair_style_1").oninput = function hair_style_1(){
 //    var input = document.getElementById("hair_style_1").value;
 //    readInput(input);
@@ -266,10 +240,23 @@ document.getElementById("skin_colour_3").onclick = function skin_colour_3(){
 
 
 
-//clean texture, add gui, temp
+let vrmModel, vrmTempModel, currentVrm;
+async function loadVrmModel(canvasID,localPath) {
 
+    const loader = new THREE.GLTFLoader();
 
-
-
-
-//gui.hide();
+    loader.register((parser) => {return new THREE_VRM.VRMLoaderPlugin( parser, {autoUpdateHumanBones: true } );}); // here we are installing VRMLoaderPlugin
+    [vrmModel, vrmTempModel] = await Promise.all(
+        [
+            loader.loadAsync(localPath),
+            loader.loadAsync(localPath)
+        ]
+    )
+    
+    const oriVrm = vrmModel.userData.vrm
+    const targetVrm = vrmTempModel.userData.vrm
+    //scene.add(oriVrm.scene);
+    //scene.remove(vrm.scene);
+    currentVrm = oriVrm;
+    //loadFBX( currentAnimationUrl );
+}
