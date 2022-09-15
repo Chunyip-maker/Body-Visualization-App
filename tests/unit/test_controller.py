@@ -41,31 +41,44 @@ class Test_Controller():
             # self.assertEqual(200, response.status_code)
             assert response.status_code == 200
 
-    def test_index_previous_logged_in(self):
+    def test_index(self):
         with self.client.session_transaction() as session:
-            session['logged_in']=True
-
+            session['logged_in'] = True
         response = self.client.get(url_for('index'))
         assert response.status_code == 302
 
+    def test_index_previous_not_logged_in(self):
+        with self.client.session_transaction() as session:
+            session['logged_in']=False
+
+        response = self.client.get(url_for('index'))
+        assert response.status_code == 302
 
     def test_register_page_post(self):
         with self.client:
             response = self.client.post(url_for('register_page'),data=Test_Controller.MODEL_OBJ)
             assert response.status_code == 302
 
-    def test_index_previous_logged_in(self):
-        with self.client.session_transaction() as session:
-            session['logged_in']=True
-
-        response = self.client.get(url_for('register_page'))
-        assert response.status_code == 302
+    # def test_index_previous_logged_in(self):
+    #     with self.client.session_transaction() as session:
+    #         session['logged_in']=True
+    #
+    #     response = self.client.get(url_for('register_page'))
+    #     assert response.status_code == 302
 
     def test_register_page_get(self):
         with self.client:
             response = self.client.get(url_for('register_page'))
             # self.assertEqual(200, response.status_code)
             assert response.status_code == 200
+
+    def test_register_page_get_logged_in(self):
+        with self.client.session_transaction() as session:
+            session['logged_in'] = True
+
+        response = self.client.get(url_for('register_page'))
+        # self.assertEqual(200, response.status_code)
+        assert response.status_code == 302
 
     def test_login_page_get(self):
         with self.client:
@@ -97,6 +110,11 @@ class Test_Controller():
         response = self.client.get(url_for("logout"))
         assert response.status_code == 302
 
+    def test_complete_step1_logged_in(self):
+        with self.client.session_transaction() as session:
+            session['logged_in'] = True
+        response = self.client.get(url_for('complete_step1'))
+        assert response.status_code == 302
 
     def test_complete_step_1_get(self):
         with self.client:
