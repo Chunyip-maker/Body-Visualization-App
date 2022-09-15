@@ -195,7 +195,7 @@ def complete_step2():
         # basic_model = model.define_basic_model(int(age), gender)
 
         # insert data to database
-        basic_model = model.define_basic_model(int(age), gender)
+        basic_model = model.define_basic_model(age, gender)
         return render_template('step2.html', basic_model=basic_model)
     elif request.method == 'POST':
         # 如果未登录 -- 未完成注册系统都不识别为登录成功
