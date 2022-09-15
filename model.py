@@ -31,6 +31,13 @@ class Model:
     def add_new_body_measurment_record(self, model_name, height, weight,
                                        thigh, shank, hip, upper_arm, waist, chest
                                        ):
+        if model_name is None or height is None or weight is None:
+            return
+        if thigh is None or shank is None or hip is None:
+            return
+        if upper_arm is None or waist is None or chest is None:
+            return
+
         update_time = str(datetime.datetime.now()).split('.')[0]  # 参数入库的时间戳
         result = self.database.add_new_body_measurement_record_with_time(model_name, update_time, height, weight, thigh,
                                                                          shank, hip, upper_arm, waist, chest)
@@ -43,6 +50,9 @@ class Model:
         return result
 
     def define_basic_model(self, age, gender):
+        if age is None or gender is None:
+            return
+        age = int(age)
         result = ""
         if age < 20:
             result += "teenager_"
