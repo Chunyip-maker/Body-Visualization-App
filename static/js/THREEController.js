@@ -5,7 +5,7 @@ import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
 
-//import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
 
 //init
 
@@ -135,6 +135,33 @@ async function init(canvasID, modelName) {
     //Set the range for different age group, default adult male
     selectGroup(3); //change this by checking the url of model
 
+    //test
+    let gui = new dat.GUI();
+
+    //debug use, should be called after the init finished.
+    //all gui in this part will be remove later
+    //current gui for debug only
+    loadModel.traverse( child => {
+
+        if (child.type == "Bone") {
+
+                if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
+                    let boneFolder = gui.addFolder(child.name);
+                    boneFolder.add(child.scale, 'x', 0.9, 1.1).name("Scale" + " X");
+                    boneFolder.add(child.scale, 'y',0.9, 1.1).name("Scale" + " Y");
+                    boneFolder.add(child.scale, 'z',0.9, 1.1).name("Scale" + " Z");
+                    boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
+                    boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
+                    boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
+                    // console.log(child.name);
+                    // console.log(child);
+                }
+
+                boneMenu.push(child.name);
+            }
+
+        })
+
 
 
     //animation
@@ -170,19 +197,19 @@ function animate() {
 }
 
 //Functions of selecting range
-//{Height, Weight, Chest, Waist, Hip, Arm girth, Thigh, Shank}
-//Should be in range of {50, 60, 20, 20, 20, 15, 18, 18}
+//{Height, Weight, Chest, Waist, Hip, Arm girth, Arms pan, Thigh, Shank}
+//Should be in range of {50, 60, 20, 20, 20, 15, 15, 18, 18}
 //min & max
 function selectGroup(agegroup){
 
-    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 40, 58, 22, 40);
-    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 37, 45, 20, 38);
-    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 48, 66, 30, 48);
-    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 45, 63, 28, 46);
-    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
-    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
-    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 48, 66, 30, 48);
-    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 45, 63, 28, 46);
+    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 35, 50, 40, 58, 22, 40);
+    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 30, 40, 37, 45, 20, 38);
+    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
+    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
+    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
+    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
+    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
+    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
     switch (agegroup){
         case 1:
             setRange(teenagerMale);
@@ -220,6 +247,7 @@ function setRange(rangeList){
     setRangeById(6, rangeList[10], rangeList[11]);
     setRangeById(7, rangeList[12], rangeList[13]);
     setRangeById(8, rangeList[14], rangeList[15]);
+    setRangeById(9, rangeList[16], rangeList[17]);
 }
 
 function setRangeById(id, min, max){
@@ -238,7 +266,6 @@ document.getElementById("a1").oninput = function changeHeight(){
     changeScaleX(["Hips"], [], index);
     changeScaleY(["Hips"], [], index);
     changeScaleZ(["Hips"], [], index);
-
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
@@ -263,20 +290,25 @@ document.getElementById("a5").oninput = function changeHip(){
     changeScaleZ(["Hips"], ["Left_leg", "Right_leg", "Spine"], index);
 }
 
-document.getElementById("a6").oninput = function changeArm(){
+document.getElementById("a6").oninput = function changeArmGrith(){
     let index = calculateTransformation(6, 0.4);
     changeScaleX(["Left_arm", "Right_arm"], [], index);
     changeScaleZ(["Left_arm", "Right_arm"], [], index);
 }
 
-document.getElementById("a7").oninput = function changeThigh(){
-    let index = calculateTransformation(7, 0.3);
+document.getElementById("a7").oninput = function changeArmsPan(){
+    let index = calculateTransformation(7, 0.01);
+    changePositionY(["Left_arm", "Right_arm"], [], index);
+}
+
+document.getElementById("a8").oninput = function changeThigh(){
+    let index = calculateTransformation(8, 0.3);
     changeScaleX(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
     changeScaleZ(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
 }
 
-document.getElementById("a8").oninput = function changeShank(){
-    let index = calculateTransformation(8, 0.3);
+document.getElementById("a9").oninput = function changeShank(){
+    let index = calculateTransformation(9, 0.3);
     changeScaleX(["Left_knee", "Right_knee"], [], index);
     changeScaleZ(["Left_knee", "Right_knee"], [], index);
 }
@@ -341,6 +373,26 @@ function changeScaleY(scaleUpBones, scaleDownBones, index){
     })
 }
 
+/* Change position of the bones in the list */
+function changePositionY(positionUpBones, positionDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( positionUpBones.includes(child.name)) {
+                    console.log(index);
+                    console.log(child.position.x);
+                    if(index > 0){
+                        child.translateX(0.0001);
+                    }else{
+                        child.translateX(-0.0001);
+                    }
+                    console.log(child.position.x);
+                    console.log("---------");
+                }
+
+        }
+    })
+}
+
 /* Get the information from the document and return index of actual scale*/
 function calculateTransformation(id, range){
     let value = document.getElementById("a" + id).value;
@@ -351,67 +403,6 @@ function calculateTransformation(id, range){
     return index;
 }
 
-
-let history_value_1 = document.getElementById("a1").value;
-let history_value_2 = document.getElementById("a2").value;
-let history_value_3 = document.getElementById("a3").value;
-let history_value_4 = document.getElementById("a4").value;
-let history_value_5 = document.getElementById("a5").value;
-let history_value_6 = document.getElementById("a6").value;
-let history_value_7 = document.getElementById("a7").value;
-let history_value_8 = document.getElementById("a8").value;
-
-/* Get the history value input*/
-function getHistoryValue(id){
-    switch (id){
-        case 1:
-            return history_value_1;
-        case 2:
-            return history_value_2;
-        case 3:
-            return history_value_3;
-        case 4:
-            return history_value_4;
-        case 5:
-            return history_value_5;
-        case 6:
-            return history_value_6;
-        case 7:
-            return history_value_7;
-        case 8:
-            return history_value_8;
-    }
-}
-
-/* Set the history value input*/
-function setHistoryValue(id, value){
-    switch (id){
-        case 1:
-            history_value_1 = value;
-            break;
-        case 2:
-            history_value_2 = value;
-            break;
-        case 3:
-            history_value_3 = value;
-            break;
-        case 4:
-            history_value_4 = value;
-            break;
-        case 5:
-            history_value_5 = value;
-            break;
-        case 6:
-            history_value_6 = value;
-            break;
-        case 7:
-            history_value_7 = value;
-            break;
-        case 8:
-            history_value_8 = value;
-            break;
-    }
-}
 
 /* Calculate the actual scale index to transform the model*/
 function getScaleIndex(min, max, value, range){
