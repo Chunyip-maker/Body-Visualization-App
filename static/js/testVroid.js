@@ -4,7 +4,6 @@ let stats, mixer, canvas, canvasWidth, canvasHeight, currentMixer, currentVrm;
 let camera, scene, renderer, controls, group;
 let action;
 
-
 function sceneInit(canvasID) {
         //canvas set up
         canvas = document.getElementById(canvasID);
@@ -63,18 +62,29 @@ async function init(modelUrl) {
         ]
     )
     
-    
+    //console.log(loadModel);
     const vrm1= loadModel.userData.vrm
     const vrm2= tempModel.userData.vrm
     scene.add(vrm1.scene);
-
 
     scene.traverse(child =>{
         if (child instanceof THREE.Mesh) {
             child.frustumCulled = false;
         }
     })
-    
+
+    var gui = new dat.GUI();
+    let count = 0;
+    scene.traverse(child =>{
+        if (child.type == "Bone") {
+             gui.add(child.scale, "x",0,2).name(child.name + "x");
+             gui.add(child.scale, "y",0,2).name(child.name + "y");
+             gui.add(child.scale, "z",0,2).name(child.name + "z");
+            console.log(child.name);
+            count += 1;
+        }
+    })
+    console.log(count);
     console.log(vrm1)
 
     let group = scene.getObjectByName("Body");
@@ -88,7 +98,6 @@ async function init(modelUrl) {
     hair.children[0].visible = false;
     console.log(group.children);
 
-
     for (let i = 7; i < 14; i++) {
         face.children[i].visible = false;
     }
@@ -96,11 +105,14 @@ async function init(modelUrl) {
     for (let i = 0; i < 5; i++) {
         group.children[i].visible = false;
     }
+    console.log(group.children);
+    currentVrm = vrm1;
 
     animate();
 
 }
 init("/static/model/test/newtest.vrm")
+
 
 // animate
 
@@ -121,6 +133,7 @@ function animate() {
     renderer.render( scene, camera );
 
 }
+
 
 
 
