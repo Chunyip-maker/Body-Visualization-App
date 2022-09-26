@@ -281,6 +281,8 @@ def complete_step4():
         last_two_records = model.search_last_two_body_measurement_records(model_name)
         return render_template('step4.html')
 
+
+# for test only
 @app.route('/test', methods=['GET', 'POST'])
 def complete_test():
     """ Handle the 3rd step of the body visualizer """
@@ -299,7 +301,7 @@ def complete_test():
 
         # insert data to database
         basic_model = model.define_basic_model(age, gender)
-        return render_template('step2.html', basic_model=basic_model)
+        return render_template('test.html', basic_model=basic_model)
     elif request.method == 'POST':
         # 如果未登录 -- 未完成注册系统都不识别为登录成功
         if 'logged_in' not in session or not session['logged_in']:
@@ -330,6 +332,6 @@ def complete_test():
             # 暂时没用
             # textures_file_path = model.search_model_texture_file_path(model_name)
             # basic_model_file_path = model.search_basic_model_file_path(model_name)
-            return redirect(url_for('complete_step3'))
+            return redirect(url_for('complete_test'))
         else:
-            return redirect(url_for('complete_step3'))
+            return redirect(url_for('complete_test'))

@@ -20,17 +20,6 @@
     <title>Body Virtualisation APP - Step 2</title>
 
 
-    <!-- three.js -->
-    <script type="importmap">
-        {
-            "imports": {
-            "three": "https://unpkg.com/three@0.143.0/build/three.module.js"
-            }
-        }
-    </script>
-
-    <script src="/static/js/three-vrm.js"></script>
-    <script type = "module" src="/static/js/THREEControllerS2.js"></script>
      
 </head>
 
@@ -244,7 +233,16 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/three@0.137.4/build/three.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/fflate/umd/index.js"></script> -->
+    <script src="https://unpkg.com/three@0.140.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.140.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.140.2/examples/js/loaders/FBXLoader.js"></script>
 
+    <script src="/static/js/three-vrm.js"></script>
+    <script src="/static/js/mixamoRigMap.js"></script>
+    <script src="/static/js/loadMixamoAnimation.js"></script>
+    <script src="/static/js/testVroid.js""></script>
 </body>
 
 </html>
