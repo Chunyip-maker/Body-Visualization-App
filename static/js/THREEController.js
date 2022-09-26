@@ -318,14 +318,14 @@ function changeScaleX(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
                 if ( scaleUpBones.includes(child.name)) {
-                    child.scale.x += (index - child.scale.x);
+                    child.scale.x = index;
                     let i = scaleUpBones.indexOf(child.name);
                     scaleUpBones.splice(i, 1);
 
                     for(let j = 0; j < child.children.length; j++){
                         if(child.children[j].name.indexOf("J_Sec") == - 1 && scaleDownBones.includes(child.children[j].name)){
                             let test = 2 - index;
-                            child.children[j].scale.x += (test - child.children[j].scale.x);
+                            child.children[j].scale.x = test;
                         }
                     }
                 }
@@ -338,13 +338,13 @@ function changeScaleZ(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
                 if ( scaleUpBones.includes(child.name)) {
-                    child.scale.z += (index - child.scale.z);
+                    child.scale.z = index;
                     let i = scaleUpBones.indexOf(child.name);
                     scaleUpBones.splice(i, 1);
                     for(let j = 0; j < child.children.length; j++){
                        if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
                            let test = 2 - index;
-                           child.children[j].scale.z += (test - child.children[j].scale.z);
+                           child.children[j].scale.z = test;
                        }
                     }
                 }
@@ -358,13 +358,13 @@ function changeScaleY(scaleUpBones, scaleDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
                 if ( scaleUpBones.includes(child.name)) {
-                    child.scale.y += (index - child.scale.y);
+                    child.scale.y = index;
                     let i = scaleUpBones.indexOf(child.name);
                     scaleUpBones.splice(i, 1);
                     for(let j = 0; j < child.children.length; j++){
                        if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
                            let test = 2 - index;
-                           child.children[j].scale.y += (test - child.children[j].scale.y);
+                           child.children[j].scale.y = test;
                        }
                     }
                 }
