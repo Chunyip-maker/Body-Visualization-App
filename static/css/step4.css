@@ -140,3 +140,21 @@ body {
     border-width: 1px;
     background-color: white;
 }
+
+
+#before_canvas{
+    float: left;
+    width: 400px;
+    height: 500px;
+    border-width: 1px;
+    background-color: white;
+}
+
+#after_canvas{
+    float: left;
+    margin-left: 100px;
+    width: 400px;
+    height: 500px;
+    border-width: 1px;
+    background-color: white;
+}

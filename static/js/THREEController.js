@@ -297,7 +297,6 @@ function changeScaleX(scaleUpBones, scaleDownBones, index){
                         }
                     }
                 }
-
         }
     })
 }
