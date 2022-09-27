@@ -33,11 +33,23 @@
 
 
 
-
     <p id="hair_color" style="display: none">{{ model_texture[0] }}</p>
     <p id="skin_color" style="display: none">{{ model_texture[1] }}</p>
     <p id="top_dress" style="display: none">{{ model_texture[2] }}</p>
     <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
+    <p id="height" style="display: none">{{ model_parameters[1] }}</p>
+    <p id="weight" style="display: none">{{ model_parameters[2] }}</p>
+    <p id="thigh" style="display: none">{{ model_parameters[3] }}
+    <p id="shank" style="display: none">{{ model_parameters[4] }}</p>
+    <p id="hip" style="display: none">{{ model_parameters[5] }}</p>
+    <p id="arm_girth" style="display: none">{{ model_parameters[6] }}</p>
+    <p id="arm_pan" style="display: none">{{ model_parameters[7] }}</p>
+    <p id="waist" style="display: none">{{ model_parameters[8] }}</p>
+    <p id="chest" style="display: none">{{ model_parameters[9] }}</p>
+
+
+
+
 
     <!-- Title -->
     <div class="main_title">
@@ -46,6 +58,7 @@
 
 
     <!-- Main Area -->
+    <form class="next" action="/step3" method='POST'>
     <div class="main">
         <div id="canvas">
 
@@ -168,7 +181,7 @@
         </div>
 
     </div>
-    <form class="next" action="/step3" method='POST'>
+{#    <form class="next" action="/step3" method='POST'>#}
         <button>
             Next
         </button>

@@ -246,7 +246,8 @@ def complete_step3():
         model_name = request.cookies.get('model_name')
         # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
-        return render_template('step3.html', model_texture=model_texture)
+        model_parameters = model.search_last_one_body_measurement_records(model_name)[0]
+        return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters)
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']
@@ -258,18 +259,19 @@ def complete_step3():
         thigh = request.form.get('thigh')  # 大腿
         shank = request.form.get('shank')  # 小腿
         hip = request.form.get('hip')  # 臀围
-        upper_arm = request.form.get('upper_arm')  # 胳膊
+        arm_girth = request.form.get('Arm girth')  # 胳膊
+        arm_pan = request.form.get("Arms pan")
         waist = request.form.get('waist')
         chest = request.form.get('chest')
 
         # print("{},{},{}".format(model_name,update_time,height))
         model.add_new_body_measurment_record(model_name, height, weight,
-                                             thigh, shank, hip, upper_arm, waist, chest)
+                                             thigh, shank, hip, arm_girth, arm_pan, waist, chest)
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
 
 
-@app.route('/step4', methods=['GET','POST'])
+@app.route('/step4', methods=['GET', 'POST'])
 def complete_step4():
     """ Generate a health report """
     # 如果未登录

@@ -29,18 +29,18 @@ class Model:
         return True
 
     def add_new_body_measurment_record(self, model_name, height, weight,
-                                       thigh, shank, hip, upper_arm, waist, chest
+                                       thigh, shank, hip, arm_girth,arm_pan, waist, chest
                                        ):
         if model_name is None or height is None or weight is None:
             return
         if thigh is None or shank is None or hip is None:
             return
-        if upper_arm is None or waist is None or chest is None:
+        if arm_girth is None or arm_pan is None or waist is None or chest is None:
             return
 
         update_time = str(datetime.datetime.now()).split('.')[0]  # 参数入库的时间戳
         result = self.database.add_new_body_measurement_record_with_time(model_name, update_time, height, weight, thigh,
-                                                                         shank, hip, upper_arm, waist, chest)
+                                                                         shank, hip, arm_girth, arm_pan, waist, chest)
         return result
 
     def add_model_appearance(self, model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model_name):
@@ -79,6 +79,9 @@ class Model:
     def search_last_two_body_measurement_records(self, model_name):
         return self.database.search_last_two_body_measurement_records(model_name)
 
+    def search_last_one_body_measurement_records(self, model_name):
+        return self.database.search_last_one_body_measurement_record(model_name)
+
     # def split_mesh_name(self, texture_name):
     #     tmp = texture_name.strip().split(',')
     #     i = 1
@@ -91,5 +94,7 @@ class Model:
 model = Model()
 # print(str(datetime.datetime.now()).split('.')[0])
 # print(model.database.search_last_two_body_measurement_records('admin'))
+# print(model.database.search_last_one_body_measurement_record('admin')[0])
+
 # print(model.database.search_basic_model_file_path('admin'))
-print(model.search_model_texture_file_path('admin'))
+# print(model.search_model_texture_file_path('admin'))

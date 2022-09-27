@@ -69,7 +69,8 @@ class SQLDatabase():
             thigh REAL,
             shank REAL,
             hip REAL,
-            upper_arm REAL,
+            arm_girth REAL,
+            arm_pan REAL,
             waist REAL,
             chest REAL,
             PRIMARY KEY(model_name, update_time),
@@ -102,16 +103,15 @@ class SQLDatabase():
         # Add our admin model
         if not self.check_model_existence('admin'):
             self.add_model('admin', 20, 'Female')
-        self.add_model_textures('black','/black_hair')
-        self.add_model_textures('yellow','/yellow_skin')
-        self.add_model_textures('T_shirt','/T_shirt')
-        self.add_model_textures('dress','/dress')
-        self.add_basic_model('adult_female',os.path.abspath('..')+'/adult_female')
-        self.add_model_appearance('admin','black','yellow','T_shirt','dress','adult_female')
-        self.add_new_body_measurement_record_with_time('admin',"2021-09-09 00:05:09",1,1,1,1,1,1,1,1)
-        self.add_new_body_measurement_record_with_time('admin',"2020-09-09 00:05:09",1,1,1,1,1,1,1,1)
-        self.add_new_body_measurement_record_with_time('admin',"2022-09-09 00:05:09",1,1,1,1,1,1,1,1)
-
+        self.add_model_textures('black', '/black_hair')
+        self.add_model_textures('yellow', '/yellow_skin')
+        self.add_model_textures('T_shirt', '/T_shirt')
+        self.add_model_textures('dress', '/dress')
+        self.add_basic_model('adult_female', os.path.abspath('..') + '/adult_female')
+        self.add_model_appearance('admin', 'black', 'yellow', 'T_shirt', 'dress', 'adult_female')
+        self.add_new_body_measurement_record_with_time('admin', "2021-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+        self.add_new_body_measurement_record_with_time('admin', "2020-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+        self.add_new_body_measurement_record_with_time('admin', "2022-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
 
         print("\nDatabase successfullly set up.\n")
 
@@ -151,12 +151,12 @@ class SQLDatabase():
     # Add a new record of a model's body measurement with timestamp
     # -----------------------------------------------------------------------------
     def add_new_body_measurement_record_with_time(self, model_name, update_time, height, weight,
-                                                  thigh, shank, hip, upper_arm,  waist, chest
+                                                  thigh, shank, hip, arm_girth, arm_pan, waist, chest
                                                   ):
         sql_cmd = """
             INSERT INTO ModelParameters
             VALUES('{model_name}', '{update_time}','{height}','{weight}', '{thigh}',
-            '{shank}','{hip}','{upper_arm}','{waist}','{chest}')
+            '{shank}','{hip}','{arm_girth}','{arm_pan}','{waist}','{chest}')
         """
         sql_cmd = sql_cmd.format(model_name=model_name,
                                  update_time=update_time,
@@ -165,7 +165,8 @@ class SQLDatabase():
                                  thigh=thigh,
                                  shank=shank,
                                  hip=hip,
-                                 upper_arm=upper_arm,
+                                 arm_girth=arm_girth,
+                                 arm_pan=arm_pan,
                                  waist=waist,
                                  chest=chest)
         self.execute(sql_cmd)
@@ -220,7 +221,6 @@ class SQLDatabase():
         self.commit()
         return True
 
-
     # -----------------------------------------------------------------------------
     #  Search Basic Model file path
     # -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ class SQLDatabase():
     # -----------------------------------------------------------------------------
     #  Search Model Texture file path
     # -----------------------------------------------------------------------------
-    def search_model_texture_file_path(self,model_name):
+    def search_model_texture_file_path(self, model_name):
 
         # sql_query = """
         #                     SELECT file_path
@@ -257,12 +257,26 @@ class SQLDatabase():
     # -----------------------------------------------------------------------------
     # Last two body measurement records
     # -----------------------------------------------------------------------------
-    def search_last_two_body_measurement_records(self,model_name):
+    def search_last_two_body_measurement_records(self, model_name):
         sql_query = """
-                            SELECT update_time,height,weight,weight,shank,hip,upper_arm,waist,chest
+                            SELECT update_time,height,weight,weight,shank,hip,arm_girth,arm_pan,waist,chest
                             FROM  ModelParameters  
                             WHERE model_name = '{model_name}'
                             ORDER BY update_time DESC LIMIT 2
+                        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # the Last one body measurement record
+    # -----------------------------------------------------------------------------
+    def search_last_one_body_measurement_record(self, model_name):
+        sql_query = """
+                            SELECT update_time,height,weight,weight,shank,hip,arm_girth,arm_pan,waist,chest
+                            FROM  ModelParameters  
+                            WHERE model_name = '{model_name}'
+                            ORDER BY update_time DESC LIMIT 1
                         """
         sql_query = sql_query.format(model_name=model_name)
         self.execute(sql_query)
