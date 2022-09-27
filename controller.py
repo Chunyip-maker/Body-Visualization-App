@@ -246,7 +246,7 @@ def complete_step3():
         model_name = request.cookies.get('model_name')
         # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
-        model_parameters = model.search_last_one_body_measurement_records(model_name)[0]
+        model_parameters = model.search_last_one_body_measurement_records(model_name)
         return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters)
     elif request.method == 'POST':
         # 提交7项参数入库

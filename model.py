@@ -29,7 +29,7 @@ class Model:
         return True
 
     def add_new_body_measurment_record(self, model_name, height, weight,
-                                       thigh, shank, hip, arm_girth,arm_pan, waist, chest
+                                       thigh, shank, hip, arm_girth, arm_pan, waist, chest
                                        ):
         if model_name is None or height is None or weight is None:
             return
@@ -80,7 +80,10 @@ class Model:
         return self.database.search_last_two_body_measurement_records(model_name)
 
     def search_last_one_body_measurement_records(self, model_name):
-        return self.database.search_last_one_body_measurement_record(model_name)
+        model_parameters = self.database.search_last_one_body_measurement_record(model_name)
+        if len(model_parameters) == 0:
+            return None
+        return model_parameters[0]
 
     # def split_mesh_name(self, texture_name):
     #     tmp = texture_name.strip().split(',')
@@ -91,7 +94,8 @@ class Model:
     #         i += 2
     #     return ','.join(result)
 
-model = Model()
+
+# model = Model()
 # print(str(datetime.datetime.now()).split('.')[0])
 # print(model.database.search_last_two_body_measurement_records('admin'))
 # print(model.database.search_last_one_body_measurement_record('admin')[0])
