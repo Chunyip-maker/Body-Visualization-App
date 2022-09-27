@@ -47,7 +47,7 @@ function sceneInit(canvasID) {
         controls.update()
 }
 
-//const loadmodel1;
+
 let loadModel, tempModel;
 async function init(modelUrl) {
 
@@ -108,31 +108,43 @@ async function init(modelUrl) {
     console.log(group.children);
     currentVrm = vrm1;
 
+    loadFBX( currentAnimationUrl );
     animate();
 
 }
 init("/static/model/test/newtest.vrm")
 
+//loadVRM( defaultModelUrl );
+// www.beian.gov.cn/portal/index?login=Y&token=22ba3e0f-dcba-4799-9c97-d4fccd4732c1&info=%E6%B3%A8%E5%86%8C%E6%88%90%E5%8A%9F%EF%BC%81
+// mixamo animation
+function loadFBX( animationUrl ) {
+    currentAnimationUrl = animationUrl;
+    // create AnimationMixer for VRM
+    currentMixer = new THREE.AnimationMixer( currentVrm.scene );
+    // Load animation
+    loadMixamoAnimation( animationUrl, currentVrm ).then( ( clip ) => {
+        // Apply the loaded animation to mixer and play
+        currentMixer.clipAction( clip ).play();
+    } );
+
+}
 
 // animate
 
 function animate() {
     //console.log(1);
     requestAnimationFrame( animate );
-
     const deltaTime = clock.getDelta();
-
     // if animation is loaded
     if ( currentMixer ) {
         currentMixer.update( deltaTime );
     }
-
     if ( currentVrm ) {
         currentVrm.update( deltaTime );
     }
     renderer.render( scene, camera );
-
 }
+
 
 
 
