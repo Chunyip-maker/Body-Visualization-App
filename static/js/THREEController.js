@@ -12,10 +12,13 @@ import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.m
 let stats, mixer, canvas, canvasWidth, canvasHeight, clock;
 let camera, scene, renderer, controls, group;
 let loadModel, tempModel, action;
+let modelBoneName = [], bonePositionY = [];
 
 
 //test version for model under /static/model/test2/ folder only
 init("canvas", "Breathing Idle2.fbx");
+
+
 
 
 
@@ -135,6 +138,9 @@ async function init(canvasID, modelName) {
     //Set the range for different age group, default adult male
     selectGroup(3); //change this by checking the url of model
 
+    //Save the origin bones position data.
+    loadOriginBones(modelBoneName, bonePositionY);
+
     //test
     let gui = new dat.GUI();
 
@@ -163,6 +169,8 @@ async function init(canvasID, modelName) {
         })
 
 
+    //Alter history data;
+    loadingHistoryBodyData();
 
     //animation
     group.add(loadModel);
@@ -257,11 +265,46 @@ function setRangeById(id, min, max){
     document.getElementById("b" + id).innerText = (max + min)/2;
 }
 
+//Method for changing the body due to parameter
+function loadingHistoryBodyData(){
+    document.getElementById("a1").value = document.getElementById("height").innerText;
+    document.getElementById("b1").innerText = document.getElementById("height").innerText;
+    document.getElementById("a2").value = document.getElementById("weight").innerText;
+    document.getElementById("b2").innerText = document.getElementById("weight").innerText;
+    document.getElementById("a3").value = document.getElementById("chest").innerText;
+    document.getElementById("b3").innerText = document.getElementById("chest").innerText;
+    document.getElementById("a4").value = document.getElementById("waist").innerText;
+    document.getElementById("b4").innerText = document.getElementById("waist").innerText;
+    document.getElementById("a5").value = document.getElementById("hip").innerText;
+    document.getElementById("b5").innerText = document.getElementById("hip").innerText;
+    document.getElementById("a6").value = document.getElementById("arm_girth").innerText;
+    document.getElementById("b6").innerText = document.getElementById("arm_girth").innerText;
+    document.getElementById("a7").value = document.getElementById("arm_pan").innerText;
+    document.getElementById("b7").innerText = document.getElementById("arm_pan").innerText;
+    document.getElementById("a8").value = document.getElementById("thigh").innerText;
+    document.getElementById("b8").innerText = document.getElementById("thigh").innerText;
+    document.getElementById("a9").value = document.getElementById("shank").innerText;
+    document.getElementById("b9").innerText = document.getElementById("shank").innerText;
+    changeHeightImpl();
+    changeWeightImpl();
+    changeThighImpl();
+    changeShankImpl();
+    changeHipImpl();
+    changeArmGrithImpl();
+    changeArmsPanImpl();
+    changeWaistImpl();
+    changeChestImpl();
+}
+
 
 
 //API of modify bones
 
 document.getElementById("a1").oninput = function changeHeight(){
+    changeHeightImpl();
+}
+
+function changeHeightImpl(){
     let index = calculateTransformation(1, 0.2);
     changeScaleX(["Hips"], [], index);
     changeScaleY(["Hips"], [], index);
@@ -269,48 +312,80 @@ document.getElementById("a1").oninput = function changeHeight(){
 }
 
 document.getElementById("a2").oninput = function changeWeight(){
+    changeWeightImpl();
+}
+
+function changeWeightImpl(){
     let index = calculateTransformation(2, 0.1);
     changeScaleX(["Hips"], [], index);
     changeScaleZ(["Hips"], [], index);
 }
 
 document.getElementById("a3").oninput = function changeChest(){
+    changeChestImpl();
+}
+
+function changeChestImpl(){
     let index = calculateTransformation(3, 0.2);
     changeScaleZ(["Upper_Chest"], ["Neck"], index);
 }
 
 document.getElementById("a4").oninput = function changeWaist(){
+    changeWaistImpl();
+}
+
+function changeWaistImpl(){
     let index = calculateTransformation(4, 0.2);
     changeScaleX(["Spine"], ["Chest"], index);
     changeScaleZ(["Spine"], ["Chest"], index);
 }
 
 document.getElementById("a5").oninput = function changeHip(){
+    changeHipImpl();
+}
+
+function changeHipImpl(){
     let index = calculateTransformation(5, 0.2);
     changeScaleZ(["Hips"], ["Left_leg", "Right_leg", "Spine"], index);
 }
 
 document.getElementById("a6").oninput = function changeArmGrith(){
+    changeArmGrithImpl();
+}
+
+function changeArmGrithImpl(){
     let index = calculateTransformation(6, 0.4);
     changeScaleX(["Left_arm", "Right_arm"], [], index);
     changeScaleZ(["Left_arm", "Right_arm"], [], index);
 }
 
 document.getElementById("a7").oninput = function changeArmsPan(){
-    let index = calculateTransformation(7, 0.01);
+    changeArmsPanImpl();
+}
+
+function changeArmsPanImpl(){
+    let index = calculateTransformation(7, 0.01, modelBoneName);
     changePositionY(["Left_arm", "Right_arm"], [], index);
 }
 
 document.getElementById("a8").oninput = function changeThigh(){
+    changeThighImpl();
+}
+
+function changeThighImpl(){
     let index = calculateTransformation(8, 0.3);
     changeScaleX(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
     changeScaleZ(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
 }
 
 document.getElementById("a9").oninput = function changeShank(){
+    changeShankImpl();
+}
+
+function changeShankImpl(){
     let index = calculateTransformation(9, 0.3);
-    changeScaleX(["Left_knee", "Right_knee"], [], index);
-    changeScaleZ(["Left_knee", "Right_knee"], [], index);
+    changeScaleX(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
+    changeScaleZ(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
 }
 
 /* Scale up and scale down the bones in the list */
@@ -379,13 +454,15 @@ function changePositionY(positionUpBones, positionDownBones, index){
         if (child.type == "Bone") {
                 if ( positionUpBones.includes(child.name)) {
                     console.log(index);
-                    console.log(child.position.x);
+                    console.log(child.position.y);
                     if(index > 0){
-                        child.translateX(0.0001);
+                        child.position.y += 0.005;
                     }else{
-                        child.translateX(-0.0001);
+                        child.position.y -= 0.005;
                     }
-                    console.log(child.position.x);
+                    let i = positionUpBones.indexOf(child.name);
+                    positionUpBones.splice(i, 1);
+                    console.log(child.position.y);
                     console.log("---------");
                 }
 
@@ -403,6 +480,16 @@ function calculateTransformation(id, range){
     return index;
 }
 
+/* Get the information from the document and return index of actual position of Y*/
+function calculateTranslationY(id, range, boneName){
+    let value = document.getElementById("a" + id).value;
+    document.getElementById("b"  + id).innerText = value;
+    let min = parseInt(document.getElementById("a"  + id).min);
+    let max = parseInt(document.getElementById("a"  + id).max);
+    let index = getPositionIndexY(min, max, value, range, boneName);
+    return index;
+}
+
 
 /* Calculate the actual scale index to transform the model*/
 function getScaleIndex(min, max, value, range){
@@ -413,7 +500,28 @@ function getScaleIndex(min, max, value, range){
     return actualIndex;
 }
 
-/* change texture called by init funtion */
+/* Calculate the actual position index to transform the model*/
+function getPositionIndexY(min, max, value, range){
+    let average = (min + max) / 2;
+    let percentageIndex = (value - average) / (max - min);
+    let actualIndex = percentageIndex * (range) + 1;
+    return actualIndex;
+}
+
+function loadOriginBones(modelBoneName, bonePositionY){
+    loadModel.traverse( child => {
+    if (child.type == "Bone") {
+        if ( !modelBoneName.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
+            modelBoneName.push(child.name);
+            bonePositionY.push(child.position.y);
+            console.log(child.name);
+            console.log(child.position.y);
+        }
+    }
+})
+}
+
+/* change texture called by init function */
 function textureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
