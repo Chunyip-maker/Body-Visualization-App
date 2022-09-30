@@ -136,7 +136,7 @@ async function init(canvasID, modelName) {
 
 
     //Set the range for different age group, default adult male
-    selectGroup(3); //change this by checking the url of model
+    //selectGroup(3); //change this by checking the url of model
 
     //Save the origin bones position data.
     loadOriginBones(modelBoneName, bonePositionY);
@@ -144,7 +144,6 @@ async function init(canvasID, modelName) {
     //Alter history data
 
     if(document.getElementById("check_new_model").innerText != 0){
-        console.log(11111111111);
         loadingHistoryBodyData();
     }
 
