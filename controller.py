@@ -247,7 +247,12 @@ def complete_step3():
         # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
-        return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters)
+        if model_parameters is None:
+            model_parameters = model.define_new_model_body_parameters(model_name)
+        body_parameters_range = model.search_body_parameters_range(model_name)
+        print(model_parameters)
+        return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
+                               body_parameters_range=body_parameters_range)
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']

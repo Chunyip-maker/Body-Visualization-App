@@ -37,15 +37,18 @@
     <p id="skin_color" style="display: none">{{ model_texture[1] }}</p>
     <p id="top_dress" style="display: none">{{ model_texture[2] }}</p>
     <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
-    <p id="height" style="display: none">{{ model_parameters[1] }}</p>
-    <p id="weight" style="display: none">{{ model_parameters[2] }}</p>
-    <p id="thigh" style="display: none">{{ model_parameters[3] }}</p>
-    <p id="shank" style="display: none">{{ model_parameters[4] }}</p>
-    <p id="hip" style="display: none">{{ model_parameters[5] }}</p>
-    <p id="arm_girth" style="display: none">{{ model_parameters[6] }}</p>
-    <p id="arm_pan" style="display: none">{{ model_parameters[7] }}</p>
-    <p id="waist" style="display: none">{{ model_parameters[8] }}</p>
-    <p id="chest" style="display: none">{{ model_parameters[9] }}</p>
+    <p id="check_new_model" style="display: none">{{ model_parameters[0] }}</p>
+
+
+{#    <p id="height" style="display: none">{{ model_parameters[1] }}</p>#}
+{#    <p id="weight" style="display: none">{{ model_parameters[2] }}</p>#}
+{#    <p id="thigh" style="display: none">{{ model_parameters[3] }}#}
+{#    <p id="shank" style="display: none">{{ model_parameters[4] }}</p>#}
+{#    <p id="hip" style="display: none">{{ model_parameters[5] }}</p>#}
+{#    <p id="arm_girth" style="display: none">{{ model_parameters[6] }}</p>#}
+{#    <p id="arm_pan" style="display: none">{{ model_parameters[7] }}</p>#}
+{#    <p id="waist" style="display: none">{{ model_parameters[8] }}</p>#}
+{#    <p id="chest" style="display: none">{{ model_parameters[9] }}</p>#}
 
 
 
@@ -68,9 +71,9 @@
         <div class="right">
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="height" min="120" max="210" value="165" class="slider" id="a1">
+                    <input type="range" name="height" min={{ body_parameters_range[1] }} max={{ body_parameters_range[2]}} value={{model_parameters[1]}} class="slider" id="a1">
                 </div>
-                <span id="b1"></span>
+                <span id="b1">{{model_parameters[1]}}</span>
                 <span>height</span>
             </div>
 
@@ -78,39 +81,39 @@
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="weight" min="30" max="100" value="65" class="slider" id="a2">
+                    <input type="range" name="weight" min={{ body_parameters_range[3] }} max={{ body_parameters_range[4]}} value={{model_parameters[2]}} class="slider" id="a2">
                 </div>
-                <span id="b2"></span>
+                <span id="b2">{{model_parameters[2]}}</span>
                 <span>weight</span>
             </div>
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="chest" min="75" max="101" value="88" class="slider" id="a3">
+                    <input type="range" name="chest" min={{ body_parameters_range[5] }} max={{ body_parameters_range[6]}} value={{model_parameters[3]}} class="slider" id="a3">
                 </div>
 
-                <span id="b3"></span>
+                <span id="b3">{{model_parameters[3]}}</span>
                 <span>chest</span>
             </div>
 
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="waist" min="40" max="70" value="55" class="slider" id="a4">
+                    <input type="range" name="waist" min={{ body_parameters_range[7] }} max={{ body_parameters_range[8]}} value={{model_parameters[4]}} class="slider" id="a4">
 
                 </div>
 
-                <span id="b4"></span>
+                <span id="b4">{{model_parameters[4]}}</span>
                 <span>waist</span>
             </div>
 
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="hip" min="75" max="101" value="88" class="slider" id="a5">
+                    <input type="range" name="hip" min={{ body_parameters_range[9] }} max={{ body_parameters_range[10]}} value={{model_parameters[5]}} class="slider" id="a5">
 
                 </div>
-                <span id="b5"></span>
+                <span id="b5">{{model_parameters[5]}}</span>
                 <span>hip</span>
             </div>
 
@@ -119,30 +122,30 @@
             <div class="slider-box">
                 <div class="slider">
 
-                    <input type="range" name="Arm girth" min="12" max="34" value="23" class="slider" id="a6">
+                    <input type="range" name="Arm girth" min={{ body_parameters_range[11] }} max={{ body_parameters_range[12]}} value={{model_parameters[6]}} class="slider" id="a6">
 
                 </div>
-                <span id="b6"></span>
+                <span id="b6">{{model_parameters[6]}}</span>
                 <span>arm girth</span>
             </div>
 
             <div class="slider-box">
                 <div class="slider">
 
-                    <input type="range" name="Arms pan" min="40" max="55" value="47" class="slider" id="a7">
+                    <input type="range" name="Arms pan" min={{ body_parameters_range[13] }} max={{ body_parameters_range[14]}} value={{model_parameters[7]}} class="slider" id="a7">
 
                 </div>
-                <span id="b7"></span>
+                <span id="b7">{{model_parameters[7]}}</span>
                 <span>arms pan</span>
             </div>
 
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="thigh" min="40" max="70" value="55" class="slider" id="a8">
+                    <input type="range" name="thigh" min={{ body_parameters_range[15] }} max={{ body_parameters_range[16]}} value={{model_parameters[8]}} class="slider" id="a8">
 
                 </div>
-                <span id="b8"></span>
+                <span id="b8">{{model_parameters[8]}}</span>
                 <span>thigh</span>
             </div>
 
@@ -150,9 +153,9 @@
 
             <div class="slider-box">
                 <div class="slider">
-                    <input type="range" name="shank" min="25" max="49" value="37" class="slider" id="a9">
+                    <input type="range" name="shank" min={{ body_parameters_range[17] }} max={{ body_parameters_range[18]}} value={{model_parameters[9]}} class="slider" id="a9">
                 </div>
-                <span id="b9"></span>
+                <span id="b9">{{model_parameters[9]}}</span>
                 <span>shank</span>
             </div>
 
