@@ -141,36 +141,12 @@ async function init(canvasID, modelName) {
     //Save the origin bones position data.
     loadOriginBones(modelBoneName, bonePositionY);
 
-    //test
-    let gui = new dat.GUI();
+    //Alter history data
 
-    //debug use, should be called after the init finished.
-    //all gui in this part will be remove later
-    //current gui for debug only
-    loadModel.traverse( child => {
-
-        if (child.type == "Bone") {
-
-                if ( !boneMenu.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
-                    let boneFolder = gui.addFolder(child.name);
-                    boneFolder.add(child.scale, 'x', 0.9, 1.1).name("Scale" + " X");
-                    boneFolder.add(child.scale, 'y',0.9, 1.1).name("Scale" + " Y");
-                    boneFolder.add(child.scale, 'z',0.9, 1.1).name("Scale" + " Z");
-                    boneFolder.add(child.position, 'x',0, 3).name("position" + " X");
-                    boneFolder.add(child.position, 'y',0, 3).name("position" + " Y");
-                    boneFolder.add(child.position, 'z',0, 3).name("position" + " Z");
-                    // console.log(child.name);
-                    // console.log(child);
-                }
-
-                boneMenu.push(child.name);
-            }
-
-        })
-
-
-    //Alter history data;
-    loadingHistoryBodyData();
+    if(document.getElementById("check_new_model").innerText != 0){
+        console.log(11111111111);
+        loadingHistoryBodyData();
+    }
 
     //animation
     group.add(loadModel);
@@ -267,24 +243,6 @@ function setRangeById(id, min, max){
 
 //Method for changing the body due to parameter
 function loadingHistoryBodyData(){
-    document.getElementById("a1").value = document.getElementById("height").innerText;
-    document.getElementById("b1").innerText = document.getElementById("height").innerText;
-    document.getElementById("a2").value = document.getElementById("weight").innerText;
-    document.getElementById("b2").innerText = document.getElementById("weight").innerText;
-    document.getElementById("a3").value = document.getElementById("chest").innerText;
-    document.getElementById("b3").innerText = document.getElementById("chest").innerText;
-    document.getElementById("a4").value = document.getElementById("waist").innerText;
-    document.getElementById("b4").innerText = document.getElementById("waist").innerText;
-    document.getElementById("a5").value = document.getElementById("hip").innerText;
-    document.getElementById("b5").innerText = document.getElementById("hip").innerText;
-    document.getElementById("a6").value = document.getElementById("arm_girth").innerText;
-    document.getElementById("b6").innerText = document.getElementById("arm_girth").innerText;
-    document.getElementById("a7").value = document.getElementById("arm_pan").innerText;
-    document.getElementById("b7").innerText = document.getElementById("arm_pan").innerText;
-    document.getElementById("a8").value = document.getElementById("thigh").innerText;
-    document.getElementById("b8").innerText = document.getElementById("thigh").innerText;
-    document.getElementById("a9").value = document.getElementById("shank").innerText;
-    document.getElementById("b9").innerText = document.getElementById("shank").innerText;
     changeHeightImpl();
     changeWeightImpl();
     changeThighImpl();
@@ -364,7 +322,7 @@ document.getElementById("a7").oninput = function changeArmsPan(){
 }
 
 function changeArmsPanImpl(){
-    let index = calculateTransformation(7, 0.01, modelBoneName);
+    let index = calculateTranslationY(7, 0.04, "Left_arm", modelBoneName, bonePositionY);
     changePositionY(["Left_arm", "Right_arm"], [], index);
 }
 
@@ -384,8 +342,8 @@ document.getElementById("a9").oninput = function changeShank(){
 
 function changeShankImpl(){
     let index = calculateTransformation(9, 0.3);
-    changeScaleX(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
-    changeScaleZ(["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
+    changeScaleX(["Left_knee", "Right_knee"], [], index);
+    changeScaleZ(["Left_knee", "Right_knee"], [], index);
 }
 
 /* Scale up and scale down the bones in the list */
@@ -453,17 +411,9 @@ function changePositionY(positionUpBones, positionDownBones, index){
     loadModel.traverse( child => {
         if (child.type == "Bone") {
                 if ( positionUpBones.includes(child.name)) {
-                    console.log(index);
-                    console.log(child.position.y);
-                    if(index > 0){
-                        child.position.y += 0.005;
-                    }else{
-                        child.position.y -= 0.005;
-                    }
+                    child.position.y = index;
                     let i = positionUpBones.indexOf(child.name);
                     positionUpBones.splice(i, 1);
-                    console.log(child.position.y);
-                    console.log("---------");
                 }
 
         }
@@ -481,12 +431,12 @@ function calculateTransformation(id, range){
 }
 
 /* Get the information from the document and return index of actual position of Y*/
-function calculateTranslationY(id, range, boneName){
+function calculateTranslationY(id, range, targetBone, originBoneList, originBonePositionY){
     let value = document.getElementById("a" + id).value;
     document.getElementById("b"  + id).innerText = value;
     let min = parseInt(document.getElementById("a"  + id).min);
     let max = parseInt(document.getElementById("a"  + id).max);
-    let index = getPositionIndexY(min, max, value, range, boneName);
+    let index = getPositionIndexY(min, max, value, range, targetBone, originBoneList, originBonePositionY);
     return index;
 }
 
@@ -501,10 +451,11 @@ function getScaleIndex(min, max, value, range){
 }
 
 /* Calculate the actual position index to transform the model*/
-function getPositionIndexY(min, max, value, range){
+function getPositionIndexY(min, max, value, range, targetBone, originBoneList, originBonePositionY){
     let average = (min + max) / 2;
     let percentageIndex = (value - average) / (max - min);
-    let actualIndex = percentageIndex * (range) + 1;
+    let targetBoneY = originBonePositionY[originBoneList.indexOf(targetBone)];
+    let actualIndex = percentageIndex * (range) + targetBoneY;
     return actualIndex;
 }
 
@@ -514,8 +465,8 @@ function loadOriginBones(modelBoneName, bonePositionY){
         if ( !modelBoneName.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
             modelBoneName.push(child.name);
             bonePositionY.push(child.position.y);
-            console.log(child.name);
-            console.log(child.position.y);
+            //console.log(child.name);
+            //console.log(child.position.y);
         }
     }
 })
