@@ -127,6 +127,13 @@ class Test_Controller():
             response = self.client.post(url_for("complete_step1"), data=Test_Controller.MODEL_OBJ)
             assert response.status_code == 302
 
+    def test_complete_step2_get_logged_in(self):
+        with self.client.session_transaction() as session:
+            session['logged_in'] = True
+        response = self.client.get(url_for('complete_step2'))
+        assert response.status_code == 302
+
+
     def test_complete_step2_get(self):
         with self.client:
             response = self.client.get(url_for('complete_step2'))
@@ -137,6 +144,7 @@ class Test_Controller():
         with self.client:
             response = self.client.post(url_for("complete_step2"), data=Test_Controller.MODEL_OBJ)
             assert response.status_code == 302
+
 
     def test_complete_step3_get(self):
         with self.client:
@@ -156,6 +164,12 @@ class Test_Controller():
         with self.client.session_transaction() as session:
             session['logged_in'] = True
         response = self.client.post(url_for('complete_step3'),data=Test_Controller.MODEL_OBJ)
+        assert response.status_code == 302
+
+    def test_complete_step4_logged_in(self):
+        # with self.client.session_transaction() as session:
+        #         #     session['logged_in'] =
+        response = self.client.get(url_for('complete_step4'))
         assert response.status_code == 302
 
     # def test_complete_step4_get(self):
