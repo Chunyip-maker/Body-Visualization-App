@@ -52,6 +52,8 @@ class SQLDatabase():
         self.commit()
         self.execute("DROP TABLE IF EXISTS ModelAppearance ")
         self.commit()
+        self.execute("DROP TABLE IF EXISTS AgeGroupParametersRange ")
+        self.commit()
 
         # Create the users table
         self.execute("""
@@ -69,7 +71,8 @@ class SQLDatabase():
             thigh REAL,
             shank REAL,
             hip REAL,
-            upper_arm REAL,
+            arm_girth REAL,
+            arm_pan REAL,
             waist REAL,
             chest REAL,
             PRIMARY KEY(model_name, update_time),
@@ -95,23 +98,45 @@ class SQLDatabase():
             basic_model_name TEXT NOT NULL REFERENCES BasicModels(basic_model_name)
             
         );
+        
+        CREATE TABLE AgeGroupParametersRange(
+            age_group TEXT PRIMARY KEY NOT NULL,
+            height_max REAL,
+            height_min REAL,
+            weight_max REAL,
+            weight_min REAL,
+            chest_max REAL,
+            chest_min REAL,
+            waist_max REAL,
+            waist_min REAL,
+            hip_max REAL,
+            hip_min REAL,
+            arm_girth_max REAL,
+            arm_girth_min REAL,
+            arm_pan_max REAL,
+            arm_pan_min REAL,
+            thigh_max REAL,
+            thigh_min REAL,
+            shank_max REAL,
+            shank_min REAL
+        );
         """)
 
         self.commit()
 
         # Add our admin model
         if not self.check_model_existence('admin'):
-            self.add_model('admin', 20, 'Female')
-        self.add_model_textures('black','/black_hair')
-        self.add_model_textures('yellow','/yellow_skin')
-        self.add_model_textures('T_shirt','/T_shirt')
-        self.add_model_textures('dress','/dress')
-        self.add_basic_model('adult_female',os.path.abspath('..')+'/adult_female')
-        self.add_model_appearance('admin','black','yellow','T_shirt','dress','adult_female')
-        self.add_new_body_measurement_record_with_time('admin',"2021-09-09 00:05:09",1,1,1,1,1,1,1,1)
-        self.add_new_body_measurement_record_with_time('admin',"2020-09-09 00:05:09",1,1,1,1,1,1,1,1)
-        self.add_new_body_measurement_record_with_time('admin',"2022-09-09 00:05:09",1,1,1,1,1,1,1,1)
-
+            self.add_model('admin', 20, 'male')
+        self.add_model_textures('black', '/black_hair')
+        self.add_model_textures('yellow', '/yellow_skin')
+        self.add_model_textures('T_shirt', '/T_shirt')
+        self.add_model_textures('dress', '/dress')
+        self.add_basic_model('adult_female', os.path.abspath('..') + '/adult_female')
+        self.add_model_appearance('admin', 'black', 'yellow', 'T_shirt', 'dress', 'adult_female')
+        self.add_new_body_measurement_record_with_time('admin', "2021-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+        self.add_new_body_measurement_record_with_time('admin', "2020-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+        self.add_new_body_measurement_record_with_time('admin', "2022-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+        self.add_age_group_parameters_range()
 
         print("\nDatabase successfullly set up.\n")
 
@@ -151,12 +176,12 @@ class SQLDatabase():
     # Add a new record of a model's body measurement with timestamp
     # -----------------------------------------------------------------------------
     def add_new_body_measurement_record_with_time(self, model_name, update_time, height, weight,
-                                                  thigh, shank, hip, upper_arm,  waist, chest
+                                                  thigh, shank, hip, arm_girth, arm_pan, waist, chest
                                                   ):
         sql_cmd = """
             INSERT INTO ModelParameters
             VALUES('{model_name}', '{update_time}','{height}','{weight}', '{thigh}',
-            '{shank}','{hip}','{upper_arm}','{waist}','{chest}')
+            '{shank}','{hip}','{arm_girth}','{arm_pan}','{waist}','{chest}')
         """
         sql_cmd = sql_cmd.format(model_name=model_name,
                                  update_time=update_time,
@@ -165,7 +190,8 @@ class SQLDatabase():
                                  thigh=thigh,
                                  shank=shank,
                                  hip=hip,
-                                 upper_arm=upper_arm,
+                                 arm_girth=arm_girth,
+                                 arm_pan=arm_pan,
                                  waist=waist,
                                  chest=chest)
         self.execute(sql_cmd)
@@ -220,6 +246,40 @@ class SQLDatabase():
         self.commit()
         return True
 
+    # -----------------------------------------------------------------------------
+    #  Add basic model parameters range (Max and Min value)
+    # -----------------------------------------------------------------------------
+    def add_age_group_parameters_range(self):
+        sql_cmd = """
+                       INSERT INTO AgeGroupParametersRange
+                       VALUES
+                       ('teenager_male',130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 35, 50, 40, 58, 22, 40),
+                       ('teenager_female',130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 30, 40, 37, 45, 20, 38),
+                       ('adult_male',160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48),
+                       ('adult_female',150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46),
+                       ('middle_male',160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48),
+                       ('middle_female',150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46),
+                       ('old_male',155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48 ),
+                       ('old_female',145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
+                       
+                   """
+        self.execute(sql_cmd)
+        self.commit()
+        return True
+
+    # -----------------------------------------------------------------------------
+    #  Search  Model age and gender by model name
+    # -----------------------------------------------------------------------------
+    def search_model_age_and_gender(self, model_name):
+        sql_query = """
+                    SELECT age,gender
+                    FROM Models
+                    WHERE model_name = '{model_name}'
+                """
+        sql_query = sql_query.format(model_name=model_name)
+
+        self.execute(sql_query)
+        return self.cur.fetchall()
 
     # -----------------------------------------------------------------------------
     #  Search Basic Model file path
@@ -238,7 +298,7 @@ class SQLDatabase():
     # -----------------------------------------------------------------------------
     #  Search Model Texture file path
     # -----------------------------------------------------------------------------
-    def search_model_texture_file_path(self,model_name):
+    def search_model_texture_file_path(self, model_name):
 
         # sql_query = """
         #                     SELECT file_path
@@ -257,13 +317,40 @@ class SQLDatabase():
     # -----------------------------------------------------------------------------
     # Last two body measurement records
     # -----------------------------------------------------------------------------
-    def search_last_two_body_measurement_records(self,model_name):
+    def search_last_two_body_measurement_records(self, model_name):
         sql_query = """
-                            SELECT update_time,height,weight,weight,shank,hip,upper_arm,waist,chest
+                            SELECT update_time,height,weight,chest,waist,hip,arm_girth,arm_pan,thigh,shank
                             FROM  ModelParameters  
                             WHERE model_name = '{model_name}'
                             ORDER BY update_time DESC LIMIT 2
                         """
         sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # the Last one body measurement record
+    # -----------------------------------------------------------------------------
+    def search_last_one_body_measurement_record(self, model_name):
+        sql_query = """
+                            SELECT update_time,height,weight,chest,waist,hip,arm_girth,arm_pan,thigh,shank
+                            FROM  ModelParameters  
+                            WHERE model_name = '{model_name}'
+                            ORDER BY update_time DESC LIMIT 1
+                        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # Search model parameters range by age group
+    # -----------------------------------------------------------------------------
+    def search_body_parameters_range(self, age_group):
+        sql_query = """
+                            SELECT *
+                            FROM  AgeGroupParametersRange  
+                            WHERE age_group = '{age_group}'
+                        """
+        sql_query = sql_query.format(age_group=age_group)
         self.execute(sql_query)
         return self.cur.fetchall()

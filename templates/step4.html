@@ -18,6 +18,17 @@
     <link href="../static/css/step4.css" rel="stylesheet">
 
     <title>Body Virtualisation APP - Health Report</title>
+
+    <script type="importmap">
+        {
+            "imports": {
+            "three": "https://unpkg.com/three@0.143.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module" src="/static/js/THREEControllerS4_before.js"></script>
+    <script type="module" src="/static/js/THREEControllerS4_after.js"></script>
 </head>
 
 <body>
@@ -31,13 +42,13 @@
         <div class="comparison">
             <h2> Part 1. Model Comparison</h2>
             <hr>
-            <div class="left">
-                <img src="../static/images/fake_step4_1.jpg" alt="">
-                <!-- 老模型 -->
+            <div id="before_canvas">
+                <!-- <img src="../static/images/fake_step4_1.jpg" alt="">
+                老模型 -->
             </div>
 
-            <div class="right">
-                <img src="../static/images/fake_step4_2.jpg" alt="">
+            <div id="after_canvas">
+                <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
                 <!-- 最新模型 -->
             </div>
         </div>

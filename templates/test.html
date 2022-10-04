@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+{% include 'flashed_message.html' %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="../static/fonts/material-design-iconic-font/css/material-design-iconic-font.css">
+
+    <!-- DATE-PICKER -->
+    <link rel="stylesheet" href="../static/vendor/date-picker/css/datepicker.min.css">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="../static/css/step2.css">
+    <link href="../static/css/list-groups.css" rel="stylesheet">
+
+    <title>Body Virtualisation APP - Step 2</title>
+
+
+     
+</head>
+
+<body>
+    <!-- Title -->
+    <div class="title">
+        <h1> Customise your model! {{ basic_model }}</h1>
+    </div>
+
+
+
+    <!-- Main Area -->
+    <div class="main">
+        <div id="canvas">
+        </div>
+
+
+
+
+        <div class="right">
+            <form class="next" action="/step2" method='POST'>
+
+            <div class="hair_style">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="hair_style" id="hair_style_1"
+                               value="" checked>
+                        <label class="list-group-item"
+                               for="hair_style_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">hair style 1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="hair_style" id="hair_style_2"
+                               value="">
+                        <label class="list-group-item"
+                               for="hair_style_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair style 2</div>
+
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="hair_colour">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_1"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_15.png" checked>
+                        <label class="list-group-item"
+                               for="hair_colour_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">hair colour 1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_2"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/option1/_15.png">
+                        <label class="list-group-item"
+                               for="hair_colour_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair colour 2</div>
+
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="hair_colour" id="hair_colour_3"
+                               value="N00_000_Hair_00_HAIR_(Instance), /static/model/test2/texture_test/option2/_15.png">
+                        <label class="list-group-item"
+                               for="hair_colour_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">hair colour 3</div>
+
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="clothing_style">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="clothing_style" id="clothing_style_1"
+                               value="" checked>
+                        <label class="list-group-item"
+                               for="clothing_style_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">clothing style 1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="clothing_style" id="clothing_style_2"
+                               value="">
+                        <label class="list-group-item"
+                               for="clothing_style_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">clothing style 2</div>
+
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="top">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_1"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_14.png" checked>
+                        <label class="list-group-item"
+                               for="top_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">top 1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_2"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/option1/_14.png">
+                        <label class="list-group-item"
+                               for="top_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">top 2</div>
+
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="top" id="top_3"
+                               value="N00_004_01_Tops_01_CLOTH_(Instance), /static/model/test2/texture_test/option2/_14.png">
+                        <label class="list-group-item"
+                               for="top_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">top 3</div>
+
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bot">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_1"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_12.png" checked>
+                        <label class="list-group-item"
+                               for="bot_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">bot 1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_2"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/option1/_12.png">
+                        <label class="list-group-item"
+                               for="bot_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">bot 2</div>
+
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="bot" id="bot_3"
+                               value="N00_001_01_Bottoms_01_CLOTH_(Instance), /static/model/test2/texture_test/option2/_12.png">
+                        <label class="list-group-item"
+                               for="bot_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">bot 2</div>
+
+                        </label>
+                    </li>
+
+                </ul>
+            </div>
+
+             <div class="skin_colour">
+                <ul>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_1"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_10.png,N00_000_00_Face_00_SKIN_(Instance), /static/model/test2/texture_test/sample.vrm.textures/_04.png" checked>
+                        <label class="list-group-item"
+                               for="skin_colour_1"/>
+                        <img src="../static/images/hair_style_1.png" class="img">
+                        <div class="bottom_text">skin_colour_1</div>
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_2"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/option1/_10.png,N00_000_00_Face_00_SKIN_(Instance), /static/model/test2/texture_test/option1/_04.png">
+                        <label class="list-group-item"
+                               for="skin_colour_2">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">skin_colour_2</div>
+
+                        </label>
+                    </li>
+                    <li>
+                        <input class="list-group-item-check" type="radio" name="skin_colour" id="skin_colour_3"
+                               value="N00_000_00_Body_00_SKIN_(Instance), /static/model/test2/texture_test/option2/_10.png,N00_000_00_Face_00_SKIN_(Instance),  /static/model/test2/texture_test/option2/_04.png">
+                        <label class="list-group-item"
+                               for="skin_colour_3">
+                            <img src="../static/images/hair_style_1.png" class="img">
+                            <div class="bottom_text">skin_colour_3</div>
+
+                        </label>
+                    </li>
+                </ul>
+            </div>
+{#            <form class="next" action="/step2" method='POST'>#}
+                <button>
+                    Next Step
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.137.4/build/three.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fflate/umd/index.js"></script>
+    <script src="https://unpkg.com/three@0.140.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.140.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.140.2/examples/js/loaders/FBXLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js" integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/static/js/three-vrm.js"></script>
+    <script src="/static/js/mixamoRigMap.js"></script>
+    <script src="/static/js/loadMixamoAnimation.js"></script>
+    <script src="/static/js/testVroid.js""></script>
+</body>
+
+
+</html>

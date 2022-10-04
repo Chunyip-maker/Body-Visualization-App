@@ -246,7 +246,13 @@ def complete_step3():
         model_name = request.cookies.get('model_name')
         # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
-        return render_template('step3.html', model_texture=model_texture)
+        model_parameters = model.search_last_one_body_measurement_records(model_name)
+        if model_parameters is None:
+            model_parameters = model.define_new_model_body_parameters(model_name)
+        body_parameters_range = model.search_body_parameters_range(model_name)
+        print(model_parameters)
+        return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
+                               body_parameters_range=body_parameters_range)
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']
@@ -258,18 +264,19 @@ def complete_step3():
         thigh = request.form.get('thigh')  # 大腿
         shank = request.form.get('shank')  # 小腿
         hip = request.form.get('hip')  # 臀围
-        upper_arm = request.form.get('upper_arm')  # 胳膊
+        arm_girth = request.form.get('Arm girth')  # 胳膊
+        arm_pan = request.form.get("Arms pan")
         waist = request.form.get('waist')
         chest = request.form.get('chest')
 
         # print("{},{},{}".format(model_name,update_time,height))
         model.add_new_body_measurment_record(model_name, height, weight,
-                                             thigh, shank, hip, upper_arm, waist, chest)
+                                             thigh, shank, hip, arm_girth, arm_pan, waist, chest)
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
 
 
-@app.route('/step4', methods=['GET','POST'])
+@app.route('/step4', methods=['GET', 'POST'])
 def complete_step4():
     """ Generate a health report """
     # 如果未登录
@@ -280,3 +287,58 @@ def complete_step4():
         model_name = request.cookies.get('model_name')
         last_two_records = model.search_last_two_body_measurement_records(model_name)
         return render_template('step4.html')
+
+
+# for test only
+@app.route('/test', methods=['GET', 'POST'])
+def complete_test():
+    """ Handle the 3rd step of the body visualizer """
+    # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
+    if 'logged_in' in session:
+        return redirect(url_for('complete_step3'))
+
+    if request.method == 'GET':
+        # load model name
+        model_name = request.cookies.get('model_name')
+
+        # define basic model
+        age = request.cookies.get('age')
+        gender = request.cookies.get('gender')
+        # basic_model = model.define_basic_model(int(age), gender)
+
+        # insert data to database
+        basic_model = model.define_basic_model(age, gender)
+        return render_template('test.html', basic_model=basic_model)
+    elif request.method == 'POST':
+        # 如果未登录 -- 未完成注册系统都不识别为登录成功
+        if 'logged_in' not in session or not session['logged_in']:
+            session['logged_in'] = True
+            # # load model name
+            model_name = request.cookies.get('model_name')
+            #
+            # # define basic model
+            age = request.cookies.get('age')
+            gender = request.cookies.get('gender')
+            basic_model = model.define_basic_model(age, gender)
+            # # insert data to database
+            model.add_a_basic_human_model(model_name, age, gender)
+            # basic_model = model.define_basic_model(int(age), gender)
+
+            hair_color = request.form.get('hair_colour')  # 头发颜色
+            skin_color = request.form.get('skin_colour')  # 皮肤颜色
+            top_dress = request.form.get('top')  # 上衣
+            bottom_dress = request.form.get('bot')  # 下装
+
+            # hair_color = model.split_mesh_name(hair_color)
+            # skin_color = model.split_mesh_name(skin_color)
+            # top_dress = model.split_mesh_name(top_dress)
+            # bottom_dress = model.split_mesh_name(bottom_dress)
+
+            model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
+
+            # 暂时没用
+            # textures_file_path = model.search_model_texture_file_path(model_name)
+            # basic_model_file_path = model.search_basic_model_file_path(model_name)
+            return redirect(url_for('complete_test'))
+        else:
+            return redirect(url_for('complete_test'))

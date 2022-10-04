@@ -156,6 +156,7 @@ class Test_Controller():
         # with :
         with self.client.session_transaction() as session:
             session['logged_in'] = True
+
         response = self.client.get(url_for('complete_step3'))
         assert response.status_code == 200
 
