@@ -194,7 +194,9 @@ input[type="range"] {
 
 
 .next button {
-    position: absolute;
+    position: relative;
+    left: -37%;
+
     float: right;
     width: 180px;
     background-color: #f6f6f6;
@@ -211,7 +213,9 @@ input[type="range"] {
 }
 
 .history button{
-  position: absolute;
+  position: relative;
+  left: -0%;
+
   float: right;
   width: 180px;
   background-color: #f6f6f6;
@@ -229,8 +233,8 @@ input[type="range"] {
 
 .logout button{
     position: absolute;
-    left: 80%;
-    top: 3%;
+    left: 75%;
+    top: 15%;
     
     float: right;
     width: 180px;
@@ -246,5 +250,3 @@ input[type="range"] {
     font-size: 24px;
     cursor: pointer;
 }
-
-
