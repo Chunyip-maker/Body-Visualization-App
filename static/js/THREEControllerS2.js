@@ -15,7 +15,7 @@ let loadModel, tempModel, action;
 
 
 //test version for model under /static/model/test2/ folder only
-init("canvas", "Breathing Idle2.fbx");
+init("canvas");
 
 function sceneInit(canvasID) {
         //canvas set up
@@ -77,16 +77,19 @@ function sceneInit(canvasID) {
         controls.update()
 }
 
-async function init(canvasID, modelName) {
+async function init(canvasID) {
 
     // group = new THREE.Group();
     sceneInit(canvasID);
+    let model_age_group =  document.getElementById("model_age_group").innerText;
 
     //Async loader!
-    const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
+    const fbxLoader = new FBXLoader().setPath( '/static/model/' +model_age_group+"/model1/");
     [loadModel, tempModel] = await Promise.all( [
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' ),
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
+        fbxLoader.loadAsync( 'adult_female_casual.fbx' ),
+        fbxLoader.loadAsync( 'adult_female_casual.fbx' )
+//        fbxLoader.loadAsync( 'Breathing Idle2.fbx' ),
+//        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
     ] );
 
     var input = document.getElementById("hair_colour_1").value;
