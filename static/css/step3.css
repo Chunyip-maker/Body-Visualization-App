@@ -115,32 +115,30 @@ span {
 }
 
 :root {
-  --slider-width: 150px;
+  --slider-width: 200px;
   --slider-height: 20px;
 }
 
 input[type='range'] {
   overflow: hidden;
+  cursor: ew-resize;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   input[type='range'] {
     width: var(--slider-width);
     -webkit-appearance: none;
-    background-color: yellow;
-  }
 
-  input[type='range']::-webkit-slider-runnable-track {
-    height: var(--slider-height);
-    -webkit-appearance: none;
-    color: red;
+    border-radius: 3px;
+    background-color: rgb(245,200,200);
   }
 
   input[type='range']::-webkit-slider-thumb {
-    width: 0px;
-    -webkit-appearance: none;
     height: var(--slider-height);
-    box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) orange;
+    -webkit-appearance: none;
+    box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103,155,134);
+
+    width: 0px;
   }
 }
 
