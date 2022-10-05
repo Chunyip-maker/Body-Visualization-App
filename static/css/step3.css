@@ -142,6 +142,19 @@ input[type='range'] {
   }
 }
 
+/* firefox support */
+input[type="range"]::-moz-range-progress {
+  background-color: rgb(103,155,134); 
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: var(--slider-height);
+  width: 0;
+  border: none;
+  box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103,155,134);
+  box-sizing: border-box;
+}
+
 /*
 input[type="range"] {
     -webkit-appearance: none;
