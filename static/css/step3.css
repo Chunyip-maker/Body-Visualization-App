@@ -193,46 +193,58 @@ input[type="range"] {
 
 
 
-.next button{
+.next button {
     position: absolute;
-    left: 83%;
-    top: 70%;
-    width: 150px;
-    height: 75px;
-    background-color: pink;
-    border-radius: 20px;
-    font-family: Lato-Black;
-    line-height: 75px;
-    text-align: center;
-    font-size: 36px;
+    float: right;
+    width: 180px;
+    background-color: #f6f6f6;
+    outline: none;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding:15px;
+    color: rgb(227,167,168);
+    letter-spacing: 2px;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .history button{
-    position: absolute;
-    left: 75%;
-    top: 70%;
-    width: 150px;
-    height: 75px;
-    background-color: pink;
-    border-radius: 20px;
-    font-family: Lato-Black;
-    line-height: 75px;
-    text-align: center;
-    font-size: 36px;
+  position: absolute;
+  float: right;
+  width: 180px;
+  background-color: #f6f6f6;
+  outline: none;
+  border-radius: 50px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(227,167,168);
+  padding:15px;
+  color: rgb(227,167,168);
+  letter-spacing: 2px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .logout button{
     position: absolute;
     left: 80%;
     top: 3%;
-    width: 150px;
-    height: 75px;
-    background-color: pink;
-    border-radius: 20px;
-    font-family: Lato-Black;
-    line-height: 75px;
-    text-align: center;
-    font-size: 36px;
+    
+    float: right;
+    width: 180px;
+    background-color: #f6f6f6;
+    outline: none;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227,167,168);
+    padding:15px;
+    color: rgb(227,167,168);
+    letter-spacing: 2px;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 
