@@ -4,7 +4,7 @@
     /*width: 85px;*/
     /*height: 85px;*/
     /*border-radius: 10px;*/
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .form-check-input:checked + .form-checked-content {
@@ -20,7 +20,7 @@
 }
 
 .list-group-checkable .list-group-item {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .list-group-item-check {
@@ -35,7 +35,7 @@
     border-width: 3px;
     border-color: purple;
     background-color: rgb(211, 157, 158);
-
+    cursor: pointer;
 }
 
 .list-group-item-check:checked + .list-group-item {
@@ -53,7 +53,7 @@
 }
 
 .list-group-radio .list-group-item {
-    cursor: pointer;
+    /*cursor: pointer;*/
     border-radius: .5rem;
 }
 
