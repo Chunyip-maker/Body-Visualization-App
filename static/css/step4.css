@@ -158,3 +158,37 @@ body {
     border-width: 1px;
     background-color: white;
 }
+
+
+/* Button */
+
+
+.last button{
+    position: absolute;
+    left: 7%;
+    top: 0%;
+    width: 150px;
+    height: 75px;
+    background-color: pink;
+    border-radius: 20px;
+    font-family: Lato-Black;
+    line-height: 75px;
+    text-align: center;
+    font-size: 36px;
+}
+
+.logout button{
+    position: absolute;
+    left: 80%;
+    top: 0%;
+    width: 150px;
+    height: 75px;
+    background-color: pink;
+    border-radius: 20px;
+    font-family: Lato-Black;
+    line-height: 75px;
+    text-align: center;
+    font-size: 36px;
+}
+
+
