@@ -5,7 +5,7 @@ from flask import  url_for, request, current_app
 
 import json
 
-class Test_Controller():
+class TestController():
     MODEL_OBJ = {
         "modelname":"alisa",
         "age":18,
@@ -152,14 +152,6 @@ class Test_Controller():
             # check the status code
             assert response.status_code == 302
 
-    def test_complete_step3_get_logged_in(self):
-        # with :
-        with self.client.session_transaction() as session:
-            session['logged_in'] = True
-
-        response = self.client.get(url_for('complete_step3'))
-        assert response.status_code == 200
-
     def test_complete_step3_post_logged_in(self):
         # with self.client:
         with self.client.session_transaction() as session:
@@ -173,16 +165,6 @@ class Test_Controller():
         response = self.client.get(url_for('complete_step4'))
         assert response.status_code == 302
 
-    # def test_complete_step4_get(self):
-    #     with self.client:
-    #         response = self.client.post(url_for("complete_step4"))
-    #         assert response.status_code == 405
-    #
-    # def test_complete_step4_get_logged_in(self):
-    #     with self.client.session_transaction() as session:
-    #         session['logged_in'] = True
-    #     response = self.client.post(url_for('complete_step4'), data=Test_Controller.MODEL_OBJ)
-    #     assert response.status_code == 405
 
 if __name__ == '__main__':
     pytest.main(["-s", "test_controller.py"])

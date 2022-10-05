@@ -52,6 +52,8 @@ class Model:
     def define_basic_model(self, age, gender):
         if age is None or gender is None:
             return
+        if age == 'None' or gender == 'None':
+            return
         age = int(age)
         result = ""
         if age < 20:

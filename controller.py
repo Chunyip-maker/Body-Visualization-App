@@ -236,7 +236,6 @@ def complete_step2():
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
     # 如果未登录
-    # print("~"*20+session['logged_in']+"~"*20)
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login_page'))
 
@@ -244,7 +243,6 @@ def complete_step3():
     if request.method == 'GET':
         # print("~"*45)
         model_name = request.cookies.get('model_name')
-        # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         if model_parameters is None:
