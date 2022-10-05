@@ -3,8 +3,6 @@
     margin: 4rem auto;
     /*width: 85px;*/
     /*height: 85px;*/
-    /*border-radius: 10px;*/
-    /*cursor: pointer;*/
 }
 
 .form-check-input:checked + .form-checked-content {
@@ -25,14 +23,14 @@
 
 .list-group-item-check {
     position: absolute;
+    border-style: solid;
     clip: rect(0, 0, 0, 0);
 }
 
 .list-group-item-check:hover + .list-group-item {
+    position: relative;
     /* color: var(--bs-light); */
     color: #fff;
-    border-style: solid;
-    border-width: 3px;
     border-color: purple;
     background-color: rgb(211, 157, 158);
     cursor: pointer;
@@ -53,7 +51,6 @@
 }
 
 .list-group-radio .list-group-item {
-    /*cursor: pointer;*/
     border-radius: .5rem;
 }
 
