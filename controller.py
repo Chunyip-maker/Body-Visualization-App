@@ -236,7 +236,6 @@ def complete_step2():
 def complete_step3():
     """ Handle the 3rd step of the body visualizer """
     # 如果未登录
-    # print("~"*20+session['logged_in']+"~"*20)
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login_page'))
 
@@ -244,7 +243,6 @@ def complete_step3():
     if request.method == 'GET':
         # print("~"*45)
         model_name = request.cookies.get('model_name')
-        # print(model_name)
         model_texture = model.search_model_texture_file_path(model_name)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         if model_parameters is None:
@@ -253,6 +251,7 @@ def complete_step3():
         print(model_parameters)
         return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
                                body_parameters_range=body_parameters_range)
+
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']
@@ -269,9 +268,10 @@ def complete_step3():
         waist = request.form.get('waist')
         chest = request.form.get('chest')
 
-        # print("{},{},{}".format(model_name,update_time,height))
+        # store the new body measurement into the database
         model.add_new_body_measurment_record(model_name, height, weight,
                                              thigh, shank, hip, arm_girth, arm_pan, waist, chest)
+
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
 
@@ -285,8 +285,10 @@ def complete_step4():
 
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
-        last_two_records = model.search_last_two_body_measurement_records(model_name)
-        return render_template('step4.html')
+
+        # latest_records：如果数据库只有一个此model的body measurement记录，那么这个2d字典长度为1，仅有一个record，否则这个2d字典包含了最近两次的record
+        latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
+        return render_template('step4.html',latest_records = latest_records)
 
 
 # for test only

@@ -42,28 +42,28 @@ class SQLDatabase():
     def database_setup(self):
 
         # Clear the database if needed
-        self.execute("DROP TABLE IF EXISTS Models ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelParameters ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS Textures ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS BasicModels ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelAppearance ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS AgeGroupParametersRange ")
-        self.commit()
+        # self.execute("DROP TABLE IF EXISTS Models ")
+        # self.commit()
+        # self.execute("DROP TABLE IF EXISTS ModelParameters ")
+        # self.commit()
+        # self.execute("DROP TABLE IF EXISTS Textures ")
+        # self.commit()
+        # self.execute("DROP TABLE IF EXISTS BasicModels ")
+        # self.commit()
+        # self.execute("DROP TABLE IF EXISTS ModelAppearance ")
+        # self.commit()
+        # self.execute("DROP TABLE IF EXISTS AgeGroupParametersRange ")
+        # self.commit()
 
         # Create the users table
         self.execute("""
-        CREATE TABLE Models(
+        CREATE TABLE IF NOT EXISTS Models(
             model_name TEXT NOT NULL,
             age INT,
             gender TEXT,
             PRIMARY KEY(model_name));
             
-        CREATE TABLE ModelParameters(
+        CREATE TABLE IF NOT EXISTS  ModelParameters(
             model_name TEXT NOT NULL,
             update_time DATETIME,
             height REAL,
@@ -79,17 +79,17 @@ class SQLDatabase():
             FOREIGN KEY (model_name) REFERENCES Models(model_name)
         );
         
-        CREATE TABLE Textures(
+        CREATE TABLE IF NOT EXISTS Textures(
             feature TEXT PRIMARY KEY NOT NULL,
             file_path TEXT NOT NULL
         );
         
-        CREATE TABLE BasicModels(
+        CREATE TABLE IF NOT EXISTS BasicModels(
             basic_model_name TEXT PRIMARY KEY NOT NULL,
             file_path TEXT NOT NULL  
         );
         
-        CREATE TABLE ModelAppearance(
+        CREATE TABLE IF NOT EXISTS ModelAppearance(
             model_name TEXT PRIMARY KEY NOT NULL REFERENCES Models(model_name),
             hair_color TEXT NOT NULL REFERENCES Textures(feature),
             skin_color TEXT NOT NULL REFERENCES Textures(feature),
@@ -99,7 +99,7 @@ class SQLDatabase():
             
         );
         
-        CREATE TABLE AgeGroupParametersRange(
+        CREATE TABLE IF NOT EXISTS AgeGroupParametersRange(
             age_group TEXT PRIMARY KEY NOT NULL,
             height_max REAL,
             height_min REAL,
@@ -125,20 +125,50 @@ class SQLDatabase():
         self.commit()
 
         # Add our admin model
-        if not self.check_model_existence('admin'):
+        if self.check_table_is_empty("Models") and not self.check_model_existence('admin'):
             self.add_model('admin', 20, 'male')
-        self.add_model_textures('black', '/black_hair')
-        self.add_model_textures('yellow', '/yellow_skin')
-        self.add_model_textures('T_shirt', '/T_shirt')
-        self.add_model_textures('dress', '/dress')
-        self.add_basic_model('adult_female', os.path.abspath('..') + '/adult_female')
-        self.add_model_appearance('admin', 'black', 'yellow', 'T_shirt', 'dress', 'adult_female')
-        self.add_new_body_measurement_record_with_time('admin', "2021-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
-        self.add_new_body_measurement_record_with_time('admin', "2020-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
-        self.add_new_body_measurement_record_with_time('admin', "2022-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
-        self.add_age_group_parameters_range()
 
-        print("\nDatabase successfullly set up.\n")
+        # Only add data when the tables are empty
+        if self.check_table_is_empty("Textures"):
+            self.add_model_textures('black', '/black_hair')
+            self.add_model_textures('yellow', '/yellow_skin')
+            self.add_model_textures('T_shirt', '/T_shirt')
+            self.add_model_textures('dress', '/dress')
+
+        if self.check_table_is_empty("BasicModels"):
+            self.add_basic_model('adult_female', os.path.abspath('..') + '/adult_female')
+
+        if self.check_table_is_empty("ModelAppearance"):
+            self.add_model_appearance('admin', 'black', 'yellow', 'T_shirt', 'dress', 'adult_female')
+
+        if self.check_table_is_empty("ModelParameters"):
+            self.add_new_body_measurement_record_with_time('admin', "2021-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+            self.add_new_body_measurement_record_with_time('admin', "2020-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+            self.add_new_body_measurement_record_with_time('admin', "2022-09-09 00:05:09", 1, 1, 1, 1, 1, 1, 1, 1,1)
+
+        if self.check_table_is_empty("AgeGroupParametersRange"):
+            self.add_age_group_parameters_range()
+
+        # print("\nDatabase successfullly set up.\n")
+
+    # -----------------------------------------------------------------------------
+    # Check if a table is empty or not
+    # -----------------------------------------------------------------------------
+    # Return True if the table is empty, otherwise false
+    def check_table_is_empty(self, table_name):
+        sql_query="""
+            SELECT COUNT(*) 
+            FROM (
+                select 0 
+                from '{table_name}'
+                limit 1);
+        """
+        sql_query = sql_query.format(table_name=table_name)
+        result = self.cur.execute(sql_query).fetchone()
+        if result[0] == 0:
+            return True
+        else:
+            return False
 
     # -----------------------------------------------------------------------------
     # Model Existence Check
@@ -315,20 +345,6 @@ class SQLDatabase():
         return self.cur.fetchall()[0]
 
     # -----------------------------------------------------------------------------
-    # Last two body measurement records
-    # -----------------------------------------------------------------------------
-    def search_last_two_body_measurement_records(self, model_name):
-        sql_query = """
-                            SELECT update_time,height,weight,chest,waist,hip,arm_girth,arm_pan,thigh,shank
-                            FROM  ModelParameters  
-                            WHERE model_name = '{model_name}'
-                            ORDER BY update_time DESC LIMIT 2
-                        """
-        sql_query = sql_query.format(model_name=model_name)
-        self.execute(sql_query)
-        return self.cur.fetchall()
-
-    # -----------------------------------------------------------------------------
     # the Last one body measurement record
     # -----------------------------------------------------------------------------
     def search_last_one_body_measurement_record(self, model_name):
@@ -354,3 +370,22 @@ class SQLDatabase():
         sql_query = sql_query.format(age_group=age_group)
         self.execute(sql_query)
         return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # Search the newest 2 body measurement records for a model
+    # -----------------------------------------------------------------------------
+    def get_two_newest_body_measurement(self, model_name):
+        sql_query = """
+                    SELECT *
+                    FROM ModelParameters
+                    WHERE model_name = '{model_name}'
+                    ORDER BY update_time DESC
+                    LIMIT 2
+        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
+
+
+

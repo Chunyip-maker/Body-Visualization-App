@@ -52,6 +52,8 @@ class Model:
     def define_basic_model(self, age, gender):
         if age is None or gender is None:
             return
+        if age == 'None' or gender == 'None':
+            return
         age = int(age)
         result = ""
         if age < 20:
@@ -75,9 +77,6 @@ class Model:
 
     def search_model_texture_file_path(self, model_name):
         return self.database.search_model_texture_file_path(model_name)
-
-    def search_last_two_body_measurement_records(self, model_name):
-        return self.database.search_last_two_body_measurement_records(model_name)
 
     def search_last_one_body_measurement_records(self, model_name):
         model_parameters = self.database.search_last_one_body_measurement_record(model_name)
@@ -104,7 +103,37 @@ class Model:
             i+=2
         return general_body_parameters
 
+    # The returned 2d dictionary contains at most 2 records of the historic body measurement of the specified model
+    # The key of the 2 records are "1st record" and "2nd record"
+    def get_at_most_two_newest_body_measurement_record(self, model_name):
+        if model_name is None:
+            return
+        raw_results = self.database.get_two_newest_body_measurement(model_name)
+        parsed_results = {}
+        for i in range(len(raw_results)):
+            raw_result = raw_results[i] # raw_result is a tuple from the 2d tuple returned by SQL query
+            index = ""
+            if i == 0:
+                index += str(i+1)+"st record"
+            else:
+                index += str(i+1)+"nd record"
 
+            entry = {}
+            entry["update_time"] = raw_result[1]
+            entry["height"] = float(raw_result[2])
+            entry["weight"] = float(raw_result[3])
+            entry["thigh"] = float(raw_result[4])
+            entry["shank"] = float(raw_result[5])
+            entry["hip"] = float(raw_result[6])
+            entry["arm_girth"]= float(raw_result[7])
+            entry["arm_pan"] = float(raw_result[8])
+            entry["waist"] = float(raw_result[9])
+            entry["chest"] = float(raw_result[10])
+
+            parsed_results[index] = entry
+
+        print(parsed_results)
+        return parsed_results
 
     # def search_body_parameters_range(self,age_group):
     #     result = self.database.search_body_parameters_range(age_group)
