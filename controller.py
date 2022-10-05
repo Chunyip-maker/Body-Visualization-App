@@ -251,6 +251,7 @@ def complete_step3():
         print(model_parameters)
         return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
                                body_parameters_range=body_parameters_range)
+
     elif request.method == 'POST':
         # 提交7项参数入库
         # model_name = human_model_details['model_name']
@@ -267,9 +268,12 @@ def complete_step3():
         waist = request.form.get('waist')
         chest = request.form.get('chest')
 
-        # print("{},{},{}".format(model_name,update_time,height))
+        # store the new body measurement into the database
         model.add_new_body_measurment_record(model_name, height, weight,
                                              thigh, shank, hip, arm_girth, arm_pan, waist, chest)
+
+        model.get_at_most_two_newest_body_measurement_record(model_name)
+
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
 
