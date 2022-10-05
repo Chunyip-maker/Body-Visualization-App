@@ -286,9 +286,14 @@ def complete_step4():
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
 
-        # latest_records：如果数据库只有一个此model的body measurement记录，那么这个2d字典长度为1，仅有一个record，否则这个2d字典包含了最近两次的record
+        # latest_records: a list of records，record可能仅一个（因为是新用户），也可能为两个，每个record以字典形式保存body measurement
+        # 如果len(latest_records) = 2 ，第一个是最新的，第二个是次新的
         latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
-        return render_template('step4.html',latest_records = latest_records)
+
+        # historic_records: a list of records，record最多有十个，按时间均匀分布，包含最新数据和最老数据，每个record以字典形式保存body measurement
+        historic_records = model.get_historic_body_measurement_records_to_be_displayed(model_name)
+
+        return render_template('step4.html',latest_records = latest_records, historic_records = historic_records)
 
 
 # for test only

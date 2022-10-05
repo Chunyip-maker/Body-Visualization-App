@@ -386,6 +386,20 @@ class SQLDatabase():
         self.execute(sql_query)
         return self.cur.fetchall()
 
+    # -----------------------------------------------------------------------------
+    # Search all body measurement records for a model
+    # -----------------------------------------------------------------------------
+    def get_all_body_measurement_records(self, model_name):
+        sql_query = """
+            SELECT *
+            FROM ModelParameters
+            WHERE model_name = '{model_name}'
+            ORDER BY update_time DESC
+        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
 
 
 
