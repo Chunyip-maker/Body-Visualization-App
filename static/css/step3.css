@@ -246,10 +246,11 @@ input[type="range"] {
 
 .next button {
     position: relative;
-    left: -37%;
+    left: -35%;
+    top: -75px;
 
     float: right;
-    width: 180px;
+    width: 230px;
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
@@ -274,10 +275,11 @@ input[type="range"] {
 
 .history button{
   position: relative;
-  left: -0%;
+  left: 3%;
+  top: -75px;
 
   float: right;
-  width: 180px;
+  width: 230px;
   background-color: #f6f6f6;
   outline: none;
   border-radius: 50px;
@@ -302,11 +304,13 @@ input[type="range"] {
 
 .logout button{
     position: absolute;
-    left: 75%;
+    left: 90%;
     top: 15%;
     
     float: right;
-    width: 180px;
+    width: 90px;
+    height: 90px;
+
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
@@ -316,7 +320,8 @@ input[type="range"] {
     padding:15px;
     color: rgb(227,167,168);
     letter-spacing: 2px;
-    font-size: 24px;
+    font-size: 15px;
+    text-align: center;
     cursor: pointer;
 }
 
