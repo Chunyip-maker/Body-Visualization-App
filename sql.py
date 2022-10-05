@@ -345,20 +345,6 @@ class SQLDatabase():
         return self.cur.fetchall()[0]
 
     # -----------------------------------------------------------------------------
-    # Last two body measurement records
-    # -----------------------------------------------------------------------------
-    def search_last_two_body_measurement_records(self, model_name):
-        sql_query = """
-                            SELECT update_time,height,weight,chest,waist,hip,arm_girth,arm_pan,thigh,shank
-                            FROM  ModelParameters  
-                            WHERE model_name = '{model_name}'
-                            ORDER BY update_time DESC LIMIT 2
-                        """
-        sql_query = sql_query.format(model_name=model_name)
-        self.execute(sql_query)
-        return self.cur.fetchall()
-
-    # -----------------------------------------------------------------------------
     # the Last one body measurement record
     # -----------------------------------------------------------------------------
     def search_last_one_body_measurement_record(self, model_name):
@@ -400,8 +386,6 @@ class SQLDatabase():
         self.execute(sql_query)
         return self.cur.fetchall()
 
-if __name__=="__main__":
-    database = SQLDatabase()
-    database.database_setup()
+
 
 

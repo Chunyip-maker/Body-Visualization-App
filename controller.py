@@ -272,8 +272,6 @@ def complete_step3():
         model.add_new_body_measurment_record(model_name, height, weight,
                                              thigh, shank, hip, arm_girth, arm_pan, waist, chest)
 
-        model.get_at_most_two_newest_body_measurement_record(model_name)
-
         # return render_template('step4.html')
         return redirect(url_for('complete_step4'))
 
@@ -287,8 +285,10 @@ def complete_step4():
 
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
-        last_two_records = model.search_last_two_body_measurement_records(model_name)
-        return render_template('step4.html')
+
+        # latest_records：如果数据库只有一个此model的body measurement记录，那么这个2d字典长度为1，仅有一个record，否则这个2d字典包含了最近两次的record
+        latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
+        return render_template('step4.html',latest_records = latest_records)
 
 
 # for test only

@@ -78,9 +78,6 @@ class Model:
     def search_model_texture_file_path(self, model_name):
         return self.database.search_model_texture_file_path(model_name)
 
-    def search_last_two_body_measurement_records(self, model_name):
-        return self.database.search_last_two_body_measurement_records(model_name)
-
     def search_last_one_body_measurement_records(self, model_name):
         model_parameters = self.database.search_last_one_body_measurement_record(model_name)
         if len(model_parameters) == 0:
