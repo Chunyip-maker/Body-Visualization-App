@@ -7,19 +7,19 @@
 
 body {
     background-image: url("../images/background1.png");
-    background-size:cover
+    background-size: cover
 }
 
 /* Font */
 
 @font-face {
-    font-family:'Lato-Black';
+    font-family: 'Lato-Black';
     src: url('../fonts/lato/Lato-Black.ttf');
 }
 
 
 @font-face {
-    font-family:'Lato-Light';
+    font-family: 'Lato-Light';
     src: url('../fonts/lato/Lato-Light.ttf');
 }
 
@@ -30,8 +30,7 @@ body {
     /* overflow: hidden; */
     background-color: transparent;
     font-size: 60px;
-    color: #f6f6f6;
-    text-shadow: rgb(166,199,208) 3px 0 0, rgb(166,199,208) 0 3px 0, rgb(166,199,208) -3px 0 0, rgb(166,199,208) 0 -3px 0;
+    text-shadow: rgb(166, 199, 208) 3px 0 0, rgb(166, 199, 208) 0 3px 0, rgb(166, 199, 208) -3px 0 0, rgb(166, 199, 208) 0 -3px 0;
     text-align: center;
     vertical-align: middle;
     line-height: 100px;
@@ -48,7 +47,8 @@ body {
     width: 1200px;
     height: 500px;
 }
-.main .left{
+
+.main .left {
     float: left;
     width: 500px;
     height: 600px;
@@ -56,7 +56,7 @@ body {
     background-color: white;
 }
 
-.main #canvas{
+.main #canvas {
     float: left;
     width: 500px;
     height: 600px;
@@ -65,7 +65,7 @@ body {
 }
 
 
-.main .left h1{
+.main .left h1 {
     color: white;
 }
 
@@ -81,13 +81,12 @@ body {
     margin-left: 50px;
     /* background-color: pink; */
     border-radius: 20px;
-    
+
     position: relative;
     top: -15px;
     left: -20px;
     border-color: transparent;
 }
-
 
 
 span {
@@ -104,7 +103,7 @@ span {
     float: left;
     margin-top: 10px;
     width: 250px;
-    height: 40x;
+    height: 40px;
     padding: 0px;
 }
 
@@ -115,53 +114,53 @@ span {
 }
 
 :root {
-  --slider-width: 200px;
-  --slider-height: 20px;
+    --slider-width: 200px;
+    --slider-height: 20px;
 }
 
 input[type='range'] {
-  overflow: hidden;
-  cursor: ew-resize;
+    overflow: hidden;
+    cursor: ew-resize;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  input[type='range'] {
-    width: var(--slider-width);
-    -webkit-appearance: none;
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    input[type='range'] {
+        width: var(--slider-width);
+        -webkit-appearance: none;
 
-    border-radius: 3px;
-    background-color: rgb(245,200,200);
-  }
+        border-radius: 3px;
+        background-color: rgb(245, 200, 200);
+    }
 
-  input[type='range']::-webkit-slider-thumb {
-    height: var(--slider-height);
-    -webkit-appearance: none;
-    box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103,155,134);
+    input[type='range']::-webkit-slider-thumb {
+        height: var(--slider-height);
+        -webkit-appearance: none;
+        box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103, 155, 134);
 
-    width: 0px;
-  }
+        width: 0px;
+    }
 }
 
 /* firefox support */
 input[type="range"]::-moz-range-progress {
-  background-color: rgb(103,155,134); 
+    background-color: rgb(103, 155, 134);
 }
 
 input[type="range"]::-moz-range-thumb {
-  height: var(--slider-height);
-  width: 0;
-  border: none;
-  box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103,155,134);
-  box-sizing: border-box;
+    height: var(--slider-height);
+    width: 0;
+    border: none;
+    box-shadow: calc(-1 * var(--slider-width)) 0 0 var(--slider-width) rgb(103, 155, 134);
+    box-sizing: border-box;
 }
 
 /* IE support */
-input[type="range"]::-ms-fill-upper {  
-  background-color: rgb(245,200,200);
+input[type="range"]::-ms-fill-upper {
+    background-color: rgb(245, 200, 200);
 }
 
 input[type="range"]::-ms-fill-lower {
-  background-color: rgb(103,155,134); 
+    background-color: rgb(103, 155, 134);
 }
 
 /*
@@ -256,57 +255,57 @@ input[type="range"] {
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
-    border-color: rgb(227,167,168);
-    padding:15px;
-    color: rgb(227,167,168);
+    border-color: rgb(227, 167, 168);
+    padding: 15px;
+    color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 24px;
     cursor: pointer;
 }
 
 .next button:hover {
-  background-color: rgb(255,206,206);
-  border-radius: 50px;
-  border-width: 3px;
-  border-style: solid;
-  color: white;
-  transition: background-color 0.4s ease;
+    background-color: rgb(255, 206, 206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    transition: background-color 0.4s ease;
 }
 
-.history button{
-  position: relative;
-  left: 3%;
-  top: -75px;
+.history button {
+    position: relative;
+    left: 3%;
+    top: -75px;
 
-  float: right;
-  width: 230px;
-  background-color: #f6f6f6;
-  outline: none;
-  border-radius: 50px;
-  border-width: 3px;
-  border-style: solid;
-  border-color: rgb(227,167,168);
-  padding:15px;
-  color: rgb(227,167,168);
-  letter-spacing: 2px;
-  font-size: 24px;
-  cursor: pointer;
+    float: right;
+    width: 230px;
+    background-color: #f6f6f6;
+    outline: none;
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(227, 167, 168);
+    padding: 15px;
+    color: rgb(227, 167, 168);
+    letter-spacing: 2px;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .history button:hover {
-  background-color: rgb(255,206,206);
-  border-radius: 50px;
-  border-width: 3px;
-  border-style: solid;
-  color: white;
-  transition: background-color 0.4s ease;
+    background-color: rgb(255, 206, 206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    transition: background-color 0.4s ease;
 }
 
-.logout button{
+.logout button {
     position: absolute;
     left: 90%;
     top: 15%;
-    
+
     float: right;
     width: 90px;
     height: 90px;
@@ -316,9 +315,9 @@ input[type="range"] {
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
-    border-color: rgb(227,167,168);
-    padding:15px;
-    color: rgb(227,167,168);
+    border-color: rgb(227, 167, 168);
+    padding: 15px;
+    color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 15px;
     text-align: center;
@@ -326,10 +325,10 @@ input[type="range"] {
 }
 
 .logout button:hover {
-  background-color: rgb(255,206,206);
-  border-radius: 50px;
-  border-width: 3px;
-  border-style: solid;
-  color: white;
-  transition: background-color 0.4s ease;
+    background-color: rgb(255, 206, 206);
+    border-radius: 50px;
+    border-width: 3px;
+    border-style: solid;
+    color: white;
+    transition: background-color 0.4s ease;
 }
