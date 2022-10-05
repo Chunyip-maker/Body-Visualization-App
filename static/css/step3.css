@@ -48,18 +48,12 @@ body {
     height: 500px;
 }
 
-.main .left {
-    float: left;
-    width: 500px;
-    height: 600px;
-    border-width: 1px;
-    background-color: white;
-}
-
 .main #canvas {
     float: left;
-    width: 500px;
-    height: 600px;
+    position: relative;
+    left: 1%;
+    width: 450px;
+    height: 550px;
     border-width: 1px;
     background-color: white;
 }
@@ -103,7 +97,7 @@ span {
     float: left;
     margin-top: 10px;
     width: 250px;
-    height: 40px;
+    height: 25px;
     padding: 0px;
 }
 
@@ -245,7 +239,7 @@ input[type="range"] {
 
 .next button {
     position: relative;
-    left: -35%;
+    left: -37%;
     top: -75px;
 
     float: right;
@@ -274,7 +268,7 @@ input[type="range"] {
 
 .history button {
     position: relative;
-    left: 3%;
+    left: 2%;
     top: -75px;
 
     float: right;
