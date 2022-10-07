@@ -86,7 +86,8 @@ function sceneInit(canvasID) {
         } );
         //x=0.74,y=1.338,z=1.278 shang
         //x=0.7458 y = 0.69353, z=1.379
-}
+        
+}   
 
 async function init(canvasID, modelName) {
 
@@ -120,6 +121,7 @@ function setFbxAnimation(model) {
     action = mixer.clipAction( model.animations[ 0 ] );
     action.play();
     animate();
+    
 }
 
 
@@ -129,6 +131,7 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
+    //console.log(controls.target);
     // console.log(camera.position)
     // console.log(camera.rotation)
     
@@ -209,6 +212,7 @@ function sceneInit1(canvasID) {
     controls1.enableDamping = true
     controls1.target.set(0, 1, 0)
     controls1.update()
+    
 
     controls1.addEventListener( 'change', () => {
         camera.position.copy( camera1.position );
@@ -260,13 +264,19 @@ function animate1() {
 }
 
 document.getElementById("Top").onclick = function cameraChange() {
+
+
     camera.position.set(0.6248297296327294, 1.503963156706119, 1.3563233589083084);
     camera1.position.set(0.6916297296327294, 1.503963156706119, 1.3563233589083084);
 
     camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
     camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-    //controls.update()
-    //controls1.update()
+    controls.target.set(
+        -0.025193594935890188,
+        1.133358866462773,
+        0.012610338156221673);
+    controls.update();
+
 
 }
 
@@ -276,8 +286,12 @@ document.getElementById("Bottom").onclick = function cameraChange() {
 
     camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
     camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-    //controls.update()
-    // controls1.update()
+
+    controls.target.set(
+        -0.046407628814892146,
+        0.4610626823169693,
+        -0.0650557742511241);
+    controls.update();
 }
 
 
