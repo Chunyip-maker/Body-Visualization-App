@@ -5,6 +5,7 @@ import { OrbitControls } from '/static/js//OrbitControls.js';
 import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+import { Vector3 } from 'three';
 
 //init
 
@@ -256,6 +257,7 @@ function setFbxAnimation1(model) {
 
 
 function animate1() {
+    TWEEN.update();
     requestAnimationFrame( animate1 );
     const delta = clock1.getDelta();
     if ( mixer1 ) mixer1.update( delta );
@@ -265,33 +267,72 @@ function animate1() {
 
 document.getElementById("Top").onclick = function cameraChange() {
 
-
-    camera.position.set(0.6248297296327294, 1.503963156706119, 1.3563233589083084);
-    camera1.position.set(0.6916297296327294, 1.503963156706119, 1.3563233589083084);
-
-    camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-    camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-    controls.target.set(
-        -0.025193594935890188,
+    const cameraTarget = new Vector3(0.6248297296327294, 1.503963156706119, 1.3563233589083084)
+    const controlTarget = new Vector3(-0.025193594935890188,
         1.133358866462773,
-        0.012610338156221673);
-    controls.update();
-
+        0.012610338156221673)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
 
 }
 
 document.getElementById("Bottom").onclick = function cameraChange() {
-    camera.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
-    camera1.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
 
-    camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-    camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
-
-    controls.target.set(
-        -0.046407628814892146,
+    const cameraTarget = new Vector3(0.5902717381883454, 0.9486176075421906, 1.5785914227370572)
+    const controlTarget = new Vector3(-0.046407628814892146,
         0.4610626823169693,
-        -0.0650557742511241);
-    controls.update();
+        -0.0650557742511241)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+}
+
+
+//reference: http://zuoben.top/#4-10
+// current1 相机当前的位置
+// target1 相机的controls的target
+// current2 新相机的目标位置
+// target2 新的controls的target
+var tween;
+ 
+function animateCamera(current1, target1, current2, target2) {
+    
+    let positionVar = {
+        x1: current1.x,
+        y1: current1.y,
+        z1: current1.z,
+        x2: target1.x,
+        y2: target1.y,
+        z2: target1.z
+    };
+    
+    controls.enabled = false;
+    tween = new TWEEN.Tween(positionVar);
+    tween.to({
+        x1: current2.x,
+        y1: current2.y,
+        z1: current2.z,
+        x2: target2.x,
+        y2: target2.y,
+        z2: target2.z
+    }, 1000);
+    
+    tween.onUpdate(function() {
+        
+        camera.position.x = positionVar.x1;
+        camera.position.y = positionVar.y1;
+        camera.position.z = positionVar.z1;
+        controls.target.x = positionVar.x2;
+        controls.target.y = positionVar.y2;
+        controls.target.z = positionVar.z2;
+        controls.update();
+        
+        console.log(positionVar);
+    })
+ 
+    tween.onComplete(function() {
+        controls.enabled = true;
+    })
+ 
+    tween.easing(TWEEN.Easing.Cubic.InOut);
+    tween.start();
 }
 
 
