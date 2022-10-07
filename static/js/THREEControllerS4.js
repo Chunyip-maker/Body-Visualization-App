@@ -129,7 +129,9 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
-    //console.log(camera.position)
+    // console.log(camera.position)
+    // console.log(camera.rotation)
+    
 }
 
 
@@ -258,15 +260,24 @@ function animate1() {
 }
 
 document.getElementById("Top").onclick = function cameraChange() {
-
     camera.position.set(0.6248297296327294, 1.503963156706119, 1.3563233589083084);
     camera1.position.set(0.6916297296327294, 1.503963156706119, 1.3563233589083084);
+
+    camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
+    camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
+    //controls.update()
+    //controls1.update()
+
 }
 
 document.getElementById("Bottom").onclick = function cameraChange() {
-
     camera.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
     camera1.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
+
+    camera.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
+    camera1.rotation.set(-0.2830493492651662, 0.4157931856541107, 0.11694632498187489);
+    //controls.update()
+    // controls1.update()
 }
 
 
