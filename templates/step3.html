@@ -28,7 +28,11 @@
 
 <body>
 
+    <div id="preloader">
 
+
+
+    </div>
 
 
 
@@ -185,7 +189,7 @@
                             Next
                         </button>
                     </form>
-    
+
                     <!-- 改成history的 -->
                     <form class="history" action="/step3" method='POST'>
                         <button>
@@ -229,13 +233,16 @@
 
 
 
-        <script type="module">
-
-
+        <script>
+            $(window).on("load", function () {
+                $("#preloader").fadeOut("slow");
+            });
         </script>
 
 
-        </div>
+
+
+
 
 </body>
 
