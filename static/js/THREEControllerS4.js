@@ -84,6 +84,8 @@ function sceneInit(canvasID) {
             camera1.position.copy( camera.position );
             camera1.rotation.copy( camera.rotation );
         } );
+        //x=0.74,y=1.338,z=1.278 shang
+        //x=0.7458 y = 0.69353, z=1.379
 }
 
 async function init(canvasID, modelName) {
@@ -127,6 +129,7 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     stats.update();
+    //console.log(camera.position)
 }
 
 
@@ -253,6 +256,19 @@ function animate1() {
     renderer1.render( scene1, camera1 );
     stats1.update();
 }
+
+document.getElementById("Top").onclick = function cameraChange() {
+
+    camera.position.set(0.6248297296327294, 1.503963156706119, 1.3563233589083084);
+    camera1.position.set(0.6916297296327294, 1.503963156706119, 1.3563233589083084);
+}
+
+document.getElementById("Bottom").onclick = function cameraChange() {
+
+    camera.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
+    camera1.position.set(0.5902717381883454, 0.9486176075421906, 1.5785914227370572);
+}
+
 
 
 
