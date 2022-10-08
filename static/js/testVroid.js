@@ -18,7 +18,7 @@ function sceneInit(canvasID) {
 
         //scene set up, background color debug use only
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x000000);
+        scene.background = new THREE.Color(0xf2f2f2);
         
         //set up render
         renderer = new THREE.WebGLRenderer();
@@ -80,11 +80,11 @@ async function init(modelUrl) {
              gui.add(child.scale, "x",0,2).name(child.name + "x");
              gui.add(child.scale, "y",0,2).name(child.name + "y");
              gui.add(child.scale, "z",0,2).name(child.name + "z");
-            console.log(child.name);
+            //console.log(child.name);
             count += 1;
         }
     })
-    console.log(count);
+    //console.log(count);
     console.log(vrm1)
 
     let group = scene.getObjectByName("Body");
@@ -93,18 +93,26 @@ async function init(modelUrl) {
 
     let bodySkin = scene.getObjectByName("Body_(merged)baked");
     let faceSkin = scene.getObjectByName("Face_(merged)(Clone)baked_3")
+    console.log(hair.children[1].material.uniforms)
+
+
+    
     //faceSkin.material = bodySkin.material;
 
     hair.children[0].visible = false;
-    console.log(group.children);
+    //console.log(hair.children[1]);
 
     for (let i = 7; i < 14; i++) {
         face.children[i].visible = false;
     }
 
-    for (let i = 0; i < 5; i++) {
+    //attribute to change MtoonMaterial color
+    //litfactor, shadeColorFactor
+
+    for (let i = 5; i < group.children.length; i++) {
         group.children[i].visible = false;
     }
+
     console.log(group.children);
     currentVrm = vrm1;
 

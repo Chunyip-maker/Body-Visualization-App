@@ -476,7 +476,7 @@ function textureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
 
-            if (child.name == targetTextureName) {
+            if (child.name.indexOf(targetTextureName) != -1) {
 
                 var newTexture = new THREE.TextureLoader().load(newTexturePath);
                 child.material.map = newTexture;

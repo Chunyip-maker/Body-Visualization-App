@@ -13,9 +13,17 @@ let stats, mixer, canvas, canvasWidth, canvasHeight, clock;
 let camera, scene, renderer, controls, group;
 let loadModel, tempModel, action;
 
+// "/static/new_model/agegroup"
+let basic_model_path = "";
+let currentSelection = "/model1/";
+
+//skin, hair, top, bottom
+let femaleTextureCombination = ["Body_00, (path)_10.png,Face_00, (path)_04.png", "Hair_00, (path)_16.png,HairBack, (path)_12.png", "Tops, (path)_15.png", "Bottoms, (path)_13.png"];
+let maleTextureCombination = ["Body_00, (path)_10.png,Face_00, (path)_04.png", "Hair_00, (path)_17.png", "Tops_01, (path)_14.png,Tops_02, (path)_15.png,Tie, (path)_16.png", "Bottoms, (path)_13.png"];
+
 
 //test version for model under /static/model/test2/ folder only
-init("canvas", "Breathing Idle2.fbx");
+init("canvas");
 
 function sceneInit(canvasID) {
         //canvas set up
@@ -77,17 +85,20 @@ function sceneInit(canvasID) {
         controls.update()
 }
 
-async function init(canvasID, modelName) {
+async function init(canvasID) {
 
     // group = new THREE.Group();
     sceneInit(canvasID);
+    basic_model_path =  "/static/new_model/" + document.getElementById("model_age_group").innerText;
 
     //Async loader!
-    const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
+    const fbxLoader = new FBXLoader().setPath( basic_model_path + currentSelection);
     [loadModel, tempModel] = await Promise.all( [
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' ),
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
+        fbxLoader.loadAsync( 'Idle.fbx' ),
+        fbxLoader.loadAsync( 'Idle.fbx' )
     ] );
+
+    setTexture();
 
     var input = document.getElementById("hair_colour_1").value;
     readInput(input);
@@ -104,8 +115,6 @@ async function init(canvasID, modelName) {
             child.material.transparent = true;
             child.material.side = THREE.DoubleSide;
             child.material.alphaTest = 0.5;
-            //console.log(child.name);
-    
         }
     })
     scene.add(loadModel);
@@ -135,9 +144,9 @@ function TextureChange(targetTextureName, newTexturePath) {
     loadModel.traverse( child => {
         if (child instanceof THREE.Mesh) {
 
-            if (child.name == targetTextureName) {
+            if (child.name.indexOf(targetTextureName) != -1) {
 
-                var newTexture = new THREE.TextureLoader().load(newTexturePath);
+                let newTexture = new THREE.TextureLoader().load(newTexturePath);
                 child.material.map = newTexture;
                 child.material.needsUpdate = true;
 
@@ -157,16 +166,73 @@ function readInput(input){
 }
 
 
-//API of modify bones
-//document.getElementById("hair_style_1").oninput = function hair_style_1(){
-//    var input = document.getElementById("hair_style_1").value;
+function setTexture(){
+    let skin1, skin2, skin3;
+    let hair1, hair2, hair3;
+    let top1, top2, top3;
+    let bottom1, bottom2, bottom3;
+
+    if(basic_model_path.indexOf("_female") != -1){
+        skin1 = femaleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        skin2 = femaleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        skin3 = femaleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        hair1 = femaleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        hair2 = femaleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        hair3 = femaleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        top1 = femaleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        top2 = femaleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        top3 = femaleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        bottom1 = femaleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        bottom2 = femaleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        bottom3 = femaleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+    }else if(basic_model_path.indexOf("_male") != -1){
+        skin1 = maleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        skin2 = maleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        skin3 = maleTextureCombination[0].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        hair1 = maleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        hair2 = maleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        hair3 = maleTextureCombination[1].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        top1 = maleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        top2 = maleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        top3 = maleTextureCombination[2].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+        bottom1 = maleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option1_texture/");
+        bottom2 = maleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option2_texture/");
+        bottom3 = maleTextureCombination[3].replaceAll('(path)', basic_model_path + currentSelection + "option3_texture/");
+    }
+
+    document.getElementById("skin_colour_1").value = skin1;
+    document.getElementById("skin_colour_2").value = skin2;
+    document.getElementById("skin_colour_3").value = skin3;
+    document.getElementById("hair_colour_1").value = hair1;
+    document.getElementById("hair_colour_2").value = hair2;
+    document.getElementById("hair_colour_3").value = hair3;
+    document.getElementById("top_1").value = top1;
+    document.getElementById("top_2").value = top2;
+    document.getElementById("top_3").value = top3;
+    document.getElementById("bot_1").value = bottom1;
+    document.getElementById("bot_2").value = bottom2;
+    document.getElementById("bot_3").value = bottom3;
+}
+
+// document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
+//    var input = document.getElementById("clothing_style_1").value;
 //    readInput(input);
-//}
+// }
 //
-//document.getElementById("hair_style_2").oninput = function hair_style_2(){
-//    var input = document.getElementById("hair_style_2").value;
+// document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
+//    var input = document.getElementById("clothing_style_2").value;
 //    readInput(input);
-//}
+// }
+//
+// document.getElementById("hair_style_1").oninput = function clothing_style_1(){
+//    var input = document.getElementById("clothing_style_1").value;
+//    readInput(input);
+// }
+//
+// document.getElementById("hair_style_2").oninput = function clothing_style_2(){
+//    var input = document.getElementById("clothing_style_2").value;
+//    readInput(input);
+// }
 
 
 document.getElementById("hair_colour_1").onclick = function hair_colour_1(){
@@ -182,16 +248,6 @@ document.getElementById("hair_colour_3").onclick = function hair_colour_3(){
     var input = document.getElementById("hair_colour_3").value;
     readInput(input);
 }
-
-//document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
-//    var input = document.getElementById("clothing_style_1").value;
-//    readInput(input);
-//}
-//
-//document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
-//    var input = document.getElementById("clothing_style_2").value;
-//    readInput(input);
-//}
 
 document.getElementById("top_1").onclick = function top_1(){
     var input = document.getElementById("top_1").value;
