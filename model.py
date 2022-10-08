@@ -2,7 +2,7 @@ import os
 import datetime
 from sql import SQLDatabase
 import numpy as np
-
+import time
 
 class Model:
     def __init__(self):
@@ -113,7 +113,9 @@ class Model:
         for i in range(len(raw_results)):
             raw_result = raw_results[i] # raw_result is a tuple from the 2d tuple returned by SQL query
             entry = {}
-            entry["update_time"] = raw_result[1]
+
+            # convert time
+            entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
             entry["height"] = float(raw_result[2])
             entry["weight"] = float(raw_result[3])
             entry["thigh"] = float(raw_result[4])
@@ -124,7 +126,7 @@ class Model:
             entry["waist"] = float(raw_result[9])
             entry["chest"] = float(raw_result[10])
 
-            result.append(entry)
+            result.insert(0, entry)
 
         # print(result)
         return result
@@ -141,6 +143,7 @@ class Model:
             for i in range(len(raw_results)):
                 raw_result = raw_results[i]
                 entry = {}
+                # entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
                 entry["update_time"] = raw_result[1]
                 entry["height"] = float(raw_result[2])
                 entry["weight"] = float(raw_result[3])
@@ -151,13 +154,14 @@ class Model:
                 entry["arm_pan"] = float(raw_result[8])
                 entry["waist"] = float(raw_result[9])
                 entry["chest"] = float(raw_result[10])
-                result.append(entry)
+                result.insert(0, entry)
         else:
             # select records evenly spaced out by timestamp
             selected_indices = np.round(np.linspace(0, len(raw_results) - 1, 10)).astype(int)
             for idx in selected_indices:
                 raw_result = raw_results[idx]
                 entry = {}
+                # entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
                 entry["update_time"] = raw_result[1]
                 entry["height"] = float(raw_result[2])
                 entry["weight"] = float(raw_result[3])
@@ -168,12 +172,65 @@ class Model:
                 entry["arm_pan"] = float(raw_result[8])
                 entry["waist"] = float(raw_result[9])
                 entry["chest"] = float(raw_result[10])
-                result.append(entry)
-        for each in result:
-            print(each)
-            print()
+                result.insert(0, entry)
+        # for each in result:
+        #     print(each)
+        #     print()
         return result
 
+    def convert_time_to_remain_date(self, datetime_from_sql):
+        f = "%Y-%m-%d %H:%M:%S"
+        result = str(datetime.datetime.strptime(datetime_from_sql, f).date())
+        return result
+
+    def calculate_bmi(self, historic_records):
+        result = []
+        for record in historic_records:
+            weight = record["weight"]
+            height = record["height"]/100
+            bmi = round(weight/(height*height),2)
+            result.append(bmi)
+
+        return result
+
+    def calculate_bmr(self, historic_records, model_gender, model_age):
+        # Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
+        # Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) – (4.330 x age in years)
+        result = []
+        model_age = int(model_age)
+        for record in historic_records:
+            weight = float(record["weight"])
+            height = float(record["height"])
+            if model_gender == "male":
+                bmr = 88.362+(13.397*weight)+(4.799*height)-(5.677*model_age)
+                result.append(int(bmr))
+            elif model_gender == "female":
+                bmr = 447.593+(9.247*weight)+(3.098*height)-(4.330*model_age)
+                result.append(int(bmr))
+            else:
+                pass
+        return result
+
+    def calculate_body_fat_rate(self, historic_records, model_gender):
+        result = []
+        for record in historic_records:
+            weight = float(record["weight"])
+            waist = float(record["waist"])
+            if model_gender == "male":
+                a = waist * 0.74
+                b = weight * 0.082 + 34.89
+                fat_weight = a - b
+                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                result.append(body_fat_rate)
+            elif model_gender == "female":
+                a = waist * 0.74
+                b = weight * 0.082 + 44.74
+                fat_weight = a - b
+                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                result.append(body_fat_rate)
+            else:
+                pass
+        return result
 
     # def search_body_parameters_range(self,age_group):
     #     result = self.database.search_body_parameters_range(age_group)
@@ -202,6 +259,8 @@ class Model:
 # print(model.database.search_basic_model_file_path('admin'))
 # print(model.search_model_texture_file_path('admin'))
 
-# if __name__ == "__main__":
-#     idx = np.round(np.linspace(0, 17 - 1, 10)).astype(int)
-#     print(idx)
+if __name__ == "__main__":
+
+    ts = "2022-10-08 10:46:25"
+    f = "%Y-%m-%d %H:%M:%S"
+    print(str(datetime.datetime.strptime(ts,f).date()))

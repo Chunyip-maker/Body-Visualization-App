@@ -287,13 +287,26 @@ def complete_step4():
         model_name = request.cookies.get('model_name')
 
         # latest_records: a list of records，record可能仅一个（因为是新用户），也可能为两个，每个record以字典形式保存body measurement
-        # 如果len(latest_records) = 2 ，第一个是最新的，第二个是次新的
+        # 如果len(latest_records) = 2 ，第一个是次新的，第二个是最新的
         latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
 
         # historic_records: a list of records，record最多有十个，按时间均匀分布，包含最新数据和最老数据，每个record以字典形式保存body measurement
         historic_records = model.get_historic_body_measurement_records_to_be_displayed(model_name)
 
-        return render_template('step4.html',latest_records = latest_records, historic_records = historic_records)
+        # 计算出最近十次的bmi
+        bmi_records = model.calculate_bmi(historic_records)
+
+        # 计算出最近十次的基础代谢率bmr
+        bmr_records = model.calculate_bmr(historic_records,request.cookies.get('gender'), request.cookies.get('age'))
+        print(bmr_records)
+        # 计算出最近十次的体脂率
+        body_fat_rate_records = model.calculate_body_fat_rate(historic_records,request.cookies.get('gender'))
+
+        return render_template('step4.html',latest_records = json.dumps(latest_records),
+                               historic_records = json.dumps(historic_records),
+                               bmi_records = json.dumps(bmi_records),
+                               bmr_records = json.dumps(bmr_records),
+                               body_fat_rate_records = json.dumps(body_fat_rate_records))
 
 
 # for test only
