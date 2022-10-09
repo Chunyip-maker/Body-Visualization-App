@@ -207,7 +207,7 @@ def complete_step2():
             # # define basic model
             age = request.cookies.get('age')
             gender = request.cookies.get('gender')
-            basic_model = model.define_basic_model(age, gender)
+            # basic_model = model.define_basic_model(age, gender)
             # # insert data to database
             model.add_a_basic_human_model(model_name, age, gender)
             # basic_model = model.define_basic_model(int(age), gender)
@@ -216,13 +216,14 @@ def complete_step2():
             skin_color = request.form.get('skin_colour')  # 皮肤颜色
             top_dress = request.form.get('top')  # 上衣
             bottom_dress = request.form.get('bot')  # 下装
+            basic_model_path = request.form.get("clothing_style")  # 基础模型的路径
 
             # hair_color = model.split_mesh_name(hair_color)
             # skin_color = model.split_mesh_name(skin_color)
             # top_dress = model.split_mesh_name(top_dress)
             # bottom_dress = model.split_mesh_name(bottom_dress)
 
-            model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
+            model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model_path)
 
             # 暂时没用
             # textures_file_path = model.search_model_texture_file_path(model_name)
@@ -244,6 +245,7 @@ def complete_step3():
         # print("~"*45)
         model_name = request.cookies.get('model_name')
         model_texture = model.search_model_texture_file_path(model_name)
+        print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         if model_parameters is None:
             model_parameters = model.define_new_model_body_parameters(model_name)
@@ -297,16 +299,16 @@ def complete_step4():
         bmi_records = model.calculate_bmi(historic_records)
 
         # 计算出最近十次的基础代谢率bmr
-        bmr_records = model.calculate_bmr(historic_records,request.cookies.get('gender'), request.cookies.get('age'))
+        bmr_records = model.calculate_bmr(historic_records, request.cookies.get('gender'), request.cookies.get('age'))
         print(bmr_records)
         # 计算出最近十次的体脂率
-        body_fat_rate_records = model.calculate_body_fat_rate(historic_records,request.cookies.get('gender'))
+        body_fat_rate_records = model.calculate_body_fat_rate(historic_records, request.cookies.get('gender'))
 
-        return render_template('step4.html',latest_records = json.dumps(latest_records),
-                               historic_records = json.dumps(historic_records),
-                               bmi_records = json.dumps(bmi_records),
-                               bmr_records = json.dumps(bmr_records),
-                               body_fat_rate_records = json.dumps(body_fat_rate_records))
+        return render_template('step4.html', latest_records=json.dumps(latest_records),
+                               historic_records=json.dumps(historic_records),
+                               bmi_records=json.dumps(bmi_records),
+                               bmr_records=json.dumps(bmr_records),
+                               body_fat_rate_records=json.dumps(body_fat_rate_records))
 
 
 # for test only

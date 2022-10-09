@@ -44,10 +44,10 @@ class Model:
                                                                          shank, hip, arm_girth, arm_pan, waist, chest)
         return result
 
-    def add_model_appearance(self, model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model_name):
+    def add_model_appearance(self, model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model_path):
 
         result = self.database.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress,
-                                                    basic_model_name)
+                                                    basic_model_path)
         return result
 
     def define_basic_model(self, age, gender):
@@ -72,9 +72,6 @@ class Model:
             result += "female"
 
         return result
-
-    def search_basic_model_file_path(self, model_name):
-        return self.database.search_basic_model_file_path(model_name)
 
     def search_model_texture_file_path(self, model_name):
         return self.database.search_model_texture_file_path(model_name)

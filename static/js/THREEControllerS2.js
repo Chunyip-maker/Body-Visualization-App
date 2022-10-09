@@ -16,6 +16,8 @@ let loadModel, tempModel, action;
 // "/static/new_model/agegroup"
 let basic_model_path = "";
 let currentSelection = "/model1/";
+let cloth = true;
+let hair = true;
 
 //skin, hair, top, bottom
 let femaleTextureCombination = ["Body_00, (path)_10.png,Face_00, (path)_04.png", "Hair_00, (path)_16.png,HairBack, (path)_12.png", "Tops, (path)_15.png", "Bottoms, (path)_13.png"];
@@ -84,7 +86,57 @@ function sceneInit(canvasID) {
         controls.target.set(0, 1, 0)
         controls.update()
 }
+async function reload(canvasID){
+    scene.remove(loadModel);
 
+    //Async loader!
+    const fbxLoader = new FBXLoader().setPath( basic_model_path + currentSelection);
+    [loadModel, tempModel] = await Promise.all( [
+        fbxLoader.loadAsync( 'Idle.fbx' ),
+        fbxLoader.loadAsync( 'Idle.fbx' )
+    ] );
+
+    setTexture();
+    var hair_colour = document.getElementsByName("hair_colour");
+    for(var i=0;i<hair_colour.length;i++){
+        if(hair_colour[i].checked){readInput(hair_colour[i].value);}
+    }
+     var top = document.getElementsByName("top");
+    for(var i=0;i<top.length;i++){
+        if(top[i].checked){readInput(top[i].value);}
+    }
+     var bot = document.getElementsByName("bot");
+    for(var i=0;i<bot.length;i++){
+        if(bot[i].checked){readInput(bot[i].value);}
+    }
+     var skin_colour = document.getElementsByName("skin_colour");
+    for(var i=0;i<skin_colour.length;i++){
+        if(skin_colour[i].checked){readInput(skin_colour[i].value);}
+    }
+
+
+//    var input = document.getElementById("hair_colour_1").value;
+//    readInput(input);
+//    var input = document.getElementById("top_1").value;
+//    readInput(input);
+//    var input = document.getElementById("bot_1").value;
+//    readInput(input);
+//    var input = document.getElementById("skin_colour_1").value;
+//    readInput(input);
+
+    loadModel.traverse( child => {
+
+        if (child instanceof THREE.Mesh) {
+            child.material.transparent = true;
+            child.material.side = THREE.DoubleSide;
+            child.material.alphaTest = 0.5;
+        }
+    })
+    scene.add(loadModel);
+    setFbxAnimation(loadModel);
+
+
+}
 async function init(canvasID) {
 
     // group = new THREE.Group();
@@ -157,11 +209,8 @@ function TextureChange(targetTextureName, newTexturePath) {
 
 function readInput(input){
     input = input.split(",");
-//    console.log(input[0], input[1]);
-//    TextureChange(input[0], input[1]);
     for (let i = 0; i < input.length; i+=2) {
         TextureChange(input[i], input[i+1]);
-        //console.log(input[i], input[i+1]);
     }
 }
 
@@ -212,29 +261,41 @@ function setTexture(){
     document.getElementById("bot_1").value = bottom1;
     document.getElementById("bot_2").value = bottom2;
     document.getElementById("bot_3").value = bottom3;
+    document.getElementById("clothing_style_1").value = basic_model_path+currentSelection;
+    document.getElementById("clothing_style_2").value = basic_model_path+currentSelection;
+    document.getElementById("hair_style_1").value = basic_model_path+currentSelection;
+    document.getElementById("hair_style_2").value = basic_model_path+currentSelection;
 }
+/* Model change */
+ document.getElementById("clothing_style_1").onclick = function clothing_style_1(){
+    cloth = true;
+    if(hair){currentSelection = "/model1/";}
+    else{currentSelection = "/model2/";}
+    reload("canvas");
+ }
 
-// document.getElementById("clothing_style_1").oninput = function clothing_style_1(){
-//    var input = document.getElementById("clothing_style_1").value;
-//    readInput(input);
-// }
-//
-// document.getElementById("clothing_style_2").oninput = function clothing_style_2(){
-//    var input = document.getElementById("clothing_style_2").value;
-//    readInput(input);
-// }
-//
-// document.getElementById("hair_style_1").oninput = function clothing_style_1(){
-//    var input = document.getElementById("clothing_style_1").value;
-//    readInput(input);
-// }
-//
-// document.getElementById("hair_style_2").oninput = function clothing_style_2(){
-//    var input = document.getElementById("clothing_style_2").value;
-//    readInput(input);
-// }
+ document.getElementById("clothing_style_2").onclick = function clothing_style_2(){
+    cloth = false;
+    if(hair){currentSelection = "/model3/";}
+    else{currentSelection = "/model4/";}
+    reload("canvas");
+ }
 
+ document.getElementById("hair_style_1").onclick = function hair_style_1(){
+    hair = true;
+    if(cloth){currentSelection = "/model1/";}
+    else{currentSelection = "/model3/";}
+    reload("canvas");
+ }
 
+ document.getElementById("hair_style_2").onclick = function hair_style_2(){
+    hair = false;
+    if(cloth){currentSelection = "/model2/";}
+    else{currentSelection = "/model4/";}
+    reload("canvas");
+ }
+
+/* Model hair colour change */
 document.getElementById("hair_colour_1").onclick = function hair_colour_1(){
     var input = document.getElementById("hair_colour_1").value;
     readInput(input);
@@ -249,6 +310,7 @@ document.getElementById("hair_colour_3").onclick = function hair_colour_3(){
     readInput(input);
 }
 
+/* Model top dress change */
 document.getElementById("top_1").onclick = function top_1(){
     var input = document.getElementById("top_1").value;
     readInput(input);
@@ -264,6 +326,7 @@ document.getElementById("top_3").onclick = function top_3(){
     readInput(input);
 }
 
+/* Model bottom dress change */
 document.getElementById("bot_1").onclick = function bot_1(){
     var input = document.getElementById("bot_1").value;
     readInput(input);
@@ -279,6 +342,7 @@ document.getElementById("bot_3").onclick = function bot_3(){
     readInput(input);
 }
 
+/* Model skin colour change */
 document.getElementById("skin_colour_1").onclick = function skin_colour_1(){
     var input = document.getElementById("skin_colour_1").value;
     readInput(input);
