@@ -16,13 +16,13 @@ let modelBoneName = [], bonePositionY = [];
 
 
 //test version for model under /static/model/test2/ folder only
-init("canvas", "Breathing Idle2.fbx");
+init("canvas");
 
 
 
 
 
-async function init(canvasID, modelName) {
+async function init(canvasID) {
 
     //canvas set up
     canvas = document.getElementById(canvasID);
@@ -115,10 +115,11 @@ async function init(canvasID, modelName) {
 
 
     //Async loader!
-    const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
+    let path = document.getElementById("model_path").innerText;
+    const fbxLoader = new FBXLoader().setPath(path);
     [loadModel, tempModel] = await Promise.all( [
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' ),
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
+        fbxLoader.loadAsync( 'Idle.fbx' ),
+        fbxLoader.loadAsync( 'Idle.fbx' )
     ] );
 
     //Read database store texture
