@@ -175,6 +175,31 @@ class Model:
         #     print()
         return result
 
+    def get_last_twenty_body_measurement_records_to_be_displayed(self,model_name):
+        if model_name is None:
+            return
+        result = []
+        raw_results = self.database.get_last_twenty_body_measurement_records(model_name)
+        for i in range(len(raw_results)):
+            raw_result = raw_results[i] # raw_result is a tuple from the 2d tuple returned by SQL query
+            entry = {}
+
+            # convert time
+            entry["update_time"] = raw_result[1]
+            entry["height"] = float(raw_result[2])
+            entry["weight"] = float(raw_result[3])
+            entry["thigh"] = float(raw_result[4])
+            entry["shank"] = float(raw_result[5])
+            entry["hip"] = float(raw_result[6])
+            entry["arm_girth"]= float(raw_result[7])
+            entry["arm_pan"] = float(raw_result[8])
+            entry["waist"] = float(raw_result[9])
+            entry["chest"] = float(raw_result[10])
+
+            result.append(entry)
+
+        return result
+
     def convert_time_to_remain_date(self, datetime_from_sql):
         f = "%Y-%m-%d %H:%M:%S"
         result = str(datetime.datetime.strptime(datetime_from_sql, f).date())
@@ -227,6 +252,26 @@ class Model:
                 result.append(body_fat_rate)
             else:
                 pass
+        return result
+
+    def fetch_specified_body_measurement(self, body_measurement_key, historic_records):
+        result = []
+        for i in range(len(historic_records)):
+            record = historic_records[i]
+            result.append(record[body_measurement_key])
+        return result
+
+    def zip_combined_records(self, update_time_list,weight_list, bmi_list, bmr_list, body_fat_rate_list):
+        result = []
+        length = len(update_time_list)
+        for i in range(length):
+            record = {}
+            record["update_time"] = update_time_list[i]
+            record["weight"] = weight_list[i]
+            record["bmi"] = bmi_list[i]
+            record["bmr"] = bmr_list[i]
+            record["body_fat_rate"] = body_fat_rate_list[i]
+            result.append(record)
         return result
 
     # def search_body_parameters_range(self,age_group):

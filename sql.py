@@ -41,16 +41,6 @@ class SQLDatabase():
     # Sets up the database, and the initial table BasicModels to record the model
     def database_setup(self):
 
-        # Clear the database if needed
-        self.execute("DROP TABLE IF EXISTS Models ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelParameters ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelAppearance ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS AgeGroupParametersRange ")
-        self.commit()
-
         # Create the users table
         self.execute("""
         CREATE TABLE IF NOT EXISTS Models(
@@ -325,6 +315,21 @@ class SQLDatabase():
             FROM ModelParameters
             WHERE model_name = '{model_name}'
             ORDER BY update_time DESC
+        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # Search last 20 body measurement records for a model
+    # -----------------------------------------------------------------------------
+    def get_last_twenty_body_measurement_records(self, model_name):
+        sql_query = """
+            SELECT *
+            FROM ModelParameters
+            WHERE model_name = '{model_name}'
+            ORDER BY update_time DESC
+            LIMIT 20
         """
         sql_query = sql_query.format(model_name=model_name)
         self.execute(sql_query)

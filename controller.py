@@ -295,20 +295,42 @@ def complete_step4():
         # historic_records: a list of records，record最多有十个，按时间均匀分布，包含最新数据和最老数据，每个record以字典形式保存body measurement
         historic_records = model.get_historic_body_measurement_records_to_be_displayed(model_name)
 
+        # 抽取最近十次的体重
+        weight_records = model.fetch_specified_body_measurement("weight", historic_records)
         # 计算出最近十次的bmi
         bmi_records = model.calculate_bmi(historic_records)
-
         # 计算出最近十次的基础代谢率bmr
         bmr_records = model.calculate_bmr(historic_records, request.cookies.get('gender'), request.cookies.get('age'))
         print(bmr_records)
         # 计算出最近十次的体脂率
         body_fat_rate_records = model.calculate_body_fat_rate(historic_records, request.cookies.get('gender'))
 
+        last_twenty_historic_records = model.get_last_twenty_body_measurement_records_to_be_displayed(model_name)
+        # 抽取最近20次的时间
+        last_twenty_update_time = model.fetch_specified_body_measurement("update_time", last_twenty_historic_records)
+        # 抽取最近20次体重
+        last_twenty_weight_records = model.fetch_specified_body_measurement("weight", last_twenty_historic_records)
+        # 计算出最近20次基础代谢率
+        last_twenty_bmr_records = model.calculate_bmr(last_twenty_historic_records,request.cookies.get('gender'), request.cookies.get('age'))
+        # 计算出最近20次体脂率
+        last_twenty_body_fate_rate_records = model.calculate_body_fat_rate(last_twenty_historic_records,request.cookies.get('gender'))
+        # 计算出最近20次bmi
+        last_twenty_bmi_records = model.calculate_bmi(last_twenty_historic_records)
+        # 获得最近二十次的（update_time, weight, bmi, bmr, body_fat_rate）记录
+        last_twenty_combined_records = model.zip_combined_records(last_twenty_update_time,last_twenty_weight_records,last_twenty_bmi_records,last_twenty_bmr_records,last_twenty_body_fate_rate_records)
+
         return render_template('step4.html', latest_records=json.dumps(latest_records),
                                historic_records=json.dumps(historic_records),
+                               weight_records=json.dumps(weight_records),
                                bmi_records=json.dumps(bmi_records),
                                bmr_records=json.dumps(bmr_records),
-                               body_fat_rate_records=json.dumps(body_fat_rate_records))
+                               body_fat_rate_records=json.dumps(body_fat_rate_records),
+                               last_twenty_historic_records = json.dumps(last_twenty_historic_records),
+                               last_twenty_weight_records = json.dumps(last_twenty_weight_records),
+                               last_twenty_bmi_records = json.dumps(last_twenty_bmi_records),
+                               last_twenty_bmr_records = json.dumps(last_twenty_bmr_records),
+                               last_twenty_body_fate_rate_records = json.dumps(last_twenty_body_fate_rate_records),
+                               last_twenty_combined_records = json.dumps(last_twenty_combined_records))
 
 
 # for test only
