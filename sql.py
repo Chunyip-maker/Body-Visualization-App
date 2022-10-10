@@ -319,3 +319,18 @@ class SQLDatabase():
         sql_query = sql_query.format(model_name=model_name)
         self.execute(sql_query)
         return self.cur.fetchall()
+
+    # -----------------------------------------------------------------------------
+    # Search last 20 body measurement records for a model
+    # -----------------------------------------------------------------------------
+    def get_last_twenty_body_measurement_records(self, model_name):
+        sql_query = """
+            SELECT *
+            FROM ModelParameters
+            WHERE model_name = '{model_name}'
+            ORDER BY update_time DESC
+            LIMIT 20
+        """
+        sql_query = sql_query.format(model_name=model_name)
+        self.execute(sql_query)
+        return self.cur.fetchall()
