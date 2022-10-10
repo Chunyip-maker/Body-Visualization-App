@@ -41,16 +41,6 @@ class SQLDatabase():
     # Sets up the database, and the initial table BasicModels to record the model
     def database_setup(self):
 
-        # Clear the database if needed
-        self.execute("DROP TABLE IF EXISTS Models ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelParameters ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS ModelAppearance ")
-        self.commit()
-        self.execute("DROP TABLE IF EXISTS AgeGroupParametersRange ")
-        self.commit()
-
         # Create the users table
         self.execute("""
         CREATE TABLE IF NOT EXISTS Models(

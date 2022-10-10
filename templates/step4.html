@@ -67,7 +67,7 @@
 
         <h2> Weight Changes </h2>
         <div>
-            <canvas id="weight_chart" width="600" height="300"></canvas>
+            <canvas id="weightChart" width="600" height="300"></canvas>
             <script>
             function retract_records_data(records, key ){
                 var toBeAppendedList = []
@@ -81,7 +81,7 @@
             var weights = retract_records_data(historic_records, "weight")
             var dates = retract_records_data(historic_records, "update_time")
 
-            const ctx = document.getElementById('weight_chart').getContext('2d');
+            const ctx = document.getElementById('weightChart').getContext('2d');
             const weightChangeChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -114,11 +114,11 @@
 
         <h2> BMI Changes</h2>
         <div>
-            <canvas id="bmi_chart" width="600" height="300"></canvas>
+            <canvas id="bmiChart" width="600" height="300"></canvas>
             <script>
               var labels = dates
               var bmi_records = {{bmi_records|safe}}
-              const data = {
+              const bmiData = {
                 labels: labels,
                 datasets: [{
                   label: 'BMI',
@@ -128,157 +128,225 @@
                 }]
               };
 
-              const config = {
+              const bmiConfig = {
                 type: 'line',
-                data: data,
+                data: bmiData,
                 options: {
                     responsive:false
+
                 }
               };
               const bmiChangeChart = new Chart(
-                    document.getElementById('bmi_chart'),
-                    config
+                    document.getElementById('bmiChart'),
+                    bmiConfig
+                );
+
+            </script>
+        </div>
+
+        <h2>BMR Changes</h2>
+        <div>
+            <canvas id="bmrChart" width="600" height="300"></canvas>
+            <script>
+
+            var labels = dates;
+            var bmr_records = {{bmr_records|safe}};
+            alert(labels);
+            alert(bmr_records);
+            const bmrData = {
+                labels: labels,
+                datasets: [{
+                  label: 'BMR',
+                  borderColor: 'rgb(192,75,75)',
+                  fill:true,
+                  data: bmr_records
+                }]
+              };
+            const bmrConfig = {
+                type: 'line',
+                data: bmrData,
+                options: {
+                    responsive:false
+
+                }
+              };
+              const bmrChangeChart = new Chart(
+                    document.getElementById('bmrChart'),
+                    bmrConfig
                 );
             </script>
         </div>
 
 
+        <h2>Body Fat Rate Changes</h2>
+        <div>
+            <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
+            <script>
+              var labels = dates
+              var bodyFatRateRecords = {{body_fat_rate_records|safe}}
+              const bodyFatRateData = {
+                labels: labels,
+                datasets: [{
+                  label: 'Body Fat Rate',
+                  borderColor: 'rgb(255, 99, 132)',
+                  fill:true,
+                  data: bodyFatRateRecords
+                }]
+              };
 
-        <h2> Part 2. Statistics Report</h2>
-        <hr>
+              const bodyFatRateConfig = {
+                type: 'line',
+                data: bodyFatRateData,
+                options: {
+                    responsive:false
+
+                }
+              };
+              const bodyFatRateChangeChart = new Chart(
+                    document.getElementById('bodyFatRateChart'),
+                    bodyFatRateConfig
+                );
+
+            </script>
+        </div>
+
+        <h2>Last Thirty Records</h2>
+
+<!--        <h2> Part 2. Statistics Report</h2>-->
+<!--        <hr>-->
 
         <!--  折线图 -->
-        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+<!--        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
 
-        <h2>Part 3. History Statistics</h2>
-        <hr>
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">BMI</th>
-                        <th scope="col">Fat Rate</th>
-                        <th scope="col">B/W/S</th>
-                        <th scope="col">blabla</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>random</td>
-                        <td>data</td>
-                        <td>placeholder</td>
-                        <td>text</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>placeholder</td>
-                        <td>irrelevant</td>
-                        <td>visual</td>
-                        <td>layout</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>data</td>
-                        <td>rich</td>
-                        <td>dashboard</td>
-                        <td>tabular</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>information</td>
-                        <td>placeholder</td>
-                        <td>illustrative</td>
-                        <td>data</td>
-                    </tr>
-                    <tr>
-                        <td>1,004</td>
-                        <td>text</td>
-                        <td>random</td>
-                        <td>layout</td>
-                        <td>dashboard</td>
-                    </tr>
-                    <tr>
-                        <td>1,005</td>
-                        <td>dashboard</td>
-                        <td>irrelevant</td>
-                        <td>text</td>
-                        <td>placeholder</td>
-                    </tr>
-                    <tr>
-                        <td>1,006</td>
-                        <td>dashboard</td>
-                        <td>illustrative</td>
-                        <td>rich</td>
-                        <td>data</td>
-                    </tr>
-                    <tr>
-                        <td>1,007</td>
-                        <td>placeholder</td>
-                        <td>tabular</td>
-                        <td>information</td>
-                        <td>irrelevant</td>
-                    </tr>
-                    <tr>
-                        <td>1,008</td>
-                        <td>random</td>
-                        <td>data</td>
-                        <td>placeholder</td>
-                        <td>text</td>
-                    </tr>
-                    <tr>
-                        <td>1,009</td>
-                        <td>placeholder</td>
-                        <td>irrelevant</td>
-                        <td>visual</td>
-                        <td>layout</td>
-                    </tr>
-                    <tr>
-                        <td>1,010</td>
-                        <td>data</td>
-                        <td>rich</td>
-                        <td>dashboard</td>
-                        <td>tabular</td>
-                    </tr>
-                    <tr>
-                        <td>1,011</td>
-                        <td>information</td>
-                        <td>placeholder</td>
-                        <td>illustrative</td>
-                        <td>data</td>
-                    </tr>
-                    <tr>
-                        <td>1,012</td>
-                        <td>text</td>
-                        <td>placeholder</td>
-                        <td>layout</td>
-                        <td>dashboard</td>
-                    </tr>
-                    <tr>
-                        <td>1,013</td>
-                        <td>dashboard</td>
-                        <td>irrelevant</td>
-                        <td>text</td>
-                        <td>visual</td>
-                    </tr>
-                    <tr>
-                        <td>1,014</td>
-                        <td>dashboard</td>
-                        <td>illustrative</td>
-                        <td>rich</td>
-                        <td>data</td>
-                    </tr>
-                    <tr>
-                        <td>1,015</td>
-                        <td>random</td>
-                        <td>tabular</td>
-                        <td>information</td>
-                        <td>text</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <h2>Part 3. History Statistics</h2>-->
+<!--        <hr>-->
+<!--        <div class="table-responsive">-->
+<!--            <table class="table table-striped table-sm">-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th scope="col">#</th>-->
+<!--                        <th scope="col">BMI</th>-->
+<!--                        <th scope="col">Fat Rate</th>-->
+<!--                        <th scope="col">B/W/S</th>-->
+<!--                        <th scope="col">blabla</th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                    <tr>-->
+<!--                        <td>1,001</td>-->
+<!--                        <td>random</td>-->
+<!--                        <td>data</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>text</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,002</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>irrelevant</td>-->
+<!--                        <td>visual</td>-->
+<!--                        <td>layout</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,003</td>-->
+<!--                        <td>data</td>-->
+<!--                        <td>rich</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>tabular</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,003</td>-->
+<!--                        <td>information</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>illustrative</td>-->
+<!--                        <td>data</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,004</td>-->
+<!--                        <td>text</td>-->
+<!--                        <td>random</td>-->
+<!--                        <td>layout</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,005</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>irrelevant</td>-->
+<!--                        <td>text</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,006</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>illustrative</td>-->
+<!--                        <td>rich</td>-->
+<!--                        <td>data</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,007</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>tabular</td>-->
+<!--                        <td>information</td>-->
+<!--                        <td>irrelevant</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,008</td>-->
+<!--                        <td>random</td>-->
+<!--                        <td>data</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>text</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,009</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>irrelevant</td>-->
+<!--                        <td>visual</td>-->
+<!--                        <td>layout</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,010</td>-->
+<!--                        <td>data</td>-->
+<!--                        <td>rich</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>tabular</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,011</td>-->
+<!--                        <td>information</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>illustrative</td>-->
+<!--                        <td>data</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,012</td>-->
+<!--                        <td>text</td>-->
+<!--                        <td>placeholder</td>-->
+<!--                        <td>layout</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,013</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>irrelevant</td>-->
+<!--                        <td>text</td>-->
+<!--                        <td>visual</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,014</td>-->
+<!--                        <td>dashboard</td>-->
+<!--                        <td>illustrative</td>-->
+<!--                        <td>rich</td>-->
+<!--                        <td>data</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1,015</td>-->
+<!--                        <td>random</td>-->
+<!--                        <td>tabular</td>-->
+<!--                        <td>information</td>-->
+<!--                        <td>text</td>-->
+<!--                    </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
     </main>
     </div>
     <script src="../static/js/bootstrap-5.2.0-js/bootstrap.bundle.min.js"></script>
