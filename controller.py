@@ -298,6 +298,13 @@ def complete_step4():
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
 
+        # model texture path including: hair_color,skin_color,top_dress,bottom_dress,basic_model_path
+        model_texture = model.search_model_texture_file_path(model_name)
+        print(model_texture[4])
+
+        # basic model body parameters_range
+        body_parameters_range = model.search_body_parameters_range(model_name)
+
         # latest_records: a list of records，record可能仅一个（因为是新用户），也可能为两个，每个record以字典形式保存body measurement
         # 如果len(latest_records) = 2 ，第一个是次新的，第二个是最新的
         latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
@@ -321,34 +328,40 @@ def complete_step4():
         # 抽取最近20次体重
         last_twenty_weight_records = model.fetch_specified_body_measurement("weight", last_twenty_historic_records)
         # 计算出最近20次基础代谢率
-        last_twenty_bmr_records = model.calculate_bmr(last_twenty_historic_records,request.cookies.get('gender'), request.cookies.get('age'))
+        last_twenty_bmr_records = model.calculate_bmr(last_twenty_historic_records, request.cookies.get('gender'),
+                                                      request.cookies.get('age'))
         # 计算出最近20次体脂率
-        last_twenty_body_fate_rate_records = model.calculate_body_fat_rate(last_twenty_historic_records,request.cookies.get('gender'))
+        last_twenty_body_fate_rate_records = model.calculate_body_fat_rate(last_twenty_historic_records,
+                                                                           request.cookies.get('gender'))
         # 计算出最近20次bmi
         last_twenty_bmi_records = model.calculate_bmi(last_twenty_historic_records)
         # 获得最近二十次的（update_time, weight, bmi, bmr, body_fat_rate）记录
-        last_twenty_combined_records = model.zip_combined_records(last_twenty_update_time,last_twenty_weight_records,last_twenty_bmi_records,last_twenty_bmr_records,last_twenty_body_fate_rate_records)
+        last_twenty_combined_records = model.zip_combined_records(last_twenty_update_time, last_twenty_weight_records,
+                                                                  last_twenty_bmi_records, last_twenty_bmr_records,
+                                                                  last_twenty_body_fate_rate_records)
 
         is_male = request.cookies.get('gender') == "male"
-        print("*"*10)
+        print("*" * 10)
         # print(request.cookies.get('model_name')+" "+ str(is_male))
         print(request.cookies.get('gender'))
         print(is_male)
-        print("*"*10)
+        print("*" * 10)
         return render_template('step4.html',
+                               model_texture=model_texture,
+                               body_parameters_range=body_parameters_range,
                                latest_records=json.dumps(latest_records),
-                               is_male = json.dumps(is_male),
-                               historic_records=json.dumps(historic_records),
-                               weight_records=json.dumps(weight_records),
-                               bmi_records=json.dumps(bmi_records),
-                               bmr_records=json.dumps(bmr_records),
-                               body_fat_rate_records=json.dumps(body_fat_rate_records),
-                               last_twenty_historic_records = json.dumps(last_twenty_historic_records),
-                               last_twenty_weight_records = json.dumps(last_twenty_weight_records),
-                               last_twenty_bmi_records = json.dumps(last_twenty_bmi_records),
-                               last_twenty_bmr_records = json.dumps(last_twenty_bmr_records),
-                               last_twenty_body_fate_rate_records = json.dumps(last_twenty_body_fate_rate_records),
-                               last_twenty_combined_records = json.dumps(last_twenty_combined_records))
+                               is_male=is_male,
+                               historic_records=historic_records,
+                               weight_records=weight_records,
+                               bmi_records=bmi_records,
+                               bmr_records=bmr_records,
+                               body_fat_rate_records=body_fat_rate_records,
+                               last_twenty_historic_records=last_twenty_historic_records,
+                               last_twenty_weight_records=last_twenty_weight_records,
+                               last_twenty_bmi_records=last_twenty_bmi_records,
+                               last_twenty_bmr_records=last_twenty_bmr_records,
+                               last_twenty_body_fate_rate_records=last_twenty_body_fate_rate_records,
+                               last_twenty_combined_records=last_twenty_combined_records)
 
 
 # for test only

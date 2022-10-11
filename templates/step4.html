@@ -51,7 +51,18 @@
 
     </div>
      -->
-
+    <p id="hair_color" style="display: none">{{ model_texture[0] }}</p>
+    <p id="skin_color" style="display: none">{{ model_texture[1]}}</p>
+    <p id="top_dress" style="display: none">{{ model_texture[2] }}</p>
+    <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
+    <p id="model_path" style="display: none">{{ model_texture[4] }}</p>
+    <p id="basic_model_parameters_range" style="display: none" >{{body_parameters_range}}</p>
+{#    <p id="basic_model_parameters_range" style="display: none" >#}
+{#        {% for i in body_parameters_range %}#}
+{#        {{ i }}#}
+{#        {% endfor %}#}
+{#    </p>#}
+    <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div>
