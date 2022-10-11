@@ -295,9 +295,11 @@ def complete_step4():
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login_page'))
 
+
+
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
-
+        
         # model texture path including: hair_color,skin_color,top_dress,bottom_dress,basic_model_path
         model_texture = model.search_model_texture_file_path(model_name)
         print(model_texture[4])

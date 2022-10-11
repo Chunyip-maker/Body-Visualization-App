@@ -30,6 +30,11 @@
 
     <div id="preloader">
 
+        <script>
+            $(window).on("load", function () {
+                $("#preloader").fadeOut("slow");
+            });
+        </script>
     </div>
 
 
@@ -183,15 +188,16 @@
 
                 <!-- buttons -->
                 <div class="button">
+                    
                     <form class="history" action="/step4" method='GET'>
                         <button>
-                            History
+                            Historical Health Report
                         </button>
                     </form>
-
+                    
                     <form class="next" action="/step3" method='POST'>
                         <button>
-                            Next
+                            Submit Your Model
                         </button>
                     </form>
 
@@ -232,11 +238,7 @@
 
 
 
-        <script>
-            $(window).on("load", function () {
-                $("#preloader").fadeOut("slow");
-            });
-        </script>
+
 
 
 

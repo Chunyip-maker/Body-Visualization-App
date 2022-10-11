@@ -246,14 +246,14 @@ input[type="range"] {
     float: left;
     margin-top: 50px;
     margin-left: 20px;
-    width: 230px;
+    width: 250px;
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
     border-color: rgb(227, 167, 168);
-    padding: 15px;
+    /* padding: 15px; */
     color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 24px;
@@ -271,16 +271,16 @@ input[type="range"] {
 
 .history button {
     float: left;
-    margin-top: 50px;
+    /* margin-top: 50px; */
     
-    width: 230px;
+    width: 250px;
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
     border-color: rgb(227, 167, 168);
-    padding: 15px;
+    /* padding: 15px; */
     color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 24px;
@@ -334,7 +334,7 @@ input[type="range"] {
 #preloader {
     background: #000 url(../images/genshin.gif) no-repeat center center;
     background-size: 40%;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     position: fixed;
     z-index: 100;
