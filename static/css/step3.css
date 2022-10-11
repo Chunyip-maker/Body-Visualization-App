@@ -238,19 +238,14 @@ input[type="range"] {
 
 
 .button {
-    float: right;
     width: 600px;
     height: 300px;
 }
 
 .next button {
-    /* position: relative; */
-    /* left: 2%;
-    top: -75px; */
     float: left;
-    margin-left: 90px;
-
     margin-top: 50px;
+    margin-left: 20px;
     width: 230px;
     background-color: #f6f6f6;
     outline: none;
@@ -275,12 +270,9 @@ input[type="range"] {
 }
 
 .history button {
-    /* position: relative; */
-    /* left: 2%; */
-    /* top: -75px; */
+    float: left;
+    margin-top: 50px;
     
-    overflow: hidden;
-    margin-left: 30px;
     width: 230px;
     background-color: #f6f6f6;
     outline: none;
