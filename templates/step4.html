@@ -303,20 +303,22 @@
             </div>
         </section>
 
-<!--        <script>-->
-<!--            function setFirstChild() {-->
-<!--              const isMale = Boolean({{isMale}});-->
+        <script>
+            function setFirstChild() {
 
-<!--              const topElement = isMale-->
-<!--                ? document.getElementById("fat")-->
-<!--                : document.getElementById("weight");-->
+              var isMale = Boolean({{is_male}});
+              alert(isMale);
 
-<!--              const parent = topElement.parentNode;-->
-<!--              parent.insertBefore(topElement, parent.firstChild);-->
-<!--            }-->
+              var topElement = isMale
+                ? document.getElementById("fat")
+                : document.getElementById("weight");
 
-<!--            setFirstChild()-->
-<!--        </script>-->
+              const parent = topElement.parentNode;
+              parent.insertBefore(topElement, parent.firstChild);
+            }
+
+            setFirstChild()
+        </script>
 
 
 
