@@ -333,10 +333,11 @@ def complete_step4():
         print("*"*10)
         # print(request.cookies.get('model_name')+" "+ str(is_male))
         print(request.cookies.get('gender'))
+        print(is_male)
         print("*"*10)
         return render_template('step4.html',
                                latest_records=json.dumps(latest_records),
-                               is_male = is_male,
+                               is_male = json.dumps(is_male),
                                historic_records=json.dumps(historic_records),
                                weight_records=json.dumps(weight_records),
                                bmi_records=json.dumps(bmi_records),
