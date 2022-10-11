@@ -113,6 +113,10 @@ def login_page():
             if model.check_model_already_exists(model_name):
                 # No credential check, log user in
                 session['logged_in'] = True
+                age_and_gender = model.search_model_age_and_gender(model_name)
+                age = age_and_gender[0][0]
+                gender = age_and_gender[0][1]
+                # print(age_and_gender[0][0])
 
                 # Store the user details for us to use throughout
                 # global human_model_details
@@ -120,6 +124,8 @@ def login_page():
 
                 resp = make_response(redirect(url_for('complete_step3')))
                 resp.set_cookie('model_name', model_name)
+                resp.set_cookie('age', str(age))
+                resp.set_cookie('gender', gender)
                 return resp
 
                 # 如果该模型已存在,跳转到step3.html
@@ -146,9 +152,15 @@ def logout():
     Logs out of the current session
         - Removes any stored human model data.
     """
+    resp = make_response(redirect(url_for('index')))
     if 'logged_in' in session:
         session.pop('logged_in')
-    return redirect(url_for('index'))
+        resp.delete_cookie('model_name')
+        resp.delete_cookie('age')
+        resp.delete_cookie('gender')
+
+    return resp
+    # return redirect(url_for('index'))
 
 
 @app.route('/step1', methods=['GET', 'POST'])
@@ -247,8 +259,6 @@ def complete_step3():
         model_texture = model.search_model_texture_file_path(model_name)
         print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
-        if model_parameters is None:
-            model_parameters = model.define_new_model_body_parameters(model_name)
         body_parameters_range = model.search_body_parameters_range(model_name)
         print(model_parameters)
         return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
