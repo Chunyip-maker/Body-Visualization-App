@@ -45,8 +45,8 @@ class SQLDatabase():
         self.execute("""
         CREATE TABLE IF NOT EXISTS Models(
             model_name TEXT NOT NULL,
-            age INT,
-            gender TEXT,
+            age INT NOT NULL,
+            gender TEXT NOT NULL,
             PRIMARY KEY(model_name));
             
         CREATE TABLE IF NOT EXISTS  ModelParameters(

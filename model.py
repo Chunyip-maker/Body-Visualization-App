@@ -79,11 +79,11 @@ class Model:
     def search_last_one_body_measurement_records(self, model_name):
         model_parameters = self.database.search_last_one_body_measurement_record(model_name)
         if len(model_parameters) == 0:
-            return None
+            return self.define_new_model_body_parameters(model_name)
         return model_parameters[0]
 
     def search_body_parameters_range(self, model_name):
-        age_and_gender = self.database.search_model_age_and_gender(model_name)
+        age_and_gender = self.search_model_age_and_gender(model_name)
         if len(age_and_gender)==0:
             return None
         age_group = self.define_basic_model(age_and_gender[0][0],age_and_gender[0][1])
@@ -91,6 +91,10 @@ class Model:
         if len(body_parameters_range) ==0:
             return None
         return body_parameters_range[0]
+
+    def search_model_age_and_gender(self, model_name):
+        age_and_gender = self.database.search_model_age_and_gender(model_name)
+        return age_and_gender
 
     def define_new_model_body_parameters(self,model_name):
         general_body_parameters = [0]
@@ -299,7 +303,7 @@ class Model:
 # print(model.database.search_last_one_body_measurement_record('admin')[0])
 
 # print(model.database.search_basic_model_file_path('admin'))
-# print(model.search_model_texture_file_path('admin'))
+# print(model.search_model_age_and_gender('admin'))
 
 if __name__ == "__main__":
 
