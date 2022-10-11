@@ -329,7 +329,14 @@ def complete_step4():
         # 获得最近二十次的（update_time, weight, bmi, bmr, body_fat_rate）记录
         last_twenty_combined_records = model.zip_combined_records(last_twenty_update_time,last_twenty_weight_records,last_twenty_bmi_records,last_twenty_bmr_records,last_twenty_body_fate_rate_records)
 
-        return render_template('step4.html', latest_records=json.dumps(latest_records),
+        is_male = request.cookies.get('gender') == "male"
+        print("*"*10)
+        # print(request.cookies.get('model_name')+" "+ str(is_male))
+        print(request.cookies.get('gender'))
+        print("*"*10)
+        return render_template('step4.html',
+                               latest_records=json.dumps(latest_records),
+                               is_male = is_male,
                                historic_records=json.dumps(historic_records),
                                weight_records=json.dumps(weight_records),
                                bmi_records=json.dumps(bmi_records),
