@@ -332,8 +332,8 @@ input[type="range"] {
 /* preloader */
 
 #preloader {
-    background: #f5c024 url(../images/loading_model.gif) no-repeat center center;
-    background-size: 15%;
+    background: black url(../images/2.gif) no-repeat center center;
+    background-size: 50%;
     height: 100%;
     width: 100%;
     position: fixed;
