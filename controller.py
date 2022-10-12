@@ -261,8 +261,13 @@ def complete_step3():
         # print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         body_parameters_range = model.search_body_parameters_range(model_name)
+        is_new_model= len(model.get_historic_body_measurement_records_to_be_displayed(model_name)) == 0
+        print("NewModel: "+str(is_new_model))
         # print(model_parameters)
-        return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
+        return render_template('step3.html',
+                               is_new_model=is_new_model,
+                               model_texture=model_texture,
+                               model_parameters=model_parameters,
                                body_parameters_range=body_parameters_range)
 
     elif request.method == 'POST':
@@ -303,7 +308,7 @@ def complete_step4():
 
         # model texture path including: hair_color,skin_color,top_dress,bottom_dress,basic_model_path
         model_texture = model.search_model_texture_file_path(model_name)
-        print(model_texture[4])
+
 
         # basic model body parameters_range
         body_parameters_range = model.search_body_parameters_range(model_name)
@@ -321,7 +326,7 @@ def complete_step4():
         bmi_records = model.calculate_bmi(historic_records)
         # 计算出最近十次的基础代谢率bmr
         bmr_records = model.calculate_bmr(historic_records, request.cookies.get('gender'), request.cookies.get('age'))
-        print(bmr_records)
+
         # 计算出最近十次的体脂率
         body_fat_rate_records = model.calculate_body_fat_rate(historic_records, bmi_records, request.cookies.get('gender'),request.cookies.get('age'))
 
@@ -345,11 +350,56 @@ def complete_step4():
                                                                   last_twenty_body_fate_rate_records)
 
         is_male = request.cookies.get('gender') == "male"
-        print("*" * 10)
-        # print(request.cookies.get('model_name')+" "+ str(is_male))
-        print(request.cookies.get('gender'))
-        print(is_male)
-        print("*" * 10)
+
+        # 判断是否为新用户，即无历史记录
+        if len(latest_records) == 0:
+            is_new_account = True
+        else:
+            is_new_account = False
+
+        if len(latest_records) == 1:
+            has_only_one_record = True
+        else:
+            has_only_one_record = False
+
+        if not is_new_account and not has_only_one_record:
+            parameter_change_report = model.generate_parameter_change_report(model_name,latest_records)
+            print(parameter_change_report)
+        else:
+            parameter_change_report = "As you are currently a new model, there is currently no historic data for your body parameter comparison :(\n"
+            print(parameter_change_report)
+
+        if not is_new_account:
+            # bmi_report是一个长度为2的list，第一个element是评价，第二个是科普信息
+            current_bmi = bmi_records[len(bmi_records)-1]
+            bmi_report_list= model.generate_bmi_report(current_bmi)
+            print(bmi_report_list)
+        else:
+            bmi_report_list = []
+
+        if not is_new_account:
+            # bmr_report是一个长度为2的list，第一个element是评价，第二个是科普信息
+            current_bmr = bmr_records[len(bmr_records)-1]
+            bmr_report_list = model.generate_bmr_report(current_bmr)
+            print(bmr_report_list)
+        else:
+            bmr_report_list = []
+
+        if not is_new_account:
+            # bfr_report是一个长度为2的list，第一个element是评价，第二个是科普信息
+            current_body_fat_rate = body_fat_rate_records[len(body_fat_rate_records)-1]
+            bfr_report_list = model.generate_bfr_report(current_body_fat_rate,request.cookies.get("gender"))
+            print(bfr_report_list)
+        else:
+            bfr_report_list = []
+
+        if len(historic_records) < 5:
+            less_than_5_records = True
+        else:
+            less_than_5_records = False
+
+        print("Less than 5 records: "+str(less_than_5_records))
+
         return render_template('step4.html',
                                model_texture=model_texture,
                                model_name = model_name,
@@ -367,7 +417,12 @@ def complete_step4():
                                last_twenty_bmi_records = last_twenty_bmi_records,
                                last_twenty_bmr_records = last_twenty_bmr_records,
                                last_twenty_body_fate_rate_records = last_twenty_body_fate_rate_records,
-                               last_twenty_combined_records = last_twenty_combined_records)
+                               last_twenty_combined_records = last_twenty_combined_records,
+                               parameter_change_report=parameter_change_report,
+                               bmi_report_list=bmi_report_list,
+                               bmr_report_list=bmr_report_list,
+                               bfr_report_list=bfr_report_list,
+                               less_than_5_records=less_than_5_records)
 
 
 # # for test only
