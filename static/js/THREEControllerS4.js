@@ -95,8 +95,8 @@ function sceneInit(canvasID) {
         scene.add(gridHelper);
 
         //set up stats
-        //stats = new Stats();
-        //document.body.appendChild( stats.dom );
+        stats = new Stats();
+        document.body.appendChild( stats.dom );
 
         //set up controller(enable user to control camera)
         controls = new OrbitControls(camera, renderer.domElement)
@@ -166,7 +166,7 @@ function animate() {
     const delta = clock.getDelta();
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
-    //stats.update();
+    stats.update();
     //console.log(controls.target);
     // console.log(camera.position)
     // console.log(camera.rotation)
@@ -246,8 +246,8 @@ function sceneInit1(canvasID) {
     scene1.add(gridHelper);
 
     //set up stats
-    // stats1 = new Stats();
-    // document.body.appendChild( stats1.dom );
+    stats1 = new Stats();
+    document.body.appendChild( stats1.dom );
 
     //set up controller(enable user to control camera)
     controls1 = new OrbitControls(camera1, renderer1.domElement)
@@ -309,7 +309,7 @@ function animate1() {
     const delta = clock1.getDelta();
     if ( mixer1 ) mixer1.update( delta );
     renderer1.render( scene1, camera1 );
-    //stats1.update();
+    stats1.update();
 }
 
 document.getElementById("Top").onclick = function cameraChange() {
