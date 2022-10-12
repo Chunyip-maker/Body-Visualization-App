@@ -86,8 +86,8 @@ async function init(canvasID) {
 
 
     //set up stats
-    stats = new Stats();
-    document.body.appendChild( stats.dom );
+    //stats = new Stats();
+    //document.body.appendChild( stats.dom );
 
             //set up controller(enable user to control camera)
     controls = new OrbitControls(camera, renderer.domElement)
@@ -177,7 +177,7 @@ function animate() {
     const delta = clock.getDelta();
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
-    stats.update();
+    //stats.update();
 }
 
 //Functions of selecting range
