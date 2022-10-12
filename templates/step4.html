@@ -57,11 +57,6 @@
     <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
     <p id="model_path" style="display: none">{{ model_texture[4] }}</p>
     <p id="basic_model_parameters_range" style="display: none" >{{body_parameters_range}}</p>
-{#    <p id="basic_model_parameters_range" style="display: none" >#}
-{#        {% for i in body_parameters_range %}#}
-{#        {{ i }}#}
-{#        {% endfor %}#}
-{#    </p>#}
     <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -107,10 +102,10 @@
 
 
         </script>
-
+        <h1> Part 2. Health Statistics </h1>
         <section class="report">
-            <h2> Part 2. Health Statistics </h2>
-            <hr> 
+
+            <hr>
             <div id="bmi" class="chartSection">
             <h2> BMI Changes</h2>
             <canvas id="bmiChart" width="600" height="300"></canvas>
@@ -180,6 +175,8 @@
                             }
                         }
                     },
+                    suggestedMin:0,
+                    suggestedMax:40,
                     responsive:false
 
                 }
@@ -320,11 +317,18 @@
             </div>
         </section>
 
+        <section class="text_report">
+            <div>
+                <h2>Textual Report</h2>
+                <p>Hi {{ model_name }}! </p>
+
+
+
+            </div>
+        </section>
         <script>
             function setFirstChild() {
-
               var isMale = Boolean({{is_male}});
-              alert(isMale);
 
               var topElement = isMale
                 ? document.getElementById("fat")

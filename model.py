@@ -74,15 +74,21 @@ class Model:
         return result
 
     def search_model_texture_file_path(self, model_name):
+        if model_name is None:
+            return
         return self.database.search_model_texture_file_path(model_name)
 
     def search_last_one_body_measurement_records(self, model_name):
+        if model_name is None:
+            return
         model_parameters = self.database.search_last_one_body_measurement_record(model_name)
         if len(model_parameters) == 0:
             return self.define_new_model_body_parameters(model_name)
         return model_parameters[0]
 
     def search_body_parameters_range(self, model_name):
+        if model_name is None:
+            return
         age_and_gender = self.search_model_age_and_gender(model_name)
         if len(age_and_gender)==0:
             return None
@@ -116,7 +122,8 @@ class Model:
             entry = {}
 
             # convert time
-            entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
+            entry["update_time"] = self.convert_time(raw_result[1])
+            # entry["update_time"] = raw_result[1]
             entry["height"] = float(raw_result[2])
             entry["weight"] = float(raw_result[3])
             entry["thigh"] = float(raw_result[4])
@@ -144,8 +151,8 @@ class Model:
             for i in range(len(raw_results)):
                 raw_result = raw_results[i]
                 entry = {}
-                # entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
-                entry["update_time"] = raw_result[1]
+                entry["update_time"] = self.convert_time(raw_result[1])
+                # entry["update_time"] = raw_result[1]
                 entry["height"] = float(raw_result[2])
                 entry["weight"] = float(raw_result[3])
                 entry["thigh"] = float(raw_result[4])
@@ -162,8 +169,8 @@ class Model:
             for idx in selected_indices:
                 raw_result = raw_results[idx]
                 entry = {}
-                # entry["update_time"] = self.convert_time_to_remain_date(raw_result[1])
-                entry["update_time"] = raw_result[1]
+                entry["update_time"] = self.convert_time(raw_result[1])
+                # entry["update_time"] = raw_result[1]
                 entry["height"] = float(raw_result[2])
                 entry["weight"] = float(raw_result[3])
                 entry["thigh"] = float(raw_result[4])
@@ -189,7 +196,7 @@ class Model:
             entry = {}
 
             # convert time
-            entry["update_time"] = raw_result[1]
+            entry["update_time"] = self.convert_time(raw_result[1])
             entry["height"] = float(raw_result[2])
             entry["weight"] = float(raw_result[3])
             entry["thigh"] = float(raw_result[4])
@@ -204,12 +211,14 @@ class Model:
 
         return result
 
-    def convert_time_to_remain_date(self, datetime_from_sql):
-        f = "%Y-%m-%d %H:%M:%S"
-        result = str(datetime.datetime.strptime(datetime_from_sql, f).date())
+    def convert_time(self, datetime_from_sql):
+
+        result = datetime.datetime.strptime(datetime_from_sql, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d, %H:%M")
         return result
 
     def calculate_bmi(self, historic_records):
+        if historic_records is None:
+            return
         result = []
         for record in historic_records:
             weight = record["weight"]
@@ -222,6 +231,8 @@ class Model:
     def calculate_bmr(self, historic_records, model_gender, model_age):
         # Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
         # Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) – (4.330 x age in years)
+        if model_gender is None or model_age is None or historic_records is None:
+            return
         result = []
         model_age = int(model_age)
         for record in historic_records:
@@ -237,28 +248,33 @@ class Model:
                 pass
         return result
 
-    def calculate_body_fat_rate(self, historic_records, model_gender):
+    def calculate_body_fat_rate(self, historic_records, bmi_records,model_gender,model_age):
+        if model_age is None or model_gender is None :
+            return
+        if historic_records is None or bmi_records is None:
+            return
         result = []
-        for record in historic_records:
+        for i in range(len(historic_records)):
+            record = historic_records[i]
+            record_bmi = bmi_records[i]
             weight = float(record["weight"])
             waist = float(record["waist"])
+            model_age = int(model_age)
             if model_gender == "male":
-                a = waist * 0.74
-                b = weight * 0.082 + 34.89
-                fat_weight = a - b
-                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                body_fat_rate = 1.2*record_bmi + 0.23*model_age - 5.4
+                body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             elif model_gender == "female":
-                a = waist * 0.74
-                b = weight * 0.082 + 44.74
-                fat_weight = a - b
-                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                body_fat_rate = 1.2 * record_bmi + 0.23 * model_age - 16.2
+                body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             else:
                 pass
         return result
 
     def fetch_specified_body_measurement(self, body_measurement_key, historic_records):
+        if historic_records is None or body_measurement_key is None:
+            return
         result = []
         for i in range(len(historic_records)):
             record = historic_records[i]
@@ -266,6 +282,12 @@ class Model:
         return result
 
     def zip_combined_records(self, update_time_list,weight_list, bmi_list, bmr_list, body_fat_rate_list):
+        if update_time_list is None or weight_list is None:
+            return
+        if bmi_list is None or bmr_list is None:
+            return
+        if body_fat_rate_list is None:
+            return
         result = []
         length = len(update_time_list)
         for i in range(length):
@@ -306,7 +328,6 @@ class Model:
 # print(model.search_model_age_and_gender('admin'))
 
 if __name__ == "__main__":
-
-    ts = "2022-10-08 10:46:25"
-    f = "%Y-%m-%d %H:%M:%S"
-    print(str(datetime.datetime.strptime(ts,f).date()))
+    a = 23.7751
+    print(int(round(a,0)))
+    # print("Datetime with out seconds",datetime.datetime.strptime("2022-10-12 21:30:30","%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d, %H:%M"))
