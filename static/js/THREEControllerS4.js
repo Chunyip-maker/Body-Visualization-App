@@ -7,7 +7,6 @@ import { Scene } from '/static/js//three.module.js';
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
 import { Vector3 } from 'three';
 
-//init
 
 let stats, mixer, canvas, canvasWidth, canvasHeight, clock;
 let camera, scene, renderer, controls;
@@ -18,9 +17,33 @@ let camera1, scene1, renderer1, controls1;
 let loadModel1,action1;
 
 
+let modelBoneName = [], bonePositionY = [];
+var path = document.getElementById("model_path").innerText;
+var hair_color = document.getElementById("hair_color").innerText;
+var skin_color = document.getElementById("skin_color").innerText;
+var top_dress = document.getElementById("top_dress").innerText;
+var bottom_dress = document.getElementById("bottom_dress").innerText;
+
+var basic_model_parameters_range = document.getElementById("basic_model_parameters_range").innerText;
+basic_model_parameters_range = basic_model_parameters_range.replaceAll("(","");
+basic_model_parameters_range = basic_model_parameters_range.replaceAll(")","");
+basic_model_parameters_range = basic_model_parameters_range.split(",");
+console.log(basic_model_parameters_range);
+
+let latest_records = document.getElementById("latest_records").innerText;
+latest_records = JSON.parse(latest_records);
+console.log(latest_records);
+
+
+
+
+
+
 //test version for model under /static/model/test2/ folder only
-init("before_canvas", "Breathing Idle2.fbx");
-init1("after_canvas", "Breathing Idle2.fbx");
+init("before_canvas");
+init1("after_canvas");
+
+
 
 function sceneInit(canvasID) {
         //canvas set up
@@ -90,17 +113,29 @@ function sceneInit(canvasID) {
         
 }   
 
-async function init(canvasID, modelName) {
+async function init(canvasID) {
 
     // group = new THREE.Group();
     sceneInit(canvasID);
 
+
+
     //Async loader!
-    const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
+    const fbxLoader = new FBXLoader().setPath(path);
     [loadModel] = await Promise.all( [
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
+        fbxLoader.loadAsync( 'Idle.fbx' )
     ] );
 
+    // Read database store texture
+    readInput(loadModel,hair_color);
+    readInput(loadModel,skin_color);
+    readInput(loadModel,top_dress);
+    readInput(loadModel,bottom_dress);
+
+    //Save the origin bones position data.
+    loadOriginBones(modelBoneName, bonePositionY);
+
+    loadingHistoryBodyData(loadModel,0);
 
     loadModel.traverse( child => {
 
@@ -138,12 +173,18 @@ function animate() {
     
 }
 
+function readInput(model,input){
+    input = input.split(",");
+    for (let i = 0; i < input.length; i+=2) {
+        TextureChange(model,input[i], input[i+1]);
+    }
+}
 
-function TextureChange(targetTextureName, newTexturePath) {
-    loadModel.traverse( child => {
+function TextureChange(model,targetTextureName, newTexturePath) {
+    model.traverse( child => {
         if (child instanceof THREE.Mesh) {
 
-            if (child.name == targetTextureName) {
+            if (child.name.indexOf(targetTextureName)!= -1) {
 
                 var newTexture = new THREE.TextureLoader().load(newTexturePath);
                 child.material.map = newTexture;
@@ -227,11 +268,17 @@ async function init1(canvasID, modelName) {
     sceneInit1(canvasID);
 
     //Async loader!
-    const fbxLoader = new FBXLoader().setPath( '/static/model/test2/' );
+    const fbxLoader = new FBXLoader().setPath(path);
     [loadModel1] = await Promise.all( [
-        fbxLoader.loadAsync( 'Breathing Idle2.fbx' )
+        fbxLoader.loadAsync( 'Idle.fbx' )
     ] );
 
+    readInput(loadModel1,hair_color);
+    readInput(loadModel1,skin_color);
+    readInput(loadModel1,top_dress);
+    readInput(loadModel1,bottom_dress);
+
+    loadingHistoryBodyData(loadModel1,1);
 
     loadModel1.traverse( child => {
 
@@ -335,7 +382,203 @@ function animateCamera(current1, target1, current2, target2) {
     tween.start();
 }
 
+/// 模型身体参数改变
 
+//Method for changing the body due to parameter
+function loadingHistoryBodyData(loadModel,model){
+    changeHeightImpl(loadModel,model);
+    changeWeightImpl(loadModel,model);
+    changeThighImpl(loadModel,model);
+    changeShankImpl(loadModel,model);
+    changeHipImpl(loadModel,model);
+    changeArmGrithImpl(loadModel,model);
+    changeArmsPanImpl(loadModel,model);
+    changeWaistImpl(loadModel,model);
+    changeChestImpl(loadModel,model);
+}
+
+/* Get the information from the document and return index of actual scale*/
+function calculateTransformation(model,id,part,range){
+//    console.log(model,id,part);
+    let value = parseFloat(latest_records[model][part]);
+    let min = parseFloat(basic_model_parameters_range[id*2-1]);
+    let max = parseFloat(basic_model_parameters_range[id*2]);
+    let index = getScaleIndex(min, max, value, range);
+//    console.log(value,min,max,index);
+    return index;
+}
+
+/* Calculate the actual scale index to transform the model*/
+function getScaleIndex(min, max, value, range){
+    //Ex: range = [0.85, 1.15] = 0.3
+    let average = (min + max) / 2;
+    let percentageIndex = (value - average) / (max - min);
+    let actualIndex = percentageIndex * (range) + 1;
+//    console.log(average,percentageIndex,actualIndex);
+    return actualIndex;
+}
+
+/* Get the information from the document and return index of actual position of Y*/
+function calculateTranslationY(model,id,part, range, targetBone, originBoneList, originBonePositionY){
+    let value = parseFloat(latest_records[model][part]);
+    let min = parseFloat(basic_model_parameters_range[id*2-1]);
+    let max = parseFloat(basic_model_parameters_range[id*2]);
+    let index = getPositionIndexY(min, max, value, range, targetBone, originBoneList, originBonePositionY);
+    return index;
+}
+
+/* Calculate the actual position index to transform the model*/
+function getPositionIndexY(min, max, value, range, targetBone, originBoneList, originBonePositionY){
+    let average = (min + max) / 2;
+    let percentageIndex = (value - average) / (max - min);
+    let targetBoneY = originBonePositionY[originBoneList.indexOf(targetBone)];
+    let actualIndex = percentageIndex * (range) + targetBoneY;
+    return actualIndex;
+}
+
+
+//API of modify bones
+
+function changeHeightImpl(loadModel,model){
+    let index = calculateTransformation(model,1,"height", 0.2);
+    changeScaleX(loadModel,["Hips"], [], index);
+    changeScaleY(loadModel,["Hips"], [], index);
+    changeScaleZ(loadModel,["Hips"], [], index);
+}
+
+function changeWeightImpl(loadModel,model){
+    let index = calculateTransformation(model,2,"weight", 0.1);
+    changeScaleX(loadModel,["Hips"], [], index);
+    changeScaleZ(loadModel,["Hips"], [], index);
+}
+
+function changeChestImpl(loadModel,model){
+    let index = calculateTransformation(model,3,"chest", 0.2);
+    changeScaleZ(loadModel,["Upper_Chest"], ["Neck"], index);
+}
+function changeWaistImpl(loadModel,model){
+    let index = calculateTransformation(model,4,"waist", 0.2);
+    changeScaleX(loadModel,["Spine"], ["Chest"], index);
+    changeScaleZ(loadModel,["Spine"], ["Chest"], index);
+}
+
+
+function changeHipImpl(loadModel,model){
+    let index = calculateTransformation(model,5,"hip", 0.2);
+    changeScaleZ(loadModel,["Hips"], ["Left_leg", "Right_leg", "Spine"], index);
+}
+
+
+function changeArmGrithImpl(loadModel,model){
+    let index = calculateTransformation(model,6,"arm_girth", 0.4);
+    changeScaleX(loadModel,["Left_arm", "Right_arm"], [], index);
+    changeScaleZ(loadModel,["Left_arm", "Right_arm"], [], index);
+}
+
+function changeArmsPanImpl(loadModel,model){
+    let index = calculateTranslationY(model,7,"arm_pan", 0.04, "Left_arm", modelBoneName, bonePositionY);
+    changePositionY(loadModel,["Left_arm", "Right_arm"], [], index);
+}
+
+function changeThighImpl(loadModel,model){
+    let index = calculateTransformation(model,8,"thigh", 0.3);
+    changeScaleX(loadModel,["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
+    changeScaleZ(loadModel,["Left_leg", "Right_leg"], ["Left_knee", "Right_knee"], index);
+}
+
+function changeShankImpl(loadModel,model){
+    let index = calculateTransformation(model,9,"shank", 0.3);
+    changeScaleX(loadModel,["Left_knee", "Right_knee"], [], index);
+    changeScaleZ(loadModel,["Left_knee", "Right_knee"], [], index);
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleX(loadModel,scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.x = index;
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+
+                    for(let j = 0; j < child.children.length; j++){
+                        if(child.children[j].name.indexOf("J_Sec") == - 1 && scaleDownBones.includes(child.children[j].name)){
+                            let test = 2 - index;
+                            child.children[j].scale.x = test;
+                        }
+                    }
+                }
+        }
+    })
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleZ(loadModel,scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.z = index;
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+                    for(let j = 0; j < child.children.length; j++){
+                       if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
+                           let test = 2 - index;
+                           child.children[j].scale.z = test;
+                       }
+                    }
+                }
+
+        }
+    })
+}
+
+/* Scale up and scale down the bones in the list */
+function changeScaleY(loadModel,scaleUpBones, scaleDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( scaleUpBones.includes(child.name)) {
+                    child.scale.y = index;
+                    let i = scaleUpBones.indexOf(child.name);
+                    scaleUpBones.splice(i, 1);
+                    for(let j = 0; j < child.children.length; j++){
+                       if(child.children[j].name.indexOf("J_Sec") == -1 && scaleDownBones.includes(child.children[j].name)){
+                           let test = 2 - index;
+                           child.children[j].scale.y = test;
+                       }
+                    }
+                }
+
+        }
+    })
+}
+
+/* Change position of the bones in the list */
+function changePositionY(loadModel,positionUpBones, positionDownBones, index){
+    loadModel.traverse( child => {
+        if (child.type == "Bone") {
+                if ( positionUpBones.includes(child.name)) {
+                    child.position.y = index;
+                    let i = positionUpBones.indexOf(child.name);
+                    positionUpBones.splice(i, 1);
+                }
+
+        }
+    })
+}
+
+//load origin bones data
+function loadOriginBones(modelBoneName, bonePositionY){
+    loadModel.traverse( child => {
+    if (child.type == "Bone") {
+        if ( !modelBoneName.includes(child.name) && child.name.indexOf("J_Sec") == -1) {
+            modelBoneName.push(child.name);
+            bonePositionY.push(child.position.y);
+//            console.log(child.name);
+//            console.log(child.position.y);
+        }
+    }
+})
+}
 
 
 

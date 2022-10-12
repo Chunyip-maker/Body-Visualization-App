@@ -30,8 +30,11 @@
 
     <div id="preloader">
 
-
-
+        <script>
+            $(window).on("load", function () {
+                $("#preloader").fadeOut("slow");
+            });
+        </script>
     </div>
 
 
@@ -45,15 +48,6 @@
     <p id="check_new_model" style="display: none">{{ model_parameters[0] }}</p>
 
 
-    {#    <p id="height" style="display: none">{{ model_parameters[1] }}</p>#}
-    {#    <p id="weight" style="display: none">{{ model_parameters[2] }}</p>#}
-    {#    <p id="thigh" style="display: none">{{ model_parameters[3] }}#}
-    {#    <p id="shank" style="display: none">{{ model_parameters[4] }}</p>#}
-    {#    <p id="hip" style="display: none">{{ model_parameters[5] }}</p>#}
-    {#    <p id="arm_girth" style="display: none">{{ model_parameters[6] }}</p>#}
-    {#    <p id="arm_pan" style="display: none">{{ model_parameters[7] }}</p>#}
-    {#    <p id="waist" style="display: none">{{ model_parameters[8] }}</p>#}
-    {#    <p id="chest" style="display: none">{{ model_parameters[9] }}</p>#}
 
 
 
@@ -185,18 +179,20 @@
 
                 <!-- buttons -->
                 <div class="button">
-                    <form class="next" action="/step3" method='POST'>
+                    
+                    <form class="history" action="/step4" method='GET'>
                         <button>
-                            Next
+                            Historical Health Report
                         </button>
                     </form>
 
-                    <!-- 改成history的 -->
-                    <form class="history" action="/step4" method='GET'>
+                    
+                    <form class="next" action="/step3" method='POST'>
                         <button>
-                            History
+                            Submit Your Model
                         </button>
                     </form>
+
                 </div>
             </div>
 
@@ -230,19 +226,6 @@
                 Logout
             </button>
         </form>
-
-
-
-
-        <script>
-            $(window).on("load", function () {
-                $("#preloader").fadeOut("slow");
-            });
-        </script>
-
-
-
-
 
 
 </body>

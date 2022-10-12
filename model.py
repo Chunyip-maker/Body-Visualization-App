@@ -248,7 +248,7 @@ class Model:
                 pass
         return result
 
-    def calculate_body_fat_rate(self, historic_records, model_gender):
+    def calculate_body_fat_rate(self, historic_records, model_gender,bmi):
         if historic_records is None or model_gender is None:
             return
         result = []
@@ -256,14 +256,14 @@ class Model:
             weight = float(record["weight"])
             waist = float(record["waist"])
             if model_gender == "male":
-                a = waist * 0.74
-                b = weight * 0.082 + 34.89
+                a = weight * 1.082 + 94.42
+                b = waist * 4.15
                 fat_weight = a - b
                 body_fat_rate = round((fat_weight / weight) * 100, 2)
                 result.append(body_fat_rate)
             elif model_gender == "female":
                 a = waist * 0.74
-                b = weight * 0.082 + 44.74
+                b = weight * 1.082 + 44.74
                 fat_weight = a - b
                 body_fat_rate = round((fat_weight / weight) * 100, 2)
                 result.append(body_fat_rate)
