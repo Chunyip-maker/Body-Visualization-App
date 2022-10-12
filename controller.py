@@ -356,7 +356,7 @@ def complete_step4():
                                body_parameters_range=body_parameters_range,
                                latest_records_original=latest_records,
                                latest_records =json.dumps(latest_records),
-                               is_male=is_male,
+                               is_male=json.dumps(is_male),
                                historic_records=historic_records,
                                weight_records=weight_records,
                                bmi_records=bmi_records,
