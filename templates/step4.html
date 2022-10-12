@@ -19,7 +19,9 @@
 
     <title>Body Virtualisation APP - Health Report</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js" integrity="sha512-lIKG1kC5TMb1Zx32vdz1n31YJMZRknVY20U9MJ28hD3y2c0OKN0Ce5NhJji78v8zX5UOSsm+MTBOcJt7yMBnSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"
+        integrity="sha512-lIKG1kC5TMb1Zx32vdz1n31YJMZRknVY20U9MJ28hD3y2c0OKN0Ce5NhJji78v8zX5UOSsm+MTBOcJt7yMBnSg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="importmap">
         {
@@ -37,31 +39,38 @@
 
     <!--    for table-->
     <script type="text/javascript" src="static/js/googleapis.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        th{
-            color:#fff;
-                }
+        th {
+            color: #fff;
+        }
     </style>
 </head>
 
 <body>
-   
-    <!-- <div id="preloader">
+
+    <div id="preloader">
 
     </div>
-     -->
+
+    <script>
+        $(window).on("load", function () {
+            $("#preloader").fadeOut("slow");
+        });
+    </script>
+
     <p id="hair_color" style="display: none">{{ model_texture[0] }}</p>
     <p id="skin_color" style="display: none">{{ model_texture[1]}}</p>
     <p id="top_dress" style="display: none">{{ model_texture[2] }}</p>
     <p id="bottom_dress" style="display: none">{{ model_texture[3] }}</p>
     <p id="model_path" style="display: none">{{ model_texture[4] }}</p>
-    <p id="basic_model_parameters_range" style="display: none" >{{body_parameters_range}}</p>
+    <p id="basic_model_parameters_range" style="display: none">{{body_parameters_range}}</p>
     <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div>
-            
+
             <h1 class="h2"> Your Health Report </h1>
             <hr>
         </div>
@@ -77,7 +86,7 @@
                 <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
                 <!-- 最新模型 -->
             </div>
-            
+
             <div class="angle_button">
                 <hr>
                 <h4> Selected Perspectives: </h4>
@@ -87,233 +96,250 @@
         </div>
 
 
+
+
+
         <script>
-            function retract_records_data(records, key ){
+            function retract_records_data(records, key) {
                 var toBeAppendedList = []
-                for (let i = 0; i < records.length; i++){
+                for (let i = 0; i < records.length; i++) {
                     toBeAppendedList.push(records[i][key])
                 }
                 return toBeAppendedList
             }
 
-            var historic_records = {{ historic_records|safe }}
-            var weight_records = {{weight_records|safe}}
+            var historic_records = {
+                {
+                    historic_records | safe
+                }
+            }
+            var weight_records = {
+                {
+                    weight_records | safe
+                }
+            }
             var dates = retract_records_data(historic_records, "update_time")
-
-
         </script>
         <h1> Part 2. Health Statistics </h1>
         <section class="report">
 
             <hr>
             <div id="bmi" class="chartSection">
-            <h2> BMI Changes</h2>
-            <canvas id="bmiChart" width="600" height="300"></canvas>
-            <script>
-              var labels = dates
-              var bmi_records = {{bmi_records|safe}}
-              const bmiData = {
-                labels: labels,
-                datasets: [{
-                  label: 'BMI',
-                  borderColor: 'rgb(255,139,139)',
-                  fill:true,
-                  pointStyle: 'circle',
-                  pointRadius: 6,
-                  pointHoverRadius: 10,
-                  data: bmi_records
-                }]
-              };
+                <h2> BMI Changes</h2>
+                <canvas id="bmiChart" width="600" height="300"></canvas>
+                <script>
+                    var labels = dates
+                    var bmi_records = {
+                        {
+                            bmi_records | safe
+                        }
+                    }
+                    const bmiData = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'BMI',
+                            borderColor: 'rgb(255,139,139)',
+                            fill: true,
+                            pointStyle: 'circle',
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            data: bmi_records
+                        }]
+                    };
 
-              const bmiConfig = {
-                type: 'line',
-                data: bmiData,
-                options: {
-                    responsive:false,
-                    suggestedMin:13,
-                    suggestedMax:27
+                    const bmiConfig = {
+                        type: 'line',
+                        data: bmiData,
+                        options: {
+                            responsive: false,
+                            suggestedMin: 13,
+                            suggestedMax: 27
 
-                }
-              };
-              const bmiChangeChart = new Chart(
-                    document.getElementById('bmiChart'),
-                    bmiConfig
-                );
-
-            </script>
-        </div>
+                        }
+                    };
+                    const bmiChangeChart = new Chart(
+                        document.getElementById('bmiChart'),
+                        bmiConfig
+                    );
+                </script>
+            </div>
 
             <div id="fat" class="chartSection">
-            <h2>Body Fat Rate Changes</h2>
-            <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
-            <script>
-              var labels = dates
-              var bodyFatRateRecords = {{body_fat_rate_records|safe}}
-              const bodyFatRateData = {
-                labels: labels,
-                datasets: [{
-                  label: 'Body Fat Rate',
-                  borderColor: 'rgb(0,100,162)',
-                  fill:true,
-                  pointStyle: 'triangle',
-                  pointRadius: 6,
-                  pointHoverRadius: 10,
-                  data: bodyFatRateRecords
-                }]
-              };
-
-              const bodyFatRateConfig = {
-                type: 'line',
-                data: bodyFatRateData,
-                options: {
-                    scales: {
-                       yAxes: {
-                            ticks: {
-                                callback: function(value, index, ticks) {
-                                return value+"%";
-                                }
-                            }
+                <h2>Body Fat Rate Changes</h2>
+                <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
+                <script>
+                    var labels = dates
+                    var bodyFatRateRecords = {
+                        {
+                            body_fat_rate_records | safe
                         }
-                    },
-                    suggestedMin:0,
-                    suggestedMax:40,
-                    responsive:false
+                    }
+                    const bodyFatRateData = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Body Fat Rate',
+                            borderColor: 'rgb(0,100,162)',
+                            fill: true,
+                            pointStyle: 'triangle',
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            data: bodyFatRateRecords
+                        }]
+                    };
 
-                }
-              };
-              const bodyFatRateChangeChart = new Chart(
-                    document.getElementById('bodyFatRateChart'),
-                    bodyFatRateConfig
-                );
-
-            </script>
-        </div>
-
-            <div id="weight" class="chartSection">
-            <h2> Weight Changes </h2>
-            <canvas id="weightChart" width="600" height="300"></canvas>
-            <script>
-
-
-            const ctx = document.getElementById('weightChart').getContext('2d');
-            const weightChangeChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        label: 'Weight',
-                        data: weight_records,
-                        fill:true,
-                        pointStyle: 'rect',
-                        pointRadius: 6,
-                        pointHoverRadius: 10,
-                        borderColor: ['rgb(86,168,179)'],
-                    }]
-                },
-                options: {
-                     scales: {
-                       yAxes: {
-                            ticks: {
-                                callback: function(value, index, ticks) {
-                                return value+" kg";
+                    const bodyFatRateConfig = {
+                        type: 'line',
+                        data: bodyFatRateData,
+                        options: {
+                            scales: {
+                                yAxes: {
+                                    ticks: {
+                                        callback: function (value, index, ticks) {
+                                            return value + "%";
+                                        }
+                                    }
                                 }
                             },
-                            suggestedMin:30,
-                            suggestedMax:150
+                            suggestedMin: 0,
+                            suggestedMax: 40,
+                            responsive: false
+
                         }
-                    },
-                    responsive: false
+                    };
+                    const bodyFatRateChangeChart = new Chart(
+                        document.getElementById('bodyFatRateChart'),
+                        bodyFatRateConfig
+                    );
+                </script>
+            </div>
 
-                }
-            });
+            <div id="weight" class="chartSection">
+                <h2> Weight Changes </h2>
+                <canvas id="weightChart" width="600" height="300"></canvas>
+                <script>
+                    const ctx = document.getElementById('weightChart').getContext('2d');
+                    const weightChangeChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [{
+                                label: 'Weight',
+                                data: weight_records,
+                                fill: true,
+                                pointStyle: 'rect',
+                                pointRadius: 6,
+                                pointHoverRadius: 10,
+                                borderColor: ['rgb(86,168,179)'],
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: {
+                                    ticks: {
+                                        callback: function (value, index, ticks) {
+                                            return value + " kg";
+                                        }
+                                    },
+                                    suggestedMin: 30,
+                                    suggestedMax: 150
+                                }
+                            },
+                            responsive: false
 
-
-        </script>
-        </div>
+                        }
+                    });
+                </script>
+            </div>
 
             <div id="bmr" class="chartSection">
-            <h2>BMR Changes</h2>
-            <canvas id="bmrChart" width="600" height="300"></canvas>
-            <script>
+                <h2>BMR Changes</h2>
+                <canvas id="bmrChart" width="600" height="300"></canvas>
+                <script>
+                    var labels = dates;
+                    var bmr_records = {
+                        {
+                            bmr_records | safe
+                        }
+                    };
+                    const bmrData = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'BMR',
+                            borderColor: 'rgb(151,131,166)',
+                            pointStyle: 'rectRot',
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            fill: true,
+                            data: bmr_records
+                        }]
+                    };
+                    const bmrConfig = {
+                        type: 'line',
+                        data: bmrData,
+                        options: {
+                            scales: {
+                                yAxes: {
+                                    ticks: {
+                                        callback: function (value, index, ticks) {
+                                            return value + " cal";
+                                        }
+                                    },
+                                    suggestedMin: 1000,
+                                    suggestedMax: 2500
+                                }
+                            },
+                            responsive: false,
 
-            var labels = dates;
-            var bmr_records = {{bmr_records|safe}};
-            const bmrData = {
-                labels: labels,
-                datasets: [{
-                  label: 'BMR',
-                  borderColor: 'rgb(151,131,166)',
-                  pointStyle: 'rectRot',
-                  pointRadius: 6,
-                  pointHoverRadius: 10,
-                  fill:true,
-                  data: bmr_records
-                }]
-              };
-            const bmrConfig = {
-                type: 'line',
-                data: bmrData,
-                options: {
-                    scales: {
-                           yAxes: {
-                                ticks: {
-                                    callback: function(value, index, ticks) {
-                                    return value+" cal";
-                                    }
-                                },
-                                suggestedMin:1000,
-                                suggestedMax:2500
-                            }
-                        },
-                    responsive:false,
 
-
-                }
-              };
-              const bmrChangeChart = new Chart(
-                    document.getElementById('bmrChart'),
-                    bmrConfig
-                );
-            </script>
-        </div>
+                        }
+                    };
+                    const bmrChangeChart = new Chart(
+                        document.getElementById('bmrChart'),
+                        bmrConfig
+                    );
+                </script>
+            </div>
 
             <div>
-            <h2>Latest 20 Records</h2>
-            <table class="table table-striped" style="width:75%">
-            <tr  class="bg-info">
-                <th>Update Time</th>
-                <th>Weight</th>
-                <th>BMI</th>
-                <th>BMR</th>
-                <th>Body Fat Rate</th>
-            </tr>
+                <h2>Latest 20 Records</h2>
+                <table class="table table-striped" style="width:75%">
+                    <tr class="bg-info">
+                        <th>Update Time</th>
+                        <th>Weight</th>
+                        <th>BMI</th>
+                        <th>BMR</th>
+                        <th>Body Fat Rate</th>
+                    </tr>
 
-            <tbody id="bodyIndicatorsTable">
+                    <tbody id="bodyIndicatorsTable">
 
-            </tbody>
-        </table>
-            <script>
+                    </tbody>
+                </table>
+                <script>
+                    var last_twenty_combined_records = {
+                        {
+                            last_twenty_combined_records | safe
+                        }
+                    };
+                    buildTable(last_twenty_combined_records)
 
-            var last_twenty_combined_records = {{last_twenty_combined_records|safe}};
-            buildTable(last_twenty_combined_records)
-            function buildTable(data){
-                var table = document.getElementById('bodyIndicatorsTable')
+                    function buildTable(data) {
+                        var table = document.getElementById('bodyIndicatorsTable')
 
-                for (var i = 0; i < data.length; i++){
-                    var row = `<tr>
+                        for (var i = 0; i < data.length; i++) {
+                            var row = `<tr>
                                     <td>${data[i].update_time}</td>
                                     <td>${data[i].weight} kg</td>
                                     <td>${data[i].bmi}</td>
                                     <td>${data[i].bmr} cal</td>
                                     <td>${data[i].body_fat_rate}%</td>
                               </tr>`
-                    table.innerHTML += row
+                            table.innerHTML += row
 
 
-                }
-            }
-
-        </script>
+                        }
+                    }
+                </script>
             </div>
         </section>
 
@@ -328,14 +354,18 @@
         </section>
         <script>
             function setFirstChild() {
-              var isMale = Boolean({{is_male}});
+                var isMale = Boolean({
+                    {
+                        is_male
+                    }
+                });
 
-              var topElement = isMale
-                ? document.getElementById("fat")
-                : document.getElementById("weight");
+                var topElement = isMale ?
+                    document.getElementById("fat") :
+                    document.getElementById("weight");
 
-              const parent = topElement.parentNode;
-              parent.insertBefore(topElement, parent.firstChild);
+                const parent = topElement.parentNode;
+                parent.insertBefore(topElement, parent.firstChild);
             }
 
             setFirstChild()
@@ -371,12 +401,8 @@
         </button>
     </form>
 
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-        window.addEventListener("load", function() {
-            window.style.display = "none";
-        })
-      
-    </script> -->
+
+
 
 </body>
 
