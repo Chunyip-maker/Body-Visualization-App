@@ -160,7 +160,7 @@ input[type="range"]::-ms-fill-lower {
 .next button {
     float: right;
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
