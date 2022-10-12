@@ -47,12 +47,6 @@
     <p id="model_path" style="display: none">{{ model_texture[4] }}</p>
     <p id="check_new_model" style="display: none">{{ model_parameters[0] }}</p>
 
-
-
-
-
-
-
     <!-- Title -->
     <div class="main_title">
         Customise your model!
@@ -60,7 +54,7 @@
 
 
     <!-- Main Area -->
-    <form action="/step3" method='POST'>
+
         <div class="main">
             <div id="canvas">
 
@@ -68,6 +62,7 @@
 
 
             <div class="right">
+                <form action="/step3" method='POST'>
                 <div class="slider-box">
                     <div class="slider">
                         <input type="range" name="height" min={{ body_parameters_range[1] }}
