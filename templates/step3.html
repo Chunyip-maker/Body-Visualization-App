@@ -48,17 +48,6 @@
     <p id="check_new_model" style="display: none">{{ model_parameters[0] }}</p>
 
 
-    {#    <p id="height" style="display: none">{{ model_parameters[1] }}</p>#}
-    {#    <p id="weight" style="display: none">{{ model_parameters[2] }}</p>#}
-    {#    <p id="thigh" style="display: none">{{ model_parameters[3] }}#}
-    {#    <p id="shank" style="display: none">{{ model_parameters[4] }}</p>#}
-    {#    <p id="hip" style="display: none">{{ model_parameters[5] }}</p>#}
-    {#    <p id="arm_girth" style="display: none">{{ model_parameters[6] }}</p>#}
-    {#    <p id="arm_pan" style="display: none">{{ model_parameters[7] }}</p>#}
-    {#    <p id="waist" style="display: none">{{ model_parameters[8] }}</p>#}
-    {#    <p id="chest" style="display: none">{{ model_parameters[9] }}</p>#}
-
-
 
 
 
@@ -69,7 +58,7 @@
 
 
     <!-- Main Area -->
-    <form action="/step3" method='POST'>
+
         <div class="main">
             <div id="canvas">
 
@@ -77,6 +66,7 @@
 
 
             <div class="right">
+                <form action="/step3" method='POST'>
                 <div class="slider-box">
                     <div class="slider">
                         <input type="range" name="height" min={{ body_parameters_range[1] }}
