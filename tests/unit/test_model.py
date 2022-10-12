@@ -31,3 +31,13 @@ class Test_Model:
 
         result = self.model.define_basic_model(70,"male")
         assert result == "old_male"
+
+    def test_zip_combined_records_none_argument(self):
+        result = self.model.zip_combined_records([],[],None,None,[])
+        assert result is None
+
+        result = self.model.zip_combined_records([], [], [],[], None)
+        assert result is None
+
+    def test_zip_combined_records_normal(self):
+        update_time_list = ["2022-10-18 21:30:30"]

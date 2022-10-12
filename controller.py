@@ -11,6 +11,7 @@ to be displayed.
 import flask
 from flask import *
 from model import *
+from contextlib import contextmanager
 import os
 
 "may be useful when the name of 'static' and 'templates' files change"
@@ -257,10 +258,10 @@ def complete_step3():
         # print("~"*45)
         model_name = request.cookies.get('model_name')
         model_texture = model.search_model_texture_file_path(model_name)
-        print(model_texture)
+        # print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         body_parameters_range = model.search_body_parameters_range(model_name)
-        print(model_parameters)
+        # print(model_parameters)
         return render_template('step3.html', model_texture=model_texture, model_parameters=model_parameters,
                                body_parameters_range=body_parameters_range)
 
@@ -297,6 +298,7 @@ def complete_step4():
 
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
+        print(model_name)
 
         # latest_records: a list of records，record可能仅一个（因为是新用户），也可能为两个，每个record以字典形式保存body measurement
         # 如果len(latest_records) = 2 ，第一个是次新的，第二个是最新的
@@ -336,71 +338,73 @@ def complete_step4():
         print(is_male)
         print("*"*10)
         return render_template('step4.html',
-                               latest_records=json.dumps(latest_records),
-                               is_male = json.dumps(is_male),
-                               historic_records=json.dumps(historic_records),
-                               weight_records=json.dumps(weight_records),
-                               bmi_records=json.dumps(bmi_records),
-                               bmr_records=json.dumps(bmr_records),
-                               body_fat_rate_records=json.dumps(body_fat_rate_records),
-                               last_twenty_historic_records = json.dumps(last_twenty_historic_records),
-                               last_twenty_weight_records = json.dumps(last_twenty_weight_records),
-                               last_twenty_bmi_records = json.dumps(last_twenty_bmi_records),
-                               last_twenty_bmr_records = json.dumps(last_twenty_bmr_records),
-                               last_twenty_body_fate_rate_records = json.dumps(last_twenty_body_fate_rate_records),
-                               last_twenty_combined_records = json.dumps(last_twenty_combined_records))
+                               latest_records=latest_records,
+                               is_male = is_male,
+                               model_name = model_name,
+                               historic_records=historic_records,
+                               weight_records=weight_records,
+                               bmi_records=bmi_records,
+                               bmr_records=bmr_records,
+                               body_fat_rate_records=body_fat_rate_records,
+                               last_twenty_historic_records = last_twenty_historic_records,
+                               last_twenty_weight_records = last_twenty_weight_records,
+                               last_twenty_bmi_records = last_twenty_bmi_records,
+                               last_twenty_bmr_records = last_twenty_bmr_records,
+                               last_twenty_body_fate_rate_records = last_twenty_body_fate_rate_records,
+                               last_twenty_combined_records = last_twenty_combined_records)
 
 
-# for test only
-@app.route('/test', methods=['GET', 'POST'])
-def complete_test():
-    """ Handle the 3rd step of the body visualizer """
-    # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
-    if 'logged_in' in session:
-        return redirect(url_for('complete_step3'))
-
-    if request.method == 'GET':
-        # load model name
-        model_name = request.cookies.get('model_name')
-
-        # define basic model
-        age = request.cookies.get('age')
-        gender = request.cookies.get('gender')
-        # basic_model = model.define_basic_model(int(age), gender)
-
-        # insert data to database
-        basic_model = model.define_basic_model(age, gender)
-        return render_template('test.html', basic_model=basic_model)
-    elif request.method == 'POST':
-        # 如果未登录 -- 未完成注册系统都不识别为登录成功
-        if 'logged_in' not in session or not session['logged_in']:
-            session['logged_in'] = True
-            # # load model name
-            model_name = request.cookies.get('model_name')
-            #
-            # # define basic model
-            age = request.cookies.get('age')
-            gender = request.cookies.get('gender')
-            basic_model = model.define_basic_model(age, gender)
-            # # insert data to database
-            model.add_a_basic_human_model(model_name, age, gender)
-            # basic_model = model.define_basic_model(int(age), gender)
-
-            hair_color = request.form.get('hair_colour')  # 头发颜色
-            skin_color = request.form.get('skin_colour')  # 皮肤颜色
-            top_dress = request.form.get('top')  # 上衣
-            bottom_dress = request.form.get('bot')  # 下装
-
-            # hair_color = model.split_mesh_name(hair_color)
-            # skin_color = model.split_mesh_name(skin_color)
-            # top_dress = model.split_mesh_name(top_dress)
-            # bottom_dress = model.split_mesh_name(bottom_dress)
-
-            model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
-
-            # 暂时没用
-            # textures_file_path = model.search_model_texture_file_path(model_name)
-            # basic_model_file_path = model.search_basic_model_file_path(model_name)
-            return redirect(url_for('complete_test'))
-        else:
-            return redirect(url_for('complete_test'))
+# # for test only
+# @app.route('/test', methods=['GET', 'POST'])
+# def complete_test():
+#     """ Handle the 3rd step of the body visualizer """
+#     # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
+#     if 'logged_in' in session:
+#         return redirect(url_for('complete_step3'))
+#
+#     if request.method == 'GET':
+#         # load model name
+#         model_name = request.cookies.get('model_name')
+#
+#         # define basic model
+#         age = request.cookies.get('age')
+#         gender = request.cookies.get('gender')
+#         # basic_model = model.define_basic_model(int(age), gender)
+#
+#         # insert data to database
+#         basic_model = model.define_basic_model(age, gender)
+#         return render_template('test.html', basic_model=basic_model)
+#     elif request.method == 'POST':
+#         # 如果未登录 -- 未完成注册系统都不识别为登录成功
+#         if 'logged_in' not in session or not session['logged_in']:
+#             session['logged_in'] = True
+#             # # load model name
+#             model_name = request.cookies.get('model_name')
+#
+#             #
+#             # # define basic model
+#             age = request.cookies.get('age')
+#             gender = request.cookies.get('gender')
+#             basic_model = model.define_basic_model(age, gender)
+#             # # insert data to database
+#             model.add_a_basic_human_model(model_name, age, gender)
+#             # basic_model = model.define_basic_model(int(age), gender)
+#
+#             hair_color = request.form.get('hair_colour')  # 头发颜色
+#             skin_color = request.form.get('skin_colour')  # 皮肤颜色
+#             top_dress = request.form.get('top')  # 上衣
+#             bottom_dress = request.form.get('bot')  # 下装
+#
+#             # hair_color = model.split_mesh_name(hair_color)
+#             # skin_color = model.split_mesh_name(skin_color)
+#             # top_dress = model.split_mesh_name(top_dress)
+#             # bottom_dress = model.split_mesh_name(bottom_dress)
+#
+#             model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model)
+#
+#             # 暂时没用
+#             # textures_file_path = model.search_model_texture_file_path(model_name)
+#             # basic_model_file_path = model.search_basic_model_file_path(model_name)
+#             return redirect(url_for('complete_test'))
+#         else:
+#             return redirect(url_for('complete_test'))
