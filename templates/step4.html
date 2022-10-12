@@ -102,10 +102,10 @@
 
 
         </script>
-
+        <h1> Part 2. Health Statistics </h1>
         <section class="report">
-            <h2> Part 2. Health Statistics </h2>
-            <hr> 
+
+            <hr>
             <div id="bmi" class="chartSection">
             <h2> BMI Changes</h2>
             <canvas id="bmiChart" width="600" height="300"></canvas>
@@ -175,6 +175,8 @@
                             }
                         }
                     },
+                    suggestedMin:0,
+                    suggestedMax:40,
                     responsive:false
 
                 }
@@ -315,11 +317,18 @@
             </div>
         </section>
 
+        <section class="text_report">
+            <div>
+                <h2>Textual Report</h2>
+                <p>Hi {{ model_name }}! </p>
+
+
+
+            </div>
+        </section>
         <script>
             function setFirstChild() {
-
               var isMale = Boolean({{is_male}});
-              alert(isMale);
 
               var topElement = isMale
                 ? document.getElementById("fat")
