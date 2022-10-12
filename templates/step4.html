@@ -73,9 +73,6 @@
 
         <div class="comparison">
             <h2> Part 1. Model Comparison</h2>
-            <button type="button" id="Top">Top</button>
-            <button type="button" id="Bottom">Bottom</button>
-            <hr>
             <div id="before_canvas">
                 <!-- <img src="../static/images/fake_step4_1.jpg" alt="">
                 老模型 -->
@@ -84,6 +81,13 @@
             <div id="after_canvas">
                 <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
                 <!-- 最新模型 -->
+            </div>
+            
+            <div class="angle_button">
+                <hr>
+                <h4> Selected Perspectives: </h4>
+                <button type="button" id="Top">Top</button>
+                <button type="button" id="Bottom">Bottom</button>
             </div>
         </div>
 
@@ -105,6 +109,8 @@
         </script>
 
         <section class="report">
+            <h2> Part 2. Health Statistics </h2>
+            <hr> 
             <div id="bmi" class="chartSection">
             <h2> BMI Changes</h2>
             <canvas id="bmiChart" width="600" height="300"></canvas>

@@ -165,8 +165,8 @@ ul li {
 /* preloader */
 
 #preloader {
-    background: #000 url(../images/genshin.gif) no-repeat center center;
-    background-size: 40%;
+    background: #000 url(../images/loading_model.gif) no-repeat center center;
+    background-size: 100%;
     height: 100vh;
     width: 100%;
     position: fixed;
