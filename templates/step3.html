@@ -69,7 +69,7 @@
 
 
     <!-- Main Area -->
-    <form class="next" action="/step3" method='POST'>
+    <form action="/step3" method='POST'>
         <div class="main">
             <div id="canvas">
 
@@ -184,20 +184,21 @@
                     <span id="b9">{{model_parameters[9]}}</span>
                     <span>shank</span>
                 </div>
-
-
+                <div class="next">
+                <button>
+                    Submit Your Model
+                </button>
+                </div>
+            </form>
                 <!-- buttons -->
                 <div class="button">
                     
-                    <form class="history" action="/step4" method='GET'>
-                        <button>
-                            Historical Health Report
-                        </button>
-                    </form>
+                    <!-- <form class="history" action="/step4" method='GET'> -->
+
                     
-                    <form class="next" action="/step3" method='POST'>
+                    <form class="history" action="/step3" method='POST'>
                         <button>
-                            Submit Your Model
+                            Historical Record
                         </button>
                     </form>
 
