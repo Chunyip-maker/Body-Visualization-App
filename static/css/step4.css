@@ -270,3 +270,28 @@ body {
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.sub-header h2{
+    float: left;
+    margin-right: 50px;
+}
+
+.sub-header img{
+    width: 50px;
+    height: 50px;
+}
+
+#mytitle {
+    width: 450px;
+    position: absolute;
+    color: #000;
+    font-size: 16px;
+    padding: 4px;
+    border: solid 1px #ced5d3;
+    border-radius:10px !important;
+    text-align: center;
+    line-height: 30px;
+    background-color: wheat;
+    opacity: .8;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
