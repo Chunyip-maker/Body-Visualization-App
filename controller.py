@@ -323,7 +323,7 @@ def complete_step4():
         bmr_records = model.calculate_bmr(historic_records, request.cookies.get('gender'), request.cookies.get('age'))
         print(bmr_records)
         # 计算出最近十次的体脂率
-        body_fat_rate_records = model.calculate_body_fat_rate(historic_records, request.cookies.get('gender'))
+        body_fat_rate_records = model.calculate_body_fat_rate(historic_records, bmi_records, request.cookies.get('gender'),request.cookies.get('age'))
 
         last_twenty_historic_records = model.get_last_twenty_body_measurement_records_to_be_displayed(model_name)
         # 抽取最近20次的时间
@@ -333,11 +333,12 @@ def complete_step4():
         # 计算出最近20次基础代谢率
         last_twenty_bmr_records = model.calculate_bmr(last_twenty_historic_records, request.cookies.get('gender'),
                                                       request.cookies.get('age'))
-        # 计算出最近20次体脂率
-        last_twenty_body_fate_rate_records = model.calculate_body_fat_rate(last_twenty_historic_records,
-                                                                           request.cookies.get('gender'))
         # 计算出最近20次bmi
         last_twenty_bmi_records = model.calculate_bmi(last_twenty_historic_records)
+        # 计算出最近20次体脂率
+        last_twenty_body_fate_rate_records = model.calculate_body_fat_rate(last_twenty_historic_records,last_twenty_bmi_records,
+                                                                           request.cookies.get('gender'),request.cookies.get('age'))
+
         # 获得最近二十次的（update_time, weight, bmi, bmr, body_fat_rate）记录
         last_twenty_combined_records = model.zip_combined_records(last_twenty_update_time, last_twenty_weight_records,
                                                                   last_twenty_bmi_records, last_twenty_bmr_records,
@@ -353,8 +354,8 @@ def complete_step4():
                                model_texture=model_texture,
                                model_name = model_name,
                                body_parameters_range=body_parameters_range,
-                               latest_records=latest_records,
-                               latest_records_json =json.dumps(latest_records),
+                               latest_records_original=latest_records,
+                               latest_records =json.dumps(latest_records),
                                is_male=is_male,
                                historic_records=historic_records,
                                weight_records=weight_records,

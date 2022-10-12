@@ -248,24 +248,25 @@ class Model:
                 pass
         return result
 
-    def calculate_body_fat_rate(self, historic_records, model_gender,bmi):
-        if historic_records is None or model_gender is None:
+    def calculate_body_fat_rate(self, historic_records, bmi_records,model_gender,model_age):
+        if model_age is None or model_gender is None :
+            return
+        if historic_records is None or bmi_records is None:
             return
         result = []
-        for record in historic_records:
+        for i in range(len(historic_records)):
+            record = historic_records[i]
+            record_bmi = bmi_records[i]
             weight = float(record["weight"])
             waist = float(record["waist"])
+            model_age = int(model_age)
             if model_gender == "male":
-                a = weight * 1.082 + 94.42
-                b = waist * 4.15
-                fat_weight = a - b
-                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                body_fat_rate = 1.2*record_bmi + 0.23*model_age - 5.4
+                body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             elif model_gender == "female":
-                a = waist * 0.74
-                b = weight * 1.082 + 44.74
-                fat_weight = a - b
-                body_fat_rate = round((fat_weight / weight) * 100, 2)
+                body_fat_rate = 1.2 * record_bmi + 0.23 * model_age - 16.2
+                body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             else:
                 pass
@@ -327,5 +328,6 @@ class Model:
 # print(model.search_model_age_and_gender('admin'))
 
 if __name__ == "__main__":
-
-    print("Datetime with out seconds",datetime.datetime.strptime("2022-10-12 21:30:30","%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d, %H:%M"))
+    a = 23.7751
+    print(int(round(a,0)))
+    # print("Datetime with out seconds",datetime.datetime.strptime("2022-10-12 21:30:30","%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d, %H:%M"))
