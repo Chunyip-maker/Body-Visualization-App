@@ -185,56 +185,58 @@
                     <span>shank</span>
                 </div>
                 <div class="next">
-                <button>
-                    Submit Your Model
-                </button>
-                </div>
-            </form>
-                <!-- buttons -->
-                <div class="button">
-                    
-                    <!-- <form class="history" action="/step4" method='GET'> -->
-
-                    
-                    <form class="history" action="/step3" method='POST'>
-                        <button>
-                            Historical Record
-                        </button>
-                    </form>
-
+                    <button>
+                        Submit Your Model
+                    </button>
                 </div>
             </div>
-
-
-            <script>
-                const rangeInputs = document.querySelectorAll('input[type="range"]')
-                const numberInput = document.querySelector('input[type="number"]')
-
-                function handleInputChange(e) {
-                    let target = e.target
-                    if (e.target.type !== 'range') {
-                        target = document.getElementById('range')
-                    }
-                    const min = target.min
-                    const max = target.max
-                    const val = target.value
-
-                    target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
-                }
-
-                rangeInputs.forEach(input => {
-                    input.addEventListener('input', handleInputChange)
-                })
-            </script>
-
         </div>
 
+    </form>
+    <!-- buttons -->
+    <div class="button">
 
-        <form class="logout" action="/logout" method='GET'>
+        <!-- <form class="history" action="/step4" method='GET'> -->
+
+
+        <form class="history" action="/step3" method='POST'>
             <button>
-                Logout
+                Historical Record
             </button>
         </form>
+
+    </div>
+
+
+    <script>
+        const rangeInputs = document.querySelectorAll('input[type="range"]')
+        const numberInput = document.querySelector('input[type="number"]')
+
+        function handleInputChange(e) {
+            let target = e.target
+            if (e.target.type !== 'range') {
+                target = document.getElementById('range')
+            }
+            const min = target.min
+            const max = target.max
+            const val = target.value
+
+            target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+        }
+
+        rangeInputs.forEach(input => {
+            input.addEventListener('input', handleInputChange)
+        })
+    </script>
+
+    </div>
+
+
+    <form class="logout" action="/logout" method='GET'>
+        <button>
+            Logout
+        </button>
+    </form>
 
 
 
