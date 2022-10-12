@@ -100,8 +100,6 @@
 
 
 
-
-
         <script>
             function retract_records_data(records, key) {
                 var toBeAppendedList = []
@@ -116,11 +114,34 @@
             var dates = retract_records_data(historic_records, "update_time")
         </script>
         <h1> Part 2. Health Statistics </h1>
+
+        <div id="general_stat">
+            
+        </div>
+
+        <!-- <script>
+            var str = new String("{{parameter_change_report}}")
+            var target = document.getElementById("general_stat")
+            target.innerHTML = str;
+        </script> -->
+
         <section class="report">
 
-            <hr>
             <div id="bmi" class="chartSection">
-                <h2> BMI Changes</h2>
+                <div class="sub-header">
+                    <h2> 2.1 BMI Changes</h2>
+                    <img src="../static/images/muscle.png">
+                </div>
+                <div class="report" id="bmi_stat">
+            
+                </div>
+
+                <script>
+                    var lst = {{bmi_report_list | tojson}}
+                    var target = document.getElementById("bmi_stat")
+                    target.innerHTML = lst[0];
+                </script>
+
                 <canvas id="bmiChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates
