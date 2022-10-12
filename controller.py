@@ -372,7 +372,9 @@ def complete_step4():
 
         if not is_new_account and not has_only_one_record:
             parameter_change_report = model.generate_parameter_change_report(model_name,latest_records)
-            print(parameter_change_report)
+
+            for each in parameter_change_report:
+                print(each)
         else:
             parameter_change_report = "As you are currently a new model, there is currently no historic data for your body parameter comparison :(\n"
             print(parameter_change_report)

@@ -293,7 +293,13 @@ document.getElementById("a4").oninput = function changeWaist(){
 }
 
 function changeWaistImpl(){
-    let index = calculateTransformation(4, 0.2);
+    let path = document.getElementById("model_path").innerText;
+    let index;
+    if(path.indexOf("female") != -1){
+        index = calculateTransformation(4, 0.3);
+    }else{
+        index = calculateTransformation(4, 0.2);
+    }
     changeScaleX(["Spine"], ["Chest"], index);
     changeScaleZ(["Spine"], ["Chest"], index);
 }

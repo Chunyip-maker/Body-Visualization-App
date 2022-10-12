@@ -304,7 +304,7 @@ class Model:
         if model_name is None or latest_records is None:
             return
 
-        result = ""
+        result = []
         old_record = latest_records[0]
         new_record = latest_records[1]
 
@@ -312,12 +312,12 @@ class Model:
         new_time = latest_records[1]["update_time"]
 
         # intro paragraph
-        intro = "Hi, {model_name}! Your body change from {old_time} to {new_time} is summarized as below:\n\n".format(
+        intro = "Hi, {model_name}! Your body change from {old_time} to {new_time} is summarized as below:".format(
             model_name=model_name,
             old_time=old_time,
             new_time=new_time
         )
-        result += intro
+        result.append(intro)
 
         # paragraph to display parameters that have changes
         second_paragraph = ""
@@ -329,7 +329,7 @@ class Model:
                 temp.append(key)
             else:
                 if old_record[key] < new_record[key]:
-                    row = "{parameter} : Increase by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}\n".format(
+                    row = "{parameter} : Increase by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
                         parameter=key.replace("_"," ").upper(),
                         diff=new_record[key]-old_record[key],
                         old_value=old_record[key],
@@ -337,28 +337,25 @@ class Model:
                         unit=unit_map[key]
                     )
                 else:
-                    row = "{parameter} : Decrease by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}\n".format(
+                    row = "{parameter} : Decrease by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
                         parameter=key.replace("_"," ").upper(),
                         diff=old_record[key] - new_record[key],
                         old_value=old_record[key],
                         new_value=new_record[key],
                         unit=unit_map[key]
                     )
-                second_paragraph += row
-
-        if second_paragraph != "":
-            result += second_paragraph+"\n"
+                result.append(row)
 
         #paragraph to display parameters that have no changes
-        third_paragraph = ""
+
         for key in temp:
-            row = "{parameter} : Remain unchanged at {old_value}{unit}\n".format(
+            row = "{parameter} : Remain unchanged at {old_value}{unit}".format(
                 parameter=key.replace("_", " ").upper(),
                 old_value=old_record[key],
                 unit=unit_map[key]
             )
-            third_paragraph += row
-        result += third_paragraph
+            result.append(row)
+
 
         return result
 

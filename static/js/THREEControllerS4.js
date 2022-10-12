@@ -457,7 +457,13 @@ function changeChestImpl(loadModel,model){
     changeScaleZ(loadModel,["Upper_Chest"], ["Neck"], index);
 }
 function changeWaistImpl(loadModel,model){
-    let index = calculateTransformation(model,4,"waist", 0.2);
+    let path = document.getElementById("model_path").innerText;
+    let index;
+    if(path.indexOf("female") != -1){
+        index = calculateTransformation(4, 0.3);
+    }else{
+        index = calculateTransformation(4, 0.2);
+    }
     changeScaleX(loadModel,["Spine"], ["Chest"], index);
     changeScaleZ(loadModel,["Spine"], ["Chest"], index);
 }
