@@ -267,12 +267,9 @@ def complete_step3():
         # print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         body_parameters_range = model.search_body_parameters_range(model_name)
-        is_new_model= len(model.get_historic_body_measurement_records_to_be_displayed(model_name))
-        print("NewModel: "+str(is_new_model))
 
         # print(model_parameters)
         return render_template('step3.html',
-                               is_new_model=is_new_model,
                                model_texture=model_texture,
                                model_parameters=model_parameters,
                                body_parameters_range=body_parameters_range
