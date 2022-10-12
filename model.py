@@ -261,11 +261,11 @@ class Model:
             waist = float(record["waist"])
             model_age = int(model_age)
             if model_gender == "male":
-                body_fat_rate = 1.2*record_bmi + 0.23*model_age - 5.4
+                body_fat_rate = 1.2*record_bmi + 0.23*model_age - 16.2
                 body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             elif model_gender == "female":
-                body_fat_rate = 1.2 * record_bmi + 0.23 * model_age - 16.2
+                body_fat_rate = 1.2 * record_bmi + 0.23 * model_age - 5.4
                 body_fat_rate = int(round(body_fat_rate, 0))
                 result.append(body_fat_rate)
             else:
@@ -300,32 +300,126 @@ class Model:
             result.append(record)
         return result
 
-    # def search_body_parameters_range(self,age_group):
-    #     result = self.database.search_body_parameters_range(age_group)
-    #     print(result)
+    def generate_parameter_change_report(self, model_name,latest_records):
+        if model_name is None or latest_records is None:
+            return
 
-    # def split_mesh_name(self, texture_name):
-    #     tmp = texture_name.strip().split(',')
-    #     i = 1
-    #     result = []
-    #     while i < len(tmp):
-    #         result.append(tmp[i])
-    #         i += 2
-    #     return ','.join(result)
+        result = ""
+        old_record = latest_records[0]
+        new_record = latest_records[1]
 
+        old_time = latest_records[0]["update_time"]
+        new_time = latest_records[1]["update_time"]
 
-# model = Model()
-# print(model.define_new_model_body_parameters('admin'))
-# model.search_model_age_and_gender('admin')
-# model.search_body_parameters_range('middle_male')
-# print(model.search_body_parameters_range('admin'))
+        # intro paragraph
+        intro = "Hi, {model_name}! Your body change from {old_time} to {new_time} is summarized as below:\n\n".format(
+            model_name=model_name,
+            old_time=old_time,
+            new_time=new_time
+        )
+        result += intro
 
-# print(str(datetime.datetime.now()).split('.')[0])
-# print(model.database.search_last_two_body_measurement_records('admin'))
-# print(model.database.search_last_one_body_measurement_record('admin')[0])
+        # paragraph to display parameters that have changes
+        second_paragraph = ""
+        parameters =["height", "weight", "thigh", "shank","hip", "arm_girth","arm_pan","waist", "chest"]
+        temp = [] # store the parameter of which the value is not changed
+        unit_map = {"height":"cm","weight":"kg","thigh":"cm","shank":"cm","hip":"cm","arm_girth":"cm","arm_pan":"cm","waist":"cm", "chest":"cm"}
+        for key in parameters:
+            if old_record[key] == new_record[key]:
+                temp.append(key)
+            else:
+                if old_record[key] < new_record[key]:
+                    row = "{parameter} : Increase by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}\n".format(
+                        parameter=key.replace("_"," ").upper(),
+                        diff=new_record[key]-old_record[key],
+                        old_value=old_record[key],
+                        new_value=new_record[key],
+                        unit=unit_map[key]
+                    )
+                else:
+                    row = "{parameter} : Decrease by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}\n".format(
+                        parameter=key.replace("_"," ").upper(),
+                        diff=old_record[key] - new_record[key],
+                        old_value=old_record[key],
+                        new_value=new_record[key],
+                        unit=unit_map[key]
+                    )
+                second_paragraph += row
 
-# print(model.database.search_basic_model_file_path('admin'))
-# print(model.search_model_age_and_gender('admin'))
+        if second_paragraph != "":
+            result += second_paragraph+"\n"
+
+        #paragraph to display parameters that have no changes
+        third_paragraph = ""
+        for key in temp:
+            row = "{parameter} : Remain unchanged at {old_value}{unit}\n".format(
+                parameter=key.replace("_", " ").upper(),
+                old_value=old_record[key],
+                unit=unit_map[key]
+            )
+            third_paragraph += row
+        result += third_paragraph
+
+        return result
+
+    def generate_bmi_report(self, bmi):
+        result = []
+        category = ""
+        if bmi < 18.5:
+            category = "underweight"
+        elif bmi <= 24.9:
+            category = "normal"
+        elif bmi <= 29.9:
+            category = "overweight"
+        else:
+            category = "obese"
+        result.append ("Your current body mass index (BMI) is {bmi}. This BMI falls within a {category} range. ".format(
+            bmi=bmi,
+            category=category
+        ))
+        result.append("Body mass index (BMI) is a person’s weight in kilograms "+
+                      "divided by the square of height in meters. BMI is an "+
+                      "inexpensive and easy screening method for weight "+
+                      "categories—underweight, healthy weight, overweight,"+
+                      " and obesity. If your BMI is below 18.5, it falls within"+
+                      " the underweight. If your BMI is 18.5 to 24.9, it falls within "+
+                      "the normal or Healthy Weight range. "+
+                      "If your BMI is 25.0 to 29.9, it falls within the overweight range. "+
+                      "If your BMI is 30.0 or higher, it falls within the obese range")
+        return result
+
+    def generate_bmr_report(self,bmr):
+        result = []
+        result.append("As for your basal metabolic rate (BMR), you are currently suggested to take in at least {bmr} calories from your daily meal".format(
+            bmr=bmr
+        ))
+        result.append("Basal Metabolic Rate is the number of calories required to keep your body functioning at rest. BMR is also known as your body\'s metabolism; therefore, any increase to your metabolic weight, such as exercise, will increase your BMR.Most people\'s BMR is between 1000 – 2000.")
+        return result
+
+    def generate_bfr_report(self,body_fat_rate, gender):
+        result = []
+        if gender is None:
+            return
+        if gender == "male":
+            if body_fat_rate < 5:
+                category = "abnormal"
+            elif body_fat_rate <= 24:
+                category = "healthy"
+            else:
+                category = "obese"
+        elif gender == "female":
+            if body_fat_rate < 10:
+                category = "abnormal"
+            elif body_fat_rate <= 31:
+                category = "healthy"
+            else:
+                category = "obese"
+        result.append("Your current body fat rate is {bfr}%. This body fate rate falls within the {category} range.".format(
+            bfr=body_fat_rate,
+            category=category
+        ))
+        result.append("The body fat rate of a human or other living being is the total mass of fat divided by total body mass, multiplied by 100; body fat includes essential body fat and storage body fat. Essential body fat is necessary to maintain life and reproductive functions. The percentage of essential body fat for women is greater than that for men, due to the demands of childbearing and other hormonal functions.For a man, 2–5% fat is essential, 2–24% fat is considered healthy, and more than 25% classifies as obesity. For a woman, 10–13% fat is essential, 10–31% fat is healthy, and more than 32% classifies as obesity.")
+        return result
 
 if __name__ == "__main__":
     a = 23.7751
