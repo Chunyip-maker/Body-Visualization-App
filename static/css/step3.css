@@ -332,8 +332,8 @@ input[type="range"] {
 /* preloader */
 
 #preloader {
-    background: #000 url(../images/genshin.gif) no-repeat center center;
-    background-size: 40%;
+    background: #f5c024 url(../images/loading_model.gif) no-repeat center center;
+    background-size: 15%;
     height: 100%;
     width: 100%;
     position: fixed;
