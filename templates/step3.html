@@ -13,6 +13,9 @@
 
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="../static/css/step3.css">
+    <link rel="Bookmark" href="../static/images/muscle.png" /> 
+    <link rel="shortcut icon" href="../static/images/muscle.png" /> 
+    <link rel="icon" href="../static/images/muscle.png" />
     <title>Body Virtualisation APP - Step 3</title>
 
     <script type="importmap">
@@ -55,14 +58,14 @@
 
     <!-- Main Area -->
 
-        <div class="main">
-            <div id="canvas">
+    <div class="main">
+        <div id="canvas">
 
-            </div>
+        </div>
 
 
-            <div class="right">
-                <form action="/step3" method='POST'>
+        <div class="right">
+            <form action="/step3" method='POST'>
                 <div class="slider-box">
                     <div class="slider">
                         <input type="range" name="height" min={{ body_parameters_range[1] }}
@@ -171,51 +174,51 @@
                     <span>shank</span>
                 </div>
                 <div class="next">
-                <button>
-                    Submit Your Model
-                </button>
+                    <button>
+                        Submit Your Model
+                    </button>
                 </div>
-            </div>
             </form>
-                <!-- buttons -->
-                <div class="button">
-                    <form class="history" action="/step3" method='POST'>
-                        <button>
-                            Historical Record
-                        </button>
-                    </form>
-
-                </div>
-
-            <script>
-                const rangeInputs = document.querySelectorAll('input[type="range"]')
-                const numberInput = document.querySelector('input[type="number"]')
-
-                function handleInputChange(e) {
-                    let target = e.target
-                    if (e.target.type !== 'range') {
-                        target = document.getElementById('range')
-                    }
-                    const min = target.min
-                    const max = target.max
-                    const val = target.value
-
-                    target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
-                }
-
-                rangeInputs.forEach(input => {
-                    input.addEventListener('input', handleInputChange)
-                })
-            </script>
-
+            <form class="history" action="/step3" method='POST'>
+                <button>
+                    Historical Record
+                </button>
+            </form>
         </div>
+    </div>
+
+   
 
 
-        <form class="logout" action="/logout" method='GET'>
-            <button>
-                Logout
-            </button>
-        </form>
+    <script>
+        const rangeInputs = document.querySelectorAll('input[type="range"]')
+        const numberInput = document.querySelector('input[type="number"]')
+
+        function handleInputChange(e) {
+            let target = e.target
+            if (e.target.type !== 'range') {
+                target = document.getElementById('range')
+            }
+            const min = target.min
+            const max = target.max
+            const val = target.value
+
+            target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+        }
+
+        rangeInputs.forEach(input => {
+            input.addEventListener('input', handleInputChange)
+        })
+    </script>
+
+    </div>
+
+
+    <form class="logout" action="/logout" method='GET'>
+        <button>
+            Logout
+        </button>
+    </form>
 
 
 </body>

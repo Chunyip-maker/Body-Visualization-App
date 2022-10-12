@@ -157,91 +157,6 @@ input[type="range"]::-ms-fill-lower {
     background-color: rgb(103, 155, 134);
 }
 
-/*
-input[type="range"] {
-    -webkit-appearance: none;
-    width: 200px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 6px;
-    background-image: linear-gradient(red, red);
-    background-size: 50% 100%;
-    background-repeat: no-repeat;
-  }
-  
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 21px;
-    width: 21px;
-    border-radius: 50%;
-    background: rgb(157, 192, 163);
-    cursor: ew-resize;
-    box-shadow: 0 0 2px 0 #555;
-    transition: background .3s ease-in-out;
-  }
-  
-  input[type="range"]::-moz-range-thumb {
-    -webkit-appearance: none;
-    height: 21px;
-    width: 21px;
-    border-radius: 50%;
-    background-image: linear-gradient(rgb(211, 230, 106), #3553a7);
-    cursor: ew-resize;
-    box-shadow: 0 0 2px 0 #555;
-    transition: background .3s ease-in-out;
-  }
-  
-  input[type="range"]::-ms-thumb {
-    -webkit-appearance: none;
-    height: 21px;
-    width: 21px;
-    border-radius: 50%;
-    background: rgb(0, 100, 92);
-    cursor: ew-resize;
-    box-shadow: 0 0 2px 0 #555;
-    transition: background .3s ease-in-out;
-  }
-  
-  input[type="range"]::-webkit-slider-thumb:hover {
-    background: rgb(0, 100, 92);
-  }
-  
-  input[type="range"]::-moz-range-thumb:hover {
-    background: rgb(0, 100, 92);
-  }
-  
-  input[type="range"]::-ms-thumb:hover {
-    background: rgb(0, 100, 92);
-  }
-  
-  input[type=range]::-webkit-slider-runnable-track  {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-  
-  input[type=range]::-moz-range-track {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-  
-  input[type="range"]::-ms-track {
-    -webkit-appearance: none;
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-*/
-
-
-.button {
-    width: 600px;
-    height: 300px;
-}
-
 .next button {
     float: right;
     margin-top: 20px;
@@ -270,7 +185,7 @@ input[type="range"] {
 
 .history button {
     float: left;
-    margin-top: 20px; 
+    margin-top: 20px;
     width: 200px;
     background-color: #f6f6f6;
     outline: none;
