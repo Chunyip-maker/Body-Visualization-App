@@ -111,16 +111,8 @@
                 return toBeAppendedList
             }
 
-            var historic_records = {
-                {
-                    historic_records | safe
-                }
-            }
-            var weight_records = {
-                {
-                    weight_records | safe
-                }
-            }
+            var historic_records = {{historic_records | safe}}
+            var weight_records = {{weight_records | safe}}
             var dates = retract_records_data(historic_records, "update_time")
         </script>
         <h1> Part 2. Health Statistics </h1>
@@ -132,11 +124,7 @@
                 <canvas id="bmiChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates
-                    var bmi_records = {
-                        {
-                            bmi_records | safe
-                        }
-                    }
+                    var bmi_records = {{bmi_records | safe}}
                     const bmiData = {
                         labels: labels,
                         datasets: [{
@@ -172,11 +160,7 @@
                 <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates
-                    var bodyFatRateRecords = {
-                        {
-                            body_fat_rate_records | safe
-                        }
-                    }
+                    var bodyFatRateRecords = {{body_fat_rate_records | safe}}
                     const bodyFatRateData = {
                         labels: labels,
                         datasets: [{
@@ -259,11 +243,7 @@
                 <canvas id="bmrChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates;
-                    var bmr_records = {
-                        {
-                            bmr_records | safe
-                        }
-                    };
+                    var bmr_records = {{bmr_records | safe }};
                     const bmrData = {
                         labels: labels,
                         datasets: [{
@@ -319,11 +299,7 @@
                     </tbody>
                 </table>
                 <script>
-                    var last_twenty_combined_records = {
-                        {
-                            last_twenty_combined_records | safe
-                        }
-                    };
+                    var last_twenty_combined_records = {{ last_twenty_combined_records | safe }};
                     buildTable(last_twenty_combined_records)
 
                     function buildTable(data) {
@@ -357,11 +333,7 @@
         </section>
         <script>
             function setFirstChild() {
-                var isMale = Boolean({
-                    {
-                        is_male
-                    }
-                });
+                var isMale = Boolean({{is_male}});
 
                 var topElement = isMale ?
                     document.getElementById("fat") :
