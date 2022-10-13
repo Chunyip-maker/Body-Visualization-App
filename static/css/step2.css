@@ -62,19 +62,16 @@ body {
     /*cursor: pointer;*/
 }
 
-
-
-.bottom_text {
-
-    font-size: 10px;
-}
-
-
 .right img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     object-fit: cover;
+
+    position: relative;
+    margin-top: 1px;
+    margin-left: 5px;
+    margin-bottom: 3px;
 }
 
 ul {
@@ -85,7 +82,7 @@ ul {
 ul li {
     display: inline-block;
     margin-right: 10px;
-    width: 120px;
+    width: 80px;
 }
 
 hr {
