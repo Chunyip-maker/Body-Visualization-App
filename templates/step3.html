@@ -173,17 +173,31 @@
                     <span id="b9">{{model_parameters[9]}}</span>
                     <span>shank</span>
                 </div>
-                <div class="next">
+                <div class="next" id="next">
                     <button>
                         Submit Your Model
                     </button>
                 </div>
             </form>
-            <form class="history" action="/step3" method='POST'>
+            
+            <form class="history" id="history" action="/step3" method='POST'>
                 <button>
                     Historical Record
                 </button>
             </form>
+            
+
+            <script>
+                var isNew = {{ model_parameters[0]}} == 0;
+                console.log(isNew)
+                var h = document.getElementById('history');
+                var next = document.getElementById('next');
+                if (isNew == true) {
+                    h.style.display = 'none';
+                    next.style.cssFloat = 'left';
+                    next.style.marginLeft = '100px';
+                }
+            </script>
         </div>
     </div>
 

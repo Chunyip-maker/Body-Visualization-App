@@ -34,9 +34,7 @@ let latest_records = document.getElementById("latest_records").innerText;
 latest_records = JSON.parse(latest_records);
 console.log(latest_records);
 
-
-
-
+var isOne = latest_records.length == 1;
 
 
 //test version for model under /static/model/test2/ folder only
@@ -278,7 +276,21 @@ async function init1(canvasID, modelName) {
     readInput(loadModel1,top_dress);
     readInput(loadModel1,bottom_dress);
 
-    loadingHistoryBodyData(loadModel1,1);
+     if(isOne){
+        loadingHistoryBodyData(loadModel1,0);
+        var canvas = document.getElementById("after_canvas");
+        canvas.style.visibility = "hidden" ;
+
+        var after_canvas_text = document.getElementById("after_canvas_text");
+        var before_canvas_text = document.getElementById("before_canvas_text");
+        before_canvas_text.innerText = "Latest Model";
+        after_canvas_text.style.visibility = "hidden" ;
+
+    }
+    else{
+        loadingHistoryBodyData(loadModel1,1);
+    }
+
 
     loadModel1.traverse( child => {
 
@@ -457,7 +469,13 @@ function changeChestImpl(loadModel,model){
     changeScaleZ(loadModel,["Upper_Chest"], ["Neck"], index);
 }
 function changeWaistImpl(loadModel,model){
-    let index = calculateTransformation(model,4,"waist", 0.2);
+    let path = document.getElementById("model_path").innerText;
+    let index;
+    if(path.indexOf("female") != -1){
+        index = calculateTransformation(model,4,"waist", 0.3);
+    }else{
+        index = calculateTransformation(model,4,"waist", 0.2);
+    }
     changeScaleX(loadModel,["Spine"], ["Chest"], index);
     changeScaleZ(loadModel,["Spine"], ["Chest"], index);
 }

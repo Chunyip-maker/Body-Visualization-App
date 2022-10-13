@@ -71,25 +71,33 @@
     <p id="basic_model_parameters_range" style="display: none">{{body_parameters_range}}</p>
     <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div>
-
-            <h1 class="h2"> Your Health Report </h1>
-            <hr>
+    <main class="main">
+        <div class="main-title">
+            Your Health Report
         </div>
 
         <div class="comparison">
             <h2> Part 1. Model Comparison</h2>
-            <div id="before_canvas">
-                <!-- <img src="../static/images/fake_step4_1.jpg" alt="">
-                老模型 -->
-            </div>
+            <div class="canvas">
+                <div class="canvas-text" id = "before_canvas_text">
+                    Previous Model
+                </div>
+                <div id="before_canvas">
 
-            <div id="after_canvas">
-                <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
-                <!-- 最新模型 -->
+                    <!-- <img src="../static/images/fake_step4_1.jpg" alt="">
+                    老模型 -->
+                </div>
             </div>
+            <div class="canvas">
+                <div class="canvas-text" id = "after_canvas_text">
+                    Latest Model
+                </div>
+                <div class="canvas" id="after_canvas">
 
+                    <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
+                    <!-- 最新模型 -->
+                </div>
+            </div>
             <div class="angle_button">
                 <hr>
                 <h4> Selected Perspectives: </h4>
@@ -97,8 +105,6 @@
                 <button type="button" id="Bottom">Bottom</button>
             </div>
         </div>
-
-
 
 
 
@@ -115,12 +121,68 @@
             var weight_records = {{weight_records | safe}}
             var dates = retract_records_data(historic_records, "update_time")
         </script>
-        <h1> Part 2. Health Statistics </h1>
+
+        <h1> Part 2. Basic Health Statistics </h1>
+
+        <div class="report_text" id="basic_stat">
+
+        </div>
+
+        <script>
+
+            var lst = {{parameter_change_report | tojson}} 
+            var block = document.getElementById("basic_stat")
+
+            var str = ""
+            for (var i = 0; i < lst.length; i ++) {
+                str += lst[i] + "<br>"
+            }
+            block.innerHTML = str;
+        </script>
+
+        <h1> Part 3. Advanced Health Statistics </h1>
+
         <section class="report">
 
-            <hr>
             <div id="bmi" class="chartSection">
-                <h2> BMI Changes</h2>
+                <div class="sub-header">
+                    <h2> BMI Changes</h2>
+                    <img id='detail_1' src="../static/images/hint.jpg">
+                </div>
+                <hr>
+                <div class="report-text" id="bmi_stat">
+            
+                </div>
+
+                <script>
+                    var lst = {{bmi_report_list | tojson}}
+                    
+                    var x = 10;
+                    var y = 20;
+                    $('img#detail_1').mouseover(function (e) {
+                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                        $('.text').text('')
+                        var lst = {{bmi_report_list | tojson}}
+                        $('.text').text(lst[1])
+
+                        $('#mytitle').css({
+                            'left': (e.pageX + x + 'px'),
+                            'top': (e.pageY + y - 80 + 'px')
+                        }).show();
+                    }).mouseout(function () { 
+                        // 鼠标移出的事件，移除dom元素
+                        $('#mytitle').remove();
+                    }).mousemove(function (e) {
+                        // 鼠标移入的事件
+                        $('#mytitle').css({
+                            'left': (e.pageX + x +10 + 'px'),
+                            'top': (e.pageY + y - 20 + 'px')
+                        }).show();
+                    })
+                    var target = document.getElementById("bmi_stat")
+                    target.innerHTML = lst[0];
+                </script>
+
                 <canvas id="bmiChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates
@@ -156,7 +218,45 @@
             </div>
 
             <div id="fat" class="chartSection">
-                <h2>Body Fat Rate Changes</h2>
+                <div class="sub-header">
+                    <h2> Body Fat Rate Changes</h2>
+                    <img id='detail_2' src="../static/images/hint.jpg">
+                </div>
+                <hr>
+                
+                <div class="report_text" id="bfr_stat">
+            
+                </div>
+
+                <script>
+                    
+                    var lst = {{bfr_report_list | tojson}}
+                    var x = 10;
+                    var y = 20;
+                    $('img#detail_2').mouseover(function (e) {
+                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                        $('.text').text('')
+                        var lst = {{bfr_report_list | tojson}}
+                        $('.text').text(lst[1])
+
+                        $('#mytitle').css({
+                            'left': (e.pageX + x + 'px'),
+                            'top': (e.pageY + y - 80 + 'px')
+                        }).show();
+                    }).mouseout(function () { 
+                        $('#mytitle').remove();
+                    }).mousemove(function (e) {
+                        $('#mytitle').css({
+                            'left': (e.pageX + x +10 + 'px'),
+                            'top': (e.pageY + y - 20 + 'px')
+                        }).show();
+                    })
+                    var target = document.getElementById("bfr_stat")
+                    target.innerHTML = lst[0];
+                </script> 
+
+
+
                 <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates
@@ -201,8 +301,17 @@
             </div>
 
             <div id="weight" class="chartSection">
+
+                
                 <h2> Weight Changes </h2>
-                <canvas id="weightChart" width="600" height="300" ></canvas>
+
+                <hr>
+
+
+
+
+                <canvas id="weightChart" width="600" height="300"></canvas>
+
                 <script>
                     const ctx = document.getElementById('weightChart').getContext('2d');
                     const weightChangeChart = new Chart(ctx, {
@@ -239,7 +348,42 @@
             </div>
 
             <div id="bmr" class="chartSection">
-                <h2>BMR Changes</h2>
+                <div class="sub-header">
+                    <h2> BMR Changes </h2>
+                    <img id='detail_3' src="../static/images/hint.jpg">
+                </div>
+                <hr>
+
+                <div class="report_text" id="bmr_stat">
+            
+                </div>
+
+                <script>
+                    
+                    var lst = {{bmr_report_list | tojson}}
+                    var x = 10;
+                    var y = 20;
+                    $('img#detail_3').mouseover(function (e) {
+                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                        $('.text').text('')
+                        var lst = {{bmr_report_list | tojson}}
+                        $('.text').text(lst[1])
+
+                        $('#mytitle').css({
+                            'left': (e.pageX + x + 'px'),
+                            'top': (e.pageY + y - 80 + 'px')
+                        }).show();
+                    }).mouseout(function () { 
+                        $('#mytitle').remove();
+                    }).mousemove(function (e) {
+                        $('#mytitle').css({
+                            'left': (e.pageX + x +10 + 'px'),
+                            'top': (e.pageY + y - 20 + 'px')
+                        }).show();
+                    })
+                    var target = document.getElementById("bmr_stat")
+                    target.innerHTML = lst[0];
+                </script> 
                 <canvas id="bmrChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates;
@@ -319,16 +463,6 @@
                         }
                     }
                 </script>
-            </div>
-        </section>
-
-        <section class="text_report">
-            <div>
-                <h2>Textual Report</h2>
-                <p>Hi {{ model_name }}! </p>
-
-
-
             </div>
         </section>
         <script>

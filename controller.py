@@ -241,6 +241,12 @@ def complete_step2():
             # 暂时没用
             # textures_file_path = model.search_model_texture_file_path(model_name)
             # basic_model_file_path = model.search_basic_model_file_path(model_name)
+
+            latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
+            if len(latest_records) == 0:
+                is_new_account = True
+            else:
+                is_new_account = False
             return redirect(url_for('complete_step3'))
         else:
             return redirect(url_for('complete_step3'))
@@ -261,14 +267,13 @@ def complete_step3():
         # print(model_texture)
         model_parameters = model.search_last_one_body_measurement_records(model_name)
         body_parameters_range = model.search_body_parameters_range(model_name)
-        is_new_model= len(model.get_historic_body_measurement_records_to_be_displayed(model_name)) == 0
-        print("NewModel: "+str(is_new_model))
+
         # print(model_parameters)
         return render_template('step3.html',
-                               is_new_model=is_new_model,
                                model_texture=model_texture,
                                model_parameters=model_parameters,
-                               body_parameters_range=body_parameters_range)
+                               body_parameters_range=body_parameters_range
+                               )
 
     elif request.method == 'POST':
         # 提交7项参数入库
@@ -372,6 +377,7 @@ def complete_step4():
                                       "body measurement record in our database, well done! Please keep on using our website for your " \
                                       "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward" \
                                       "summary to indicate how your body measurements have changed! Keep going! :)"
+
             print(parameter_change_report)
 
         if not is_new_account:
