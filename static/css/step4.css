@@ -266,10 +266,27 @@ body {
     transition: background-color 0.4s ease;
 }
 
-.report {
+.report_text {
+    width: 800px;
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: pink;
+    border-width: 2px;
+    padding: 10px;
+    background-color: wheat;
+}
+
+.report_text:hover {
+    font-size: 26px;
+    font-weight: bold;
+    border-style: solid;
+    border-color: pink;
+    border-width: 5px;
+    padding: 10px;
+    background-color: blanchedalmond; 
 }
 
 .sub-header h2{

@@ -7,7 +7,6 @@
 
 
 body {
-    height: 100vh;
     background-image: url("../images/background1.png");
     background-size: cover
 }
@@ -123,7 +122,7 @@ ul li {
     background-size: 50%;
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 100;
 }
 

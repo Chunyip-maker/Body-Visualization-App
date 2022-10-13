@@ -373,7 +373,7 @@ def complete_step4():
             for each in parameter_change_report:
                 print(each)
         else:
-            parameter_change_report = "As you are currently a new model, there is currently no historic data for your body parameter comparison :(\n"
+            parameter_change_report = ["As you are currently a new model, there is currently no historic data for your body parameter comparison :("]
             print(parameter_change_report)
 
         if not is_new_account:

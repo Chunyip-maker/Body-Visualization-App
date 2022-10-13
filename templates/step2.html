@@ -47,7 +47,7 @@
 
 
     <!-- Main Area -->
-    <div class="main">
+    <div class="main" id="main">
         <p id="model_age_group" style="display: none">{{ basic_model }}</p>
         <!-- Title -->
         <div class="title">
@@ -239,9 +239,17 @@
     </div>
 
     <script>
+        var m = document.getElementById("main")
+        
         $(window).on("load", function () {
-            $("#preloader").fadeOut("slow");
+            m.style.display = 'none'
+            $("#preloader").fadeOut("slow"); 
+            m.style.display = 'block'
         });
+        // $('#main').load( "load", function () {
+        
+        // });
+        
     </script>
 
 
