@@ -280,6 +280,12 @@ async function init1(canvasID, modelName) {
         loadingHistoryBodyData(loadModel1,0);
         var canvas = document.getElementById("after_canvas");
         canvas.style.visibility = "hidden" ;
+
+        var after_canvas_text = document.getElementById("after_canvas_text");
+        var before_canvas_text = document.getElementById("before_canvas_text");
+        before_canvas_text.innerText = "Latest Model";
+        after_canvas_text.style.visibility = "hidden" ;
+
     }
     else{
         loadingHistoryBodyData(loadModel1,1);
