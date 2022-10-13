@@ -88,6 +88,11 @@ ul li {
     width: 150px;
 }
 
+hr {
+    margin-top: 23px;
+    border-top: 2px double rgb(202, 147, 148);
+    margin-bottom: 30px;
+}
 
 .next button {
     float: right;
