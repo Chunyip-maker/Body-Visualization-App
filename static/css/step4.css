@@ -301,3 +301,7 @@ body {
     margin: 0 auto;
     width: 1200px;
 }
+
+.main-title {
+    font-size: 60px;
+}
