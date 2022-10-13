@@ -71,7 +71,7 @@
     <p id="basic_model_parameters_range" style="display: none">{{body_parameters_range}}</p>
     <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="main">
         <div>
 
             <h1 class="h2"> Your Health Report </h1>
@@ -113,17 +113,26 @@
             var weight_records = {{weight_records | safe}}
             var dates = retract_records_data(historic_records, "update_time")
         </script>
-        <h1> Part 2. Health Statistics </h1>
 
-        <div id="general_stat">
-            
+        <h1> Part 2. Basic Health Statistics </h1>
+
+        <div class="report" id="basic_stat">
+
         </div>
 
-        <!-- <script>
-            var str = new String("{{parameter_change_report}}")
-            var target = document.getElementById("general_stat")
-            target.innerHTML = str;
-        </script> -->
+        <script>
+
+            var lst = {{parameter_change_report | tojson}} 
+            var block = document.getElementById("basic_stat")
+
+            var str = ""
+            for (var i = 0; i < lst.length; i ++) {
+                str += lst[i] + "<br>"
+            }
+            block.innerHTML = str;
+        </script>
+
+        <h1> Part 3. Advanced Health Statistics </h1>
 
         <section class="report">
 

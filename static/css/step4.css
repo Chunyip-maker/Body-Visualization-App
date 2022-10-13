@@ -269,6 +269,7 @@ body {
 .report {
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
 }
 
 .sub-header h2{
@@ -294,4 +295,9 @@ body {
     background-color: wheat;
     opacity: .8;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.main{
+    margin: 0 auto;
+    width: 1200px;
 }
