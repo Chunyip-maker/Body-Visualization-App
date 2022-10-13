@@ -150,8 +150,12 @@
                     <img id='detail_1' src="../static/images/hint.jpg">
                 </div>
                 <hr>
-                <div class="report-text" id="bmi_stat">
-            
+                <div class="report_text" id="bmi_stat">
+                    <span> Your current body mass index (BMI) is </span>
+                    <span class="important_val" id="bmi_val_1"> {bmi} </span>  
+                    <span>. This BMI falls within a(n) </span>
+                    <span class="important_val" id="bmi_val_2"> {category} </span>
+                    <span> range. </span>
                 </div>
 
                 <script>
@@ -163,24 +167,23 @@
                         $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
                         $('.text').text('')
                         var lst = {{bmi_report_list | tojson}}
-                        $('.text').text(lst[1])
+                        $('.text').text(lst[2])
 
                         $('#mytitle').css({
                             'left': (e.pageX + x + 'px'),
                             'top': (e.pageY + y - 80 + 'px')
                         }).show();
                     }).mouseout(function () { 
-                        // 鼠标移出的事件，移除dom元素
                         $('#mytitle').remove();
                     }).mousemove(function (e) {
-                        // 鼠标移入的事件
                         $('#mytitle').css({
                             'left': (e.pageX + x +10 + 'px'),
                             'top': (e.pageY + y - 20 + 'px')
                         }).show();
                     })
-                    var target = document.getElementById("bmi_stat")
-                    target.innerHTML = lst[0];
+                    document.getElementById("bmi_val_1").innerHTML = lst[0]
+                    document.getElementById("bmi_val_2").innerHTML = lst[1]
+                    
                 </script>
 
                 <canvas id="bmiChart" width="600" height="300"></canvas>
@@ -225,7 +228,11 @@
                 <hr>
                 
                 <div class="report_text" id="bfr_stat">
-            
+                    <span> Your current body fat rate is </span>
+                    <span class="important_val" id="bfr_val_1"> {bfr} </span>  
+                    <span>%. This body fate rate falls within the </span>
+                    <span class="important_val" id="bfr_val_2"> {category} </span>
+                    <span> range. </span>
                 </div>
 
                 <script>
@@ -237,7 +244,7 @@
                         $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
                         $('.text').text('')
                         var lst = {{bfr_report_list | tojson}}
-                        $('.text').text(lst[1])
+                        $('.text').text(lst[2])
 
                         $('#mytitle').css({
                             'left': (e.pageX + x + 'px'),
@@ -251,8 +258,9 @@
                             'top': (e.pageY + y - 20 + 'px')
                         }).show();
                     })
-                    var target = document.getElementById("bfr_stat")
-                    target.innerHTML = lst[0];
+                    document.getElementById("bfr_val_1").innerHTML = lst[0];
+                    document.getElementById("bfr_val_2").innerHTML = lst[1];
+                    
                 </script> 
 
 
@@ -303,12 +311,44 @@
             <div id="weight" class="chartSection">
 
                 
-                <h2> Weight Changes </h2>
-
+                <div class="sub-header">
+                    <h2> Weight Changes </h2>
+                    <img id='detail_5' src="../static/images/hint.jpg">
+                </div>
                 <hr>
 
+                <div class="report_text" id="weight_stat">
+                    <span> Your weight has</span>
+                    <span class="important_val" id="w_val_1"> {change} </span>
+                    <span> since</span>    
+                    <span class="important_val" id="w_val_2"> {earliest_time}</span>  
+                </div>
 
+                <script>    
+                    var lst = {{weight_report | tojson}}
+                    var x = 10;
+                    var y = 20;
+                    $('img#detail_5').mouseover(function (e) {
+                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                        $('.text').text('')
+                        var lst = {{weight_report | tojson}}
+                        $('.text').text(lst[2])
 
+                        $('#mytitle').css({
+                            'left': (e.pageX + x + 'px'),
+                            'top': (e.pageY + y - 80 + 'px')
+                        }).show();
+                    }).mouseout(function () { 
+                        $('#mytitle').remove();
+                    }).mousemove(function (e) {
+                        $('#mytitle').css({
+                            'left': (e.pageX + x +10 + 'px'),
+                            'top': (e.pageY + y - 20 + 'px')
+                        }).show();
+                    })
+                    document.getElementById("w_val_1").innerHTML = lst[0]
+                    document.getElementById("w_val_2").innerHTML = lst[1]
+                </script> 
 
                 <canvas id="weightChart" width="600" height="300"></canvas>
 
@@ -355,7 +395,9 @@
                 <hr>
 
                 <div class="report_text" id="bmr_stat">
-            
+                    <span>As for your basal metabolic rate (BMR), you are currently suggested to take in at least</span>
+                    <span id="bmr_val" class="important_val">  </span>
+                    <span> calories from your daily meal</span>
                 </div>
 
                 <script>
@@ -367,7 +409,7 @@
                         $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
                         $('.text').text('')
                         var lst = {{bmr_report_list | tojson}}
-                        $('.text').text(lst[1])
+                        $('.text').text(lst[2])
 
                         $('#mytitle').css({
                             'left': (e.pageX + x + 'px'),
@@ -381,8 +423,8 @@
                             'top': (e.pageY + y - 20 + 'px')
                         }).show();
                     })
-                    var target = document.getElementById("bmr_stat")
-                    target.innerHTML = lst[0];
+                    var target = document.getElementById("bmr_val")
+                    target.innerHTML = lst[0]
                 </script> 
                 <canvas id="bmrChart" width="600" height="300"></canvas>
                 <script>

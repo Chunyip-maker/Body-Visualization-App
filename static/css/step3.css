@@ -46,6 +46,8 @@ body {
     margin-right: auto;
     width: 1200px;
     height: 500px;
+    /* background-color: pink;
+    border-radius: 30px; */
 }
 
 .main #canvas {
