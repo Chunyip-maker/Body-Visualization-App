@@ -5,11 +5,15 @@ import numpy as np
 import time
 
 class Model:
-    def __init__(self):
+
+    def create_database(self):
         self.database = SQLDatabase()
 
         # Create the tables in the database
         self.database.database_setup()
+
+    def set_database(self,database):
+        self.database = database
 
     def check_model_already_exists(self, model_name):
         result = self.database.check_model_existence(model_name)

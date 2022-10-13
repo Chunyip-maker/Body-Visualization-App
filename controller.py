@@ -10,6 +10,7 @@ to be displayed.
 
 import flask
 from flask import *
+from flask import g
 from model import *
 from contextlib import contextmanager
 import os
@@ -21,8 +22,12 @@ app = flask.Flask(__name__)
 
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SERVER_NAME'] = "127.0.0.1:5000"
+
+# @app.before_first_request_funcs
+# def before_request():
+#     print("currently connect to real db")
 model = Model()
-response = Response()
+model.create_database()
 
 error_message = "No Special Characters Allowed ; # & ' < > -  , not empty input allowed and limit 50 characters!"
 
@@ -243,7 +248,7 @@ def complete_step2():
             # basic_model_file_path = model.search_basic_model_file_path(model_name)
 
             latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
-            if len(latest_records) == 0:
+            if latest_records is None or len(latest_records) == 0:
                 is_new_account = True
             else:
                 is_new_account = False
@@ -357,12 +362,12 @@ def complete_step4():
         is_male = request.cookies.get('gender') == "male"
 
         # 判断是否为新用户，即无历史记录
-        if len(latest_records) == 0:
+        if latest_records is None or len(latest_records) == 0:
             is_new_account = True
         else:
             is_new_account = False
 
-        if len(latest_records) == 1:
+        if latest_records is not None and len(latest_records) == 1:
             has_only_one_record = True
         else:
             has_only_one_record = False
@@ -408,9 +413,9 @@ def complete_step4():
             weight_report = model.generate_weight_report(latest_records,weight_records)
             print(weight_report)
         else:
-            weight_records=[]
+            weight_report =[]
 
-        if len(historic_records) < 5:
+        if historic_records is not None and len(historic_records) < 5:
             less_than_5_records = True
         else:
             less_than_5_records = False
