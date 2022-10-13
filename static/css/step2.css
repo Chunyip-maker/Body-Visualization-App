@@ -8,7 +8,7 @@
 
 body {
     background-image: url("../images/background1.png");
-    background-size: cover
+    background-size: auto;
 }
 
 
@@ -19,14 +19,16 @@ body {
 
     /* overflow: hidden; */
     background-color: transparent;
-    font-size: 30px;
     color: #f6f6f6;
-    text-shadow: rgb(166, 199, 208) 3px 0 0, rgb(166, 199, 208) 0 3px 0, rgb(166, 199, 208) -3px 0 0, rgb(166, 199, 208) 0 -3px 0;
+    font-weight: bold;
+    text-shadow: rgb(164, 189, 199) 4px 0 0, rgb(164, 189, 199) 0 4px 0, rgb(164, 189, 199) -4px 0 0, rgb(164, 189, 199) 0 -4px 0;
     text-align: center;
     margin: center;
+    margin-top: -10px;
 }
 
 .title h1 {
+    font-size: 40px;
     vertical-align: middle;
     line-height: 100px;
     letter-spacing: 3px;
@@ -35,14 +37,17 @@ body {
 
 /* Main Area*/
 .main {
+    border-radius: 10px;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
-    height: 500px;
+    width: 1080px;
+    height: 700px;
+    background-color: rgba(255,255,255,0.4);
 }
 
 .main #canvas {
+    margin-left: 50px;
     float: left;
     width: 400px;
     height: 500px;
@@ -58,7 +63,7 @@ body {
     width: 500px;
     height: 500px;
     /* margin-top: -15px; */
-    margin-left: 100px;
+    margin-left: 70px;
     /*cursor: pointer;*/
 }
 
@@ -74,10 +79,6 @@ body {
     margin-bottom: 3px;
 }
 
-.hair_style {
-    display: inline-block;
-}
-
 ul {
     list-style: none;
     display: inline-block;
@@ -85,7 +86,7 @@ ul {
 
 ul li {
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 12px;
     width: 80px;
 }
 
@@ -111,7 +112,7 @@ hr {
 
 .next button {
     float: right;
-    margin-top: 5px;
+    margin-top: 8px;
     width: 50%;
     background-color: #f6f6f6;
     outline: none;
