@@ -89,6 +89,20 @@ ul li {
     width: 80px;
 }
 
+.icon_name {
+    width: 130px;
+}
+
+.icon_name p {
+    font-size: 19px;
+}
+
+ul #item_name p {
+    width: 200px;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
 hr {
     margin-top: 23px;
     border-top: 2px double rgb(202, 147, 148);
@@ -97,6 +111,7 @@ hr {
 
 .next button {
     float: right;
+    margin-top: 5px;
     width: 50%;
     background-color: #f6f6f6;
     outline: none;
