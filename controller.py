@@ -373,7 +373,11 @@ def complete_step4():
             for each in parameter_change_report:
                 print(each)
         else:
-            parameter_change_report = ["As you are currently a new model, there is currently no historic data for your body parameter comparison :("]
+            parameter_change_report = "Hi {model_name}! Thanks for taking a go at our Health Report page! We now have one of your " \
+                                      "body measurement record in our database, well done! Please keep on using our website for your " \
+                                      "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward" \
+                                      "summary to indicate how your body measurements have changed! Keep going! :)"
+
             print(parameter_change_report)
 
         if not is_new_account:
@@ -399,6 +403,12 @@ def complete_step4():
             print(bfr_report_list)
         else:
             bfr_report_list = []
+
+        if not is_new_account:
+            weight_report = model.generate_weight_report(latest_records,weight_records)
+            print(weight_report)
+        else:
+            weight_records=[]
 
         if len(historic_records) < 5:
             less_than_5_records = True
@@ -429,6 +439,7 @@ def complete_step4():
                                bmi_report_list=bmi_report_list,
                                bmr_report_list=bmr_report_list,
                                bfr_report_list=bfr_report_list,
+                               weight_report=weight_report,
                                less_than_5_records=less_than_5_records)
 
 
