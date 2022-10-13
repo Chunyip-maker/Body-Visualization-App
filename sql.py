@@ -40,7 +40,6 @@ class SQLDatabase():
 
     # Sets up the database, and the initial table BasicModels to record the model
     def database_setup(self):
-
         # Create the users table
         self.execute("""
         CREATE TABLE IF NOT EXISTS Models(
