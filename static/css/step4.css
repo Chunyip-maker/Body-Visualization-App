@@ -279,8 +279,8 @@ body {
 }
 
 .report_text:hover {
-    font-size: 26px;
-    font-weight: bold;
+    /* font-size: 26px; */
+    /* font-weight: bold; */
     border-style: solid;
     border-color: pink;
     border-width: 5px;
@@ -330,3 +330,8 @@ body {
     width: 400px;
 }
 
+.important_val {
+    font-size: 36px; 
+    font-weight: bold;
+    color: rebeccapurple;
+}
