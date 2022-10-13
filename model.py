@@ -355,8 +355,28 @@ class Model:
                 unit=unit_map[key]
             )
             result.append(row)
+        return result
 
+    def generate_weight_report(self, latest_records,weight_records):
+        if weight_records is None or len(weight_records) == 0:
 
+            return
+        if latest_records is None or len(latest_records) == 0:
+
+            return
+        earliest_date = latest_records[0]["update_time"]
+        earliest = weight_records[0]
+        current = weight_records[len(weight_records)-1]
+
+        change = ""
+        if earliest <= current:
+            change += "increase by {diff}kg".format(diff = current-earliest)
+        elif earliest > current:
+            change += "decrease by {diff}kg".format(diff = earliest-current)
+        result = []
+        result.append(change)
+        result.append(earliest_date)
+        result.append("Weight is an important body measurement you should focus on. If you are overweight or obese, you are at higher risk of developing serious health problems, including heart disease, high blood pressure, type 2 diabetes, gallstones, breathing problems, and certain cancers.")
         return result
 
     def generate_bmi_report(self, bmi):
@@ -370,10 +390,12 @@ class Model:
             category = "overweight"
         else:
             category = "obese"
-        result.append ("Your current body mass index (BMI) is {bmi}. This BMI falls within a {category} range. ".format(
-            bmi=bmi,
-            category=category
-        ))
+        # result.append ("Your current body mass index (BMI) is {bmi}. This BMI falls within a {category} range. ".format(
+        #     bmi=bmi,
+        #     category=category
+        # ))
+        result.append(bmi)
+        result.append(category)
         result.append("Body mass index (BMI) is a person’s weight in kilograms "+
                       "divided by the square of height in meters. BMI is an "+
                       "inexpensive and easy screening method for weight "+
@@ -387,9 +409,12 @@ class Model:
 
     def generate_bmr_report(self,bmr):
         result = []
-        result.append("As for your basal metabolic rate (BMR), you are currently suggested to take in at least {bmr} calories from your daily meal".format(
-            bmr=bmr
-        ))
+        category = None
+        # result.append("As for your basal metabolic rate (BMR), you are currently suggested to take in at least {bmr} calories from your daily meal".format(
+        #     bmr=bmr
+        # ))
+        result.append(bmr)
+        result.append(category)
         result.append("Basal Metabolic Rate is the number of calories required to keep your body functioning at rest. BMR is also known as your body\'s metabolism; therefore, any increase to your metabolic weight, such as exercise, will increase your BMR.Most people\'s BMR is between 1000 – 2000.")
         return result
 
@@ -411,10 +436,12 @@ class Model:
                 category = "healthy"
             else:
                 category = "obese"
-        result.append("Your current body fat rate is {bfr}%. This body fate rate falls within the {category} range.".format(
-            bfr=body_fat_rate,
-            category=category
-        ))
+        # result.append("Your current body fat rate is {bfr}%. This body fate rate falls within the {category} range.".format(
+        #     bfr=body_fat_rate,
+        #     category=category
+        # ))
+        result.append(body_fat_rate)
+        result.append(category)
         result.append("The body fat rate of a human or other living being is the total mass of fat divided by total body mass, multiplied by 100; body fat includes essential body fat and storage body fat. Essential body fat is necessary to maintain life and reproductive functions. The percentage of essential body fat for women is greater than that for men, due to the demands of childbearing and other hormonal functions.For a man, 2–5% fat is essential, 2–24% fat is considered healthy, and more than 25% classifies as obesity. For a woman, 10–13% fat is essential, 10–31% fat is healthy, and more than 32% classifies as obesity.")
         return result
 
