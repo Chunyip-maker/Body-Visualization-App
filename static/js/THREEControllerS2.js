@@ -57,15 +57,16 @@ function sceneInit(canvasID) {
         renderer.toneMappingExposure = 1; 
         canvas.appendChild(renderer.domElement);
 
+
         //light
-        const light = new THREE.AmbientLight(0xffffff,1.2);
+        const light = new THREE.AmbientLight(0xffffff,0.8);
         light.position.set(10.0, 10.0, 10.0).normalize();
         scene.add(light);
-        var light2 = new THREE.DirectionalLight(0xffffff,0.3);
+        var light2 = new THREE.DirectionalLight(0xffffff,1);
         light2.position.set(0, 3, 2);
         light2.castShadow = true;
         scene.add(light2);
-        var light3 = new THREE.DirectionalLight(0xffffff,0.3);
+        var light3 = new THREE.DirectionalLight(0xffffff,1);
         light3.position.set(0, 0, 2);
         light3.castShadow = true;
         scene.add(light3);

@@ -236,6 +236,7 @@ function sceneInit1(canvasID) {
     light3.position.set(0, 0, 2);
     light3.castShadow = true;
     scene1.add(light3);
+    
 
 
     //grid
