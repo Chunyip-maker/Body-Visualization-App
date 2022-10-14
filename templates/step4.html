@@ -77,7 +77,7 @@
         </div>
 
         <div class="comparison">
-            <h2> Part 1. Model Comparison</h2>
+            <!-- <h2> Part 1. Model Comparison</h2> -->
             <div class="canvas">
                 <div class="canvas-text" id = "before_canvas_text">
                     Previous Model
@@ -100,9 +100,11 @@
             </div>
             <div class="angle_button">
                 <hr>
-                <h4> Selected Perspectives: </h4>
                 <button type="button" id="Top">Top</button>
                 <button type="button" id="Bottom">Bottom</button>
+                <button type="button" id="Top_side">Top side</button>
+                <button type="button" id="Bottom_side">Bottom side</button>
+                <button type="button" id="Back">Back</button>
             </div>
         </div>
 
@@ -122,9 +124,9 @@
             var dates = retract_records_data(historic_records, "update_time")
         </script>
 
-        <h1> Part 2. Basic Health Statistics </h1>
-
-        <div class="report_text" id="basic_stat">
+        <!-- <h1> Part 2. Basic Health Statistics </h1> -->
+        
+        <div class="basic-text" id="basic_stat">
 
         </div>
 
@@ -140,130 +142,167 @@
             block.innerHTML = str;
         </script>
 
-        <h1> Part 3. Advanced Health Statistics </h1>
-
+        <!-- <h1> Part 3. Advanced Health Statistics </h1> -->
+        <div class="part-two">
         <section class="report">
+            <div class="part-two-first">
+                <div id="weight" class="chartSection">
+                    <div class="sub-header">
+                        <h2> Weight Changes </h2>
+                        <img id='detail_5' src="../static/images/hint.jpg">
+                    </div>
+                    <canvas class="chart" id="weightChart" width="600" height="300"></canvas>
 
-            <div id="bmi" class="chartSection">
-                <div class="sub-header">
-                    <h2> BMI Changes</h2>
-                    <img id='detail_1' src="../static/images/hint.jpg">
-                </div>
-                <hr>
-                <div class="report_text" id="bmi_stat">
-                    <span> Your current body mass index (BMI) is </span>
-                    <span class="important_val" id="bmi_val_1"> {bmi} </span>  
-                    <span>. This BMI falls within a(n) </span>
-                    <span class="important_val" id="bmi_val_2"> {category} </span>
-                    <span> range. </span>
+                    <script>
+                        const ctx = document.getElementById('weightChart').getContext('2d');
+                        const weightChangeChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: dates,
+                                datasets: [{
+                                    label: 'Weight',
+                                    data: weight_records,
+                                    fill: true,
+                                    pointStyle: 'rect',
+                                    pointRadius: 6,
+                                    pointHoverRadius: 10,
+                                    borderColor: ['rgb(86,168,179)'],
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: {
+                                        ticks: {
+                                            callback: function (value, index, ticks) {
+                                                return value + " kg";
+                                            }
+                                        },
+                                        suggestedMin: 30,
+                                        suggestedMax: 150
+                                    }
+                                },
+                                responsive: false
+
+                            }
+                        });
+                    </script>
+                    <div class="report_text" id="weight_stat">
+                        <span> Your weight has</span>
+                        <span class="important_val" id="w_val_1"> {change} </span>
+                        <span> since</span>    
+                        <span class="important_val" id="w_val_2"> {earliest_time}</span>  
+                    </div>
+
+                    <script>    
+                        var lst = {{weight_report | tojson}}
+                        var x = 10;
+                        var y = 20;
+                        $('img#detail_5').mouseover(function (e) {
+                            $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                            $('.text').text('')
+                            var lst = {{weight_report | tojson}}
+                            $('.text').text(lst[2])
+
+                            $('#mytitle').css({
+                                'left': (e.pageX + x + 'px'),
+                                'top': (e.pageY + y - 80 + 'px')
+                            }).show();
+                        }).mouseout(function () { 
+                            $('#mytitle').remove();
+                        }).mousemove(function (e) {
+                            $('#mytitle').css({
+                                'left': (e.pageX + x +10 + 'px'),
+                                'top': (e.pageY + y - 20 + 'px')
+                            }).show();
+                        })
+                        document.getElementById("w_val_1").innerHTML = lst[0]
+                        document.getElementById("w_val_2").innerHTML = lst[1]
+                    </script> 
                 </div>
 
-                <script>
-                    var lst = {{bmi_report_list | tojson}}
-                    
-                    var x = 10;
-                    var y = 20;
-                    $('img#detail_1').mouseover(function (e) {
-                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
-                        $('.text').text('')
+
+
+
+                <div id="bmi" class="chartSection">
+                    <div class="sub-header">
+                        <h2> BMI Changes</h2>
+                        <img id='detail_1' src="../static/images/hint.jpg">
+                    </div>
+                
+                    <canvas id="bmiChart" width="600" height="300"></canvas>
+                    <script>
+                        var labels = dates
+                        var bmi_records = {{bmi_records | safe}}
+                        const bmiData = {
+                            labels: labels,
+                            datasets: [{
+                                label: 'BMI',
+                                borderColor: 'rgb(255,139,139)',
+                                fill: true,
+                                pointStyle: 'circle',
+                                pointRadius: 6,
+                                pointHoverRadius: 10,
+                                data: bmi_records
+                            }]
+                        };
+
+                        const bmiConfig = {
+                            type: 'line',
+                            data: bmiData,
+                            options: {
+                                responsive: false,
+                                suggestedMin: 13,
+                                suggestedMax: 27
+
+                            }
+                        };
+                        const bmiChangeChart = new Chart(
+                            document.getElementById('bmiChart'),
+                            bmiConfig
+                        );
+                    </script>
+                    <div class="report_text" id="bmi_stat">
+                        <span> Your current body mass index (BMI) is </span>
+                        <span class="important_val" id="bmi_val_1"> {bmi} </span>  
+                        <span>. This BMI falls within a(n) </span>
+                        <span class="important_val" id="bmi_val_2"> {category} </span>
+                        <span> range. </span>
+                    </div>
+
+                    <script>
                         var lst = {{bmi_report_list | tojson}}
-                        $('.text').text(lst[2])
+                        
+                        var x = 10;
+                        var y = 20;
+                        $('img#detail_1').mouseover(function (e) {
+                            $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                            $('.text').text('')
+                            var lst = {{bmi_report_list | tojson}}
+                            $('.text').text(lst[2])
 
-                        $('#mytitle').css({
-                            'left': (e.pageX + x + 'px'),
-                            'top': (e.pageY + y - 80 + 'px')
-                        }).show();
-                    }).mouseout(function () { 
-                        $('#mytitle').remove();
-                    }).mousemove(function (e) {
-                        $('#mytitle').css({
-                            'left': (e.pageX + x +10 + 'px'),
-                            'top': (e.pageY + y - 20 + 'px')
-                        }).show();
-                    })
-                    document.getElementById("bmi_val_1").innerHTML = lst[0]
-                    document.getElementById("bmi_val_2").innerHTML = lst[1]
-                    
-                </script>
-
-                <canvas id="bmiChart" width="600" height="300"></canvas>
-                <script>
-                    var labels = dates
-                    var bmi_records = {{bmi_records | safe}}
-                    const bmiData = {
-                        labels: labels,
-                        datasets: [{
-                            label: 'BMI',
-                            borderColor: 'rgb(255,139,139)',
-                            fill: true,
-                            pointStyle: 'circle',
-                            pointRadius: 6,
-                            pointHoverRadius: 10,
-                            data: bmi_records
-                        }]
-                    };
-
-                    const bmiConfig = {
-                        type: 'line',
-                        data: bmiData,
-                        options: {
-                            responsive: false,
-                            suggestedMin: 13,
-                            suggestedMax: 27
-
-                        }
-                    };
-                    const bmiChangeChart = new Chart(
-                        document.getElementById('bmiChart'),
-                        bmiConfig
-                    );
-                </script>
+                            $('#mytitle').css({
+                                'left': (e.pageX + x + 'px'),
+                                'top': (e.pageY + y - 80 + 'px')
+                            }).show();
+                        }).mouseout(function () { 
+                            $('#mytitle').remove();
+                        }).mousemove(function (e) {
+                            $('#mytitle').css({
+                                'left': (e.pageX + x +10 + 'px'),
+                                'top': (e.pageY + y - 20 + 'px')
+                            }).show();
+                        })
+                        document.getElementById("bmi_val_1").innerHTML = lst[0]
+                        document.getElementById("bmi_val_2").innerHTML = lst[1]
+                        
+                    </script>
+                </div>
             </div>
-
             <div id="fat" class="chartSection">
                 <div class="sub-header">
                     <h2> Body Fat Rate Changes</h2>
                     <img id='detail_2' src="../static/images/hint.jpg">
                 </div>
-                <hr>
-                
-                <div class="report_text" id="bfr_stat">
-                    <span> Your current body fat rate is </span>
-                    <span class="important_val" id="bfr_val_1"> {bfr} </span>  
-                    <span>%. This body fate rate falls within the </span>
-                    <span class="important_val" id="bfr_val_2"> {category} </span>
-                    <span> range. </span>
-                </div>
-
-                <script>
-                    
-                    var lst = {{bfr_report_list | tojson}}
-                    var x = 10;
-                    var y = 20;
-                    $('img#detail_2').mouseover(function (e) {
-                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
-                        $('.text').text('')
-                        var lst = {{bfr_report_list | tojson}}
-                        $('.text').text(lst[2])
-
-                        $('#mytitle').css({
-                            'left': (e.pageX + x + 'px'),
-                            'top': (e.pageY + y - 80 + 'px')
-                        }).show();
-                    }).mouseout(function () { 
-                        $('#mytitle').remove();
-                    }).mousemove(function (e) {
-                        $('#mytitle').css({
-                            'left': (e.pageX + x +10 + 'px'),
-                            'top': (e.pageY + y - 20 + 'px')
-                        }).show();
-                    })
-                    document.getElementById("bfr_val_1").innerHTML = lst[0];
-                    document.getElementById("bfr_val_2").innerHTML = lst[1];
-                    
-                </script> 
-
-
 
                 <canvas id="bodyFatRateChart" width="600" height="300"></canvas>
                 <script>
@@ -306,32 +345,23 @@
                         bodyFatRateConfig
                     );
                 </script>
-            </div>
-
-            <div id="weight" class="chartSection">
-
-                
-                <div class="sub-header">
-                    <h2> Weight Changes </h2>
-                    <img id='detail_5' src="../static/images/hint.jpg">
-                </div>
-                <hr>
-
-                <div class="report_text" id="weight_stat">
-                    <span> Your weight has</span>
-                    <span class="important_val" id="w_val_1"> {change} </span>
-                    <span> since</span>    
-                    <span class="important_val" id="w_val_2"> {earliest_time}</span>  
+                <div class="report_text" id="bfr_stat">
+                    <span> Your current body fat rate is </span>
+                    <span class="important_val" id="bfr_val_1"> {bfr} </span>  
+                    <span>%. This body fate rate falls within the </span>
+                    <span class="important_val" id="bfr_val_2"> {category} </span>
+                    <span> range. </span>
                 </div>
 
-                <script>    
-                    var lst = {{weight_report | tojson}}
+                <script>
+                    
+                    var lst = {{bfr_report_list | tojson}}
                     var x = 10;
                     var y = 20;
-                    $('img#detail_5').mouseover(function (e) {
+                    $('img#detail_2').mouseover(function (e) {
                         $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
                         $('.text').text('')
-                        var lst = {{weight_report | tojson}}
+                        var lst = {{bfr_report_list | tojson}}
                         $('.text').text(lst[2])
 
                         $('#mytitle').css({
@@ -346,86 +376,20 @@
                             'top': (e.pageY + y - 20 + 'px')
                         }).show();
                     })
-                    document.getElementById("w_val_1").innerHTML = lst[0]
-                    document.getElementById("w_val_2").innerHTML = lst[1]
+                    document.getElementById("bfr_val_1").innerHTML = lst[0];
+                    document.getElementById("bfr_val_2").innerHTML = lst[1];
+                    
                 </script> 
-
-                <canvas id="weightChart" width="600" height="300"></canvas>
-
-                <script>
-                    const ctx = document.getElementById('weightChart').getContext('2d');
-                    const weightChangeChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: dates,
-                            datasets: [{
-                                label: 'Weight',
-                                data: weight_records,
-                                fill: true,
-                                pointStyle: 'rect',
-                                pointRadius: 6,
-                                pointHoverRadius: 10,
-                                borderColor: ['rgb(86,168,179)'],
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: {
-                                    ticks: {
-                                        callback: function (value, index, ticks) {
-                                            return value + " kg";
-                                        }
-                                    },
-                                    suggestedMin: 30,
-                                    suggestedMax: 150
-                                }
-                            },
-                            responsive: false
-
-                        }
-                    });
-                </script>
             </div>
+
+          
 
             <div id="bmr" class="chartSection">
                 <div class="sub-header">
                     <h2> BMR Changes </h2>
                     <img id='detail_3' src="../static/images/hint.jpg">
                 </div>
-                <hr>
-
-                <div class="report_text" id="bmr_stat">
-                    <span>As for your basal metabolic rate (BMR), you are currently suggested to take in at least</span>
-                    <span id="bmr_val" class="important_val">  </span>
-                    <span> calories from your daily meal</span>
-                </div>
-
-                <script>
-                    
-                    var lst = {{bmr_report_list | tojson}}
-                    var x = 10;
-                    var y = 20;
-                    $('img#detail_3').mouseover(function (e) {
-                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
-                        $('.text').text('')
-                        var lst = {{bmr_report_list | tojson}}
-                        $('.text').text(lst[2])
-
-                        $('#mytitle').css({
-                            'left': (e.pageX + x + 'px'),
-                            'top': (e.pageY + y - 80 + 'px')
-                        }).show();
-                    }).mouseout(function () { 
-                        $('#mytitle').remove();
-                    }).mousemove(function (e) {
-                        $('#mytitle').css({
-                            'left': (e.pageX + x +10 + 'px'),
-                            'top': (e.pageY + y - 20 + 'px')
-                        }).show();
-                    })
-                    var target = document.getElementById("bmr_val")
-                    target.innerHTML = lst[0]
-                </script> 
+ 
                 <canvas id="bmrChart" width="600" height="300"></canvas>
                 <script>
                     var labels = dates;
@@ -467,11 +431,47 @@
                         bmrConfig
                     );
                 </script>
-            </div>
 
+                <div class="report_text" id="bmr_stat">
+                    <span>As for your basal metabolic rate (BMR), you are currently suggested to take in at least</span>
+                    <span id="bmr_val" class="important_val">  </span>
+                    <span> calories from your daily meal</span>
+                </div>
+
+                <script>
+                    
+                    var lst = {{bmr_report_list | tojson}}
+                    var x = 10;
+                    var y = 20;
+                    $('img#detail_3').mouseover(function (e) {
+                        $('body').append('<div id="mytitle" >' +'<span class="text"></span>'+ '</div>');
+                        $('.text').text('')
+                        var lst = {{bmr_report_list | tojson}}
+                        $('.text').text(lst[2])
+
+                        $('#mytitle').css({
+                            'left': (e.pageX + x + 'px'),
+                            'top': (e.pageY + y - 80 + 'px')
+                        }).show();
+                    }).mouseout(function () { 
+                        $('#mytitle').remove();
+                    }).mousemove(function (e) {
+                        $('#mytitle').css({
+                            'left': (e.pageX + x +10 + 'px'),
+                            'top': (e.pageY + y - 20 + 'px')
+                        }).show();
+                    })
+                    var target = document.getElementById("bmr_val")
+                    target.innerHTML = lst[0]
+                </script>
+            </div>
+            
+
+
+            <div class="part-three">
             <div>
                 <h2>Latest 20 Records</h2>
-                <table class="table table-striped" style="width:75%">
+                <table class="table table-striped">
                     <tr class="bg-info">
                         <th>Update Time</th>
                         <th>Weight</th>
@@ -507,7 +507,7 @@
                 </script>
             </div>
         </section>
-        <script>
+        <!-- <script>
             function setFirstChild() {
                 var isMale = Boolean({{is_male}});
 
@@ -520,8 +520,8 @@
             }
 
             setFirstChild()
-        </script>
-
+        </script> -->
+        </div>
 
 
 

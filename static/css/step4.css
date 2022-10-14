@@ -6,15 +6,27 @@
 
 
 body {
-    background-image: url("../images/background0.png");
-    background-size: cover;
+    background-image: url("../images/background1.png");
     font-size: .875rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment:fixed;
 }
 
 .h2 {
     font-size: 48px;
 }
 
+.main{
+    margin: 0 auto;
+    width: 1200px;
+    
+}
+
+.main-title {
+    font-size: 60px;
+    text-align: center;
+}
 
 .feather {
     width: 16px;
@@ -114,7 +126,7 @@ body {
     overflow: hidden;
     margin-top: 100px;
     width: 1200px;
-    height: 800px;
+    height: 600px;
 }
 .comparison .left{
     float: left;
@@ -157,6 +169,8 @@ body {
     border-width: 1px;
     background-color: white;
 }
+
+
 
 
 /* Button */
@@ -234,22 +248,20 @@ body {
 
 .angle_button {
     float: left;
-    width: 600px;
-    height: 100px;
+    width: 200px;
+    height: 600px;
 }
 
 .angle_button button {
-    height: 100px;
-    width: 150px;
-    margin-top: 5px;
-    margin-right: 30px;
+    height: 50px;
+    width: 200px;
+    margin-bottom: 50px;
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
     border-color: rgb(227, 167, 168);
-    padding: 15px;
     color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 24px;
@@ -265,31 +277,30 @@ body {
     transition: background-color 0.4s ease;
 }
 
-.report_text {
-    width: 1200px;
+.basic-text  {
     font-size: 24px;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Part 2 */
+
+ .report_text {
+    width: 600px;
+    font-size: 18px;
     margin-bottom: 20px;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: pink;
-    border-width: 2px;
     padding: 10px;
-    background-color: wheat;
 }
 
-.report_text:hover {
-    /* font-size: 26px; */
-    /* font-weight: bold; */
-    border-style: solid;
-    border-color: pink;
-    border-width: 5px;
-    padding: 10px;
-    background-color: blanchedalmond; 
+.important_val {
+    font-size: 24px; 
+    font-weight: bold;
+    color: rebeccapurple;
 }
 
-.sub-header h2{
-    float: left;
+
+.sub-header{
+    
+    text-align: center;
+    width: 600px;    
     margin-right: 50px;
 }
 
@@ -313,25 +324,50 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.main{
-    margin: 0 auto;
-    width: 1200px;
-}
 
-.main-title {
-    font-size: 60px;
-}
 
 .canvas {
     float: left;
-    margin-right: 200px;
+    margin-right: 100px;
     font-size: 24px;
     background-color: transparent;
     width: 400px;
 }
 
-.important_val {
-    font-size: 36px; 
-    font-weight: bold;
-    color: rebeccapurple;
+.canvas-text {
+    text-align: center;
+    width: 400px;
+}
+
+
+
+.part-two {
+    float: left;
+    margin-top: 50px;
+    width: 1200px;
+    height: 1100px;
+    background-color: rgb(222, 234, 237);
+    border-radius: 20px;
+}
+
+.part-two-first {
+    margin-bottom: 30px;
+}
+
+.chartSection {
+    float: left;
+    width: 600px;
+}
+
+.part-three {
+    float: left;
+    margin-top: 100px;
+    width: 1200px;
+    padding: 20px;
+    background-color: rgb(222, 234, 237);
+    border-radius: 20px;
+}
+
+.part-three h2 {
+    text-align: center;
 }

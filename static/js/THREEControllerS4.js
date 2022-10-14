@@ -165,8 +165,8 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     //stats.update();
-    //console.log(controls.target);
-    // console.log(camera.position)
+    
+    //console.log(camera.position, controls.target);
     // console.log(camera.rotation)
     
 }
@@ -236,6 +236,7 @@ function sceneInit1(canvasID) {
     light3.position.set(0, 0, 2);
     light3.castShadow = true;
     scene1.add(light3);
+    
 
 
     //grid
@@ -307,7 +308,7 @@ async function init1(canvasID, modelName) {
 }
 
 function setFbxAnimation1(model) {
-//animation
+    //animation
     mixer1 = new THREE.AnimationMixer( model );
     action1 = mixer1.clipAction( model.animations[ 0 ] );
     action1.play();
@@ -321,7 +322,7 @@ function animate1() {
     const delta = clock1.getDelta();
     if ( mixer1 ) mixer1.update( delta );
     renderer1.render( scene1, camera1 );
-    //stats1.update();
+
 }
 
 document.getElementById("Top").onclick = function cameraChange() {
@@ -341,6 +342,36 @@ document.getElementById("Bottom").onclick = function cameraChange() {
         0.4610626823169693,
         -0.0650557742511241)
     animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+}
+
+document.getElementById("Top_side").onclick = function cameraChange() {
+
+    const cameraTarget = new Vector3(1.308709997771635, 1.3521985284192815, -0.15307891073072163)
+    const controlTarget = new Vector3(-0.004148981083599594,
+        1.2025215018947184,
+        -0.004882691356911102)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+
+}
+
+document.getElementById("Bottom_side").onclick = function cameraChange() {
+
+    const cameraTarget = new Vector3(1.3538168165687487, 0.7672824647324888, -0.27511724999154225)
+    const controlTarget = new Vector3(0.07176819883779749,
+        0.5801777022560607,
+        0.023725818690882142)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+
+}
+
+document.getElementById("Back").onclick = function cameraChange() {
+
+    const cameraTarget = new Vector3(0.09798494493960556, 1.4677532125601949, -2.8010056092115954)
+    const controlTarget = new Vector3(0.015196391403839911,
+        0.8286177024522235,
+        -0.004296867247283868)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+
 }
 
 
