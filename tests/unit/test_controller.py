@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 from unittest.mock import patch
 from controller import model
 
+@pytest.mark.unit_test
 class Test_Controller():
     MODEL_OBJ = {
         "modelname":"alisa",
@@ -218,6 +219,7 @@ class Test_Controller():
             session['logged_in'] = True
 
         response = self.client.get(url_for('complete_step4'))
+
         assert response.status_code == 200
 
 

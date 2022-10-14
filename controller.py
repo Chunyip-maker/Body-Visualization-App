@@ -310,9 +310,6 @@ def complete_step4():
     # 如果未登录
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login_page'))
-
-
-
     if request.method == 'GET':
         model_name = request.cookies.get('model_name')
 

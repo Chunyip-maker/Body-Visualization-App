@@ -4,6 +4,7 @@ from model import *
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+@pytest.mark.unit_test
 class Test_Model:
     def setup(self):
         self.model = Model()
