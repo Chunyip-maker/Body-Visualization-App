@@ -127,19 +127,20 @@ input:focus::placeholder {
 
 
 input.mf {
-    margin-left: 10%;
-    margin-right: 5%;
+    margin-left: 12%;
+    /*margin-right: 5%;*/
 }
 
 input[type="radio"] {
-    width: 20px;
-    height: 20px;
+    width: 0;
+    height: 0;
+    background-color: transparent;
     /* opacity: 0; */
 }
 
 input:checked + label {
-    background-color: rgb(210, 245, 235);
-    border-radius: 5px;
+    background-color: rgba(140, 160, 147, 0.9);
+    border-radius: 3px;
 }
 
 .ageSlider {
@@ -147,10 +148,12 @@ input:checked + label {
 }
 
 .form-box img {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 100px;
     opacity: 1.0;
     border-radius: 5px;
+    /*margin-left: -10px;*/
+    cursor: pointer;
 }
 
 input:focus {
