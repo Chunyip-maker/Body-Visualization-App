@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url("../images/background1.png");
-    background-size:cover;
+    background-size: auto;
 }
 
 h1 {
@@ -19,7 +19,9 @@ h1 {
     margin-bottom: 30px;
     text-transform: uppercase;
     color: #f6f6f6;
-    font-size: 46px;
+    text-shadow: rgb(164, 189, 199) 4px 0 0, rgb(164, 189, 199) 0 4px 0, rgb(164, 189, 199) -4px 0 0, rgb(164, 189, 199) 0 -4px 0;
+    font-size: 35px;
+    font-weight: bold;
     letter-spacing: 3px;
 }
 
@@ -28,7 +30,7 @@ p {
     margin-top: 20px;
     margin-bottom: 30px;
     text-transform: uppercase;
-    color: #f6f6f6;
+    color: rgb(150, 171, 179);
     letter-spacing: 2px;
     font-size: 16px;
 }
@@ -36,7 +38,7 @@ p {
 .form-box {
     position: center;
     /* background-color: transparent; */
-    background-color: rgb(185, 148, 154);
+    background-color: rgba(255,255,255,0.4);
     width: 900px;
     height: 600px;
     border-radius: 12px;
