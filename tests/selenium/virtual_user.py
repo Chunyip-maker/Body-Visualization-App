@@ -4,6 +4,7 @@ import selenium
 import sys
 import csv
 import getpass
+import random
 
 
 from selenium import webdriver
@@ -18,11 +19,13 @@ import selenium.webdriver.support.expected_conditions as EC
 class Build_user:
 
     def user1_execute(self):
-        username = "virtual_user1"
+        username = "virtual_user" + str(random.uniform(200, 10000))
         self.user1_login(username)
         self.user1_step1()
         self.user1_step2()
         self.user1_step3_rollback()
+        self.user1_step3_testing()
+        self.user1_step4_viewAndLogOut(username)
 
     def user1_login(self, username):
         self.bigSpacer()
@@ -55,17 +58,16 @@ class Build_user:
         self.bigSpacer()
         print("Step1: select female")
 
-        # self.smallSpacer()
-        # print("select age 25")
-        # slider = self.driver.find_element(By.XPATH, r'/html/body/div/form/div[1]/input')
-        # self.action.click_and_hold(slider).perform()
-        # self.action.drag_and_drop_by_offset(slider, xoffset=100, yoffset=0).perform()
-        # self.action.drag_and_drop_by_offset(slider, xoffset=-0.01, yoffset=0).perform()
-        # self.action.release().perform()
+        self.smallSpacer()
+        print("select age 25")
+        slider = self.driver.find_element(By.XPATH, r'/html/body/div/form/div[1]/input')
+        self.action.click_and_hold(slider).perform()
+        self.action.drag_and_drop_by_offset(slider, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
 
         self.smallSpacer()
         print("select female")
-        self.driver.find_element(By.XPATH, r'/html/body/div/form/div[2]/input[2]').click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/form/div[2]/label[2]"))).click()
 
         self.smallSpacer()
         print("click next step")
@@ -130,10 +132,169 @@ class Build_user:
         print("user1 select style and clothing successfully!!\n")
 
     def user1_step3_rollback(self):
+        time.sleep(8)
         self.bigSpacer()
+        print("Step3 rollback: Directly go to step4 to see report and come back")
 
-    def user1_step4(self):
+        self.smallSpacer()
+        print("save model parameter and go to the step4")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
+
+        self.smallSpacer()
+        print("scroll down")
+        self.scroll_down()
+
+        time.sleep(3)
+        self.smallSpacer()
+        print("scroll up")
+        self.scroll_up()
+
+        self.smallSpacer()
+        print("Go back to step3")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[1]/button"))).click()
+
+    def user1_step3_testing(self):
+        time.sleep(8)
         self.bigSpacer()
+        print("Step3: Change parameter")
+
+        self.smallSpacer()
+        print("Go and see historical record")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[2]/button"))).click()
+
+        self.smallSpacer()
+        print("Go back to step3")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[1]/button"))).click()
+
+        self.smallSpacer()
+        print("Change Shank")
+        slider1 = self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[9]/div/input")))
+        self.action.click_and_hold(slider1).perform()
+        self.action.drag_and_drop_by_offset(slider1, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Thigh")
+        slider2 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[8]/div/input")))
+        self.action.click_and_hold(slider2).perform()
+        self.action.drag_and_drop_by_offset(slider2, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Arms pan")
+        slider3 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[7]/div/input")))
+        self.action.click_and_hold(slider3).perform()
+        self.action.drag_and_drop_by_offset(slider3, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Arm girth")
+        slider4 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[6]/div/input")))
+        self.action.click_and_hold(slider4).perform()
+        self.action.drag_and_drop_by_offset(slider4, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Hip")
+        slider5 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[5]/div/input")))
+        self.action.click_and_hold(slider5).perform()
+        self.action.drag_and_drop_by_offset(slider5, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Waist")
+        slider6 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[4]/div/input")))
+        self.action.click_and_hold(slider6).perform()
+        self.action.drag_and_drop_by_offset(slider6, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Chest")
+        slider7 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[3]/div/input")))
+        self.action.click_and_hold(slider7).perform()
+        self.action.drag_and_drop_by_offset(slider7, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Weight")
+        slider8 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[2]/div/input")))
+        self.action.click_and_hold(slider8).perform()
+        self.action.drag_and_drop_by_offset(slider8, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+        self.smallSpacer()
+        print("Change Height")
+        slider9 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[1]/div/input")))
+        self.action.click_and_hold(slider9).perform()
+        self.action.drag_and_drop_by_offset(slider9, xoffset=100, yoffset=0).perform()
+        self.action.release().perform()
+
+    def user1_step4_viewAndLogOut(self, username):
+        time.sleep(2)
+        self.bigSpacer()
+        print("Step4: See comparing of data")
+
+        self.smallSpacer()
+        print("Save and see new data")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
+
+        self.smallSpacer()
+        print("Check camera top button")
+        time.sleep(3)
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[1]"))).click()
+
+        self.smallSpacer()
+        print("Check camera bottom button")
+        time.sleep(4)
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[2]"))).click()
+
+        self.smallSpacer()
+        print("Check camera top side button")
+        time.sleep(4)
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[3]"))).click()
+
+        self.smallSpacer()
+        print("Check camera bottom side button")
+        time.sleep(4)
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[4]"))).click()
+
+        self.smallSpacer()
+        print("Check camera Back button")
+        time.sleep(4)
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[5]"))).click()
+
+        self.smallSpacer()
+        time.sleep(4)
+        print("scroll down")
+        self.scroll_down()
+
+        time.sleep(3)
+        self.smallSpacer()
+        print("scroll up")
+        self.scroll_up()
+
+        self.smallSpacer()
+        print("Log out")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[2]/button"))).click()
+
+        self.smallSpacer()
+        print("Enter user name")
+        username_field = self.driver.find_element(By.XPATH, r'/html/body/div/div[1]/form[1]/input')
+        username_field.send_keys(username)
+
+        # Submit request
+        self.smallSpacer()
+        print("Log in")
+        self.driver.find_element(By.XPATH, r'/html/body/div/div[1]/form[1]/button').click()
+        print("Login with virtual_user1 successfully!!\n")
 
     def smallSpacer(self):
         time.sleep(self.time_sleep)
@@ -158,6 +319,11 @@ class Build_user:
             if lastCount == lenOfPage:
                 match = True
 
+    def scroll_up(self):
+        self.driver.execute_script(
+            "window.scrollTo(0, 0)")
+        time.sleep(2)
+
     def close(self):
         self.bigSpacer()
         print("YOU PASS ALL THE TEST!")
@@ -176,34 +342,5 @@ class Build_user:
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver.exe')
         self.action = ActionChains(self.driver, 50)
-        self.time_sleep = 1
+        self.time_sleep = 0
         self.wait = ui.WebDriverWait(self.driver, 20)
-
-def get_track(distance):
-    # 移动轨迹
-    track = []
-    # 当前位移
-    current = 0
-    # 减速阈值
-    mid = distance * 4 / 5
-    # 计算间隔
-    t = 0.2
-    # 初速度
-    v = 1
-    while current:
-        if current:
-            # 加速度为2
-            a = 4
-        else:
-            # 加速度为-2
-            a = -3
-        v0 = v
-        # 当前速度
-        v = v0 + a * t
-        # 移动距离
-        move = v0 * t + 1 / 2 * a * t * t
-        # 当前位移
-        current += move
-        # 加入轨迹
-        track.append(round(move))
-    return track
