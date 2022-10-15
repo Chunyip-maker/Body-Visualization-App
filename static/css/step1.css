@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
 
@@ -38,11 +38,11 @@ p {
 .form-box {
     position: center;
     /* background-color: transparent; */
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255, 255, 255, 0.4);
     width: 900px;
     height: 600px;
     border-radius: 12px;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,7 +76,7 @@ input {
     width: 70%;
     color: #fff;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     padding: 10px 0;
     text-indent: 10%;
     font-size: 18px;
@@ -87,10 +87,8 @@ input::placeholder {
     color: #fff;
 }
 
-input:focus{
+input:focus {
     outline: none;
-    border-bottom: 2px solid black;
-    transition: 0.5s;
 }
 
 input:focus::placeholder {
@@ -106,16 +104,16 @@ input:focus::placeholder {
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
-    border-color: rgb(227,167,168);
-    padding:15px;
-    color: rgb(227,167,168);
+    border-color: rgb(227, 167, 168);
+    padding: 15px;
+    color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 24px;
     cursor: pointer;
 }
 
 .form-box button:hover {
-    background-color: rgb(255,206,206);
+    background-color: rgb(255, 206, 206);
     border-radius: 50px;
     border-width: 3px;
     border-style: solid;
@@ -139,8 +137,8 @@ input[type="radio"] {
     /* opacity: 0; */
 }
 
-input:checked+label {
-    background-color: rgb(210,245,235);
+input:checked + label {
+    background-color: rgb(210, 245, 235);
     border-radius: 5px;
 }
 
@@ -148,9 +146,47 @@ input:checked+label {
     position: relative;
 }
 
-.form-box img{
+.form-box img {
     width: 60px;
     height: 60px;
     opacity: 1.0;
     border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    border-width: 0;
+}
+
+.slider::before .slider::after {
+    border-width: 0;
+}
+
+.slider::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: rgb(140, 160, 147);
+}
+
+.slider::-webkit-slider-thumb {
+    margin-top: -5.5px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #f6f6f6;
+    cursor: pointer;
 }
