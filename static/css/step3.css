@@ -165,7 +165,7 @@ input[type="range"]::-ms-fill-lower {
 
 .next button {
     float: right;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 25px;
     width: 250px;
     background-color: #f6f6f6;
@@ -192,7 +192,7 @@ input[type="range"]::-ms-fill-lower {
 
 .history button {
     float: left;
-    margin-top: 20px;
+    margin-top: 30px;
     width: 200px;
     background-color: #f6f6f6;
     outline: none;
@@ -251,10 +251,15 @@ input[type="range"]::-ms-fill-lower {
 /* preloader */
 
 #preloader {
+    /* overflow:hidden; */
     background: black url(../images/2.gif) no-repeat center center;
     background-size: 50%;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 100;
+    z-index: 10000;
 }
