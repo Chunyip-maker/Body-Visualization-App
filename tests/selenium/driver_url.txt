@@ -1,3 +1,5 @@
 https://registry.npmmirror.com/binary.html?path=chromedriver/
 
-Download the driver depends on your system and chrome version here.
+Step1: Download the driver here and on your system and chrome version.
+Step2: go to virtual_user __init__ function change the path of driver to yours
+Step3: run python3 test_selenium.py
