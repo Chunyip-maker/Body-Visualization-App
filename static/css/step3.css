@@ -7,7 +7,7 @@
 
 body {
     background-image: url("../images/background1.png");
-    background-size: cover
+    background-size: auto
 }
 
 /* Font */
@@ -26,33 +26,36 @@ body {
 /* Title */
 .main_title {
     width: 100%;
-    height: 100px;
     /* overflow: hidden; */
     background-color: transparent;
-    font-size: 60px;
-    text-shadow: rgb(166, 199, 208) 3px 0 0, rgb(166, 199, 208) 0 3px 0, rgb(166, 199, 208) -3px 0 0, rgb(166, 199, 208) 0 -3px 0;
+    color: #f6f6f6;
+    text-shadow: rgb(164, 189, 199) 4px 0 0, rgb(164, 189, 199) 0 4px 0, rgb(164, 189, 199) -4px 0 0, rgb(164, 189, 199) 0 -4px 0;
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 3px;
     text-align: center;
     vertical-align: middle;
     line-height: 100px;
-    letter-spacing: 3px;
-    color: white;
+    margin-top: 50px;
 }
 
 
 /* Main Area*/
 .main {
-    margin-top: 100px;
+    margin-top: -100px;
     margin-left: auto;
     margin-right: auto;
-    width: 1200px;
-    height: 500px;
-    /* background-color: pink;
-    border-radius: 30px; */
+    width: 1100px;
+    height: 700px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
 }
 
 .main #canvas {
     float: left;
     position: relative;
+    margin-top: 110px;
+    margin-left: 40px;
     left: 1%;
     width: 450px;
     height: 550px;
@@ -75,6 +78,7 @@ body {
     padding-left: 50px;
     height: 550px;
     margin-left: 50px;
+    margin-top: 110px;
     /* background-color: pink; */
     border-radius: 20px;
 
@@ -161,7 +165,8 @@ input[type="range"]::-ms-fill-lower {
 
 .next button {
     float: right;
-    margin-top: 20px;
+    margin-top: 38px;
+    margin-left: 25px;
     width: 250px;
     background-color: #f6f6f6;
     outline: none;
@@ -213,12 +218,12 @@ input[type="range"]::-ms-fill-lower {
 
 .logout button {
     position: absolute;
-    left: 90%;
-    top: 15%;
+    left: 85%;
+    top: 8%;
 
     float: right;
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
 
     background-color: #f6f6f6;
     outline: none;
@@ -229,7 +234,7 @@ input[type="range"]::-ms-fill-lower {
     padding: 15px;
     color: rgb(227, 167, 168);
     letter-spacing: 2px;
-    font-size: 15px;
+    font-size: 9px;
     text-align: center;
     cursor: pointer;
 }
