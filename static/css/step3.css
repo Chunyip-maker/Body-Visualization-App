@@ -165,7 +165,7 @@ input[type="range"]::-ms-fill-lower {
 
 .next button {
     float: right;
-    margin-top: 38px;
+    margin-top: 20px;
     margin-left: 25px;
     width: 250px;
     background-color: #f6f6f6;
@@ -231,7 +231,6 @@ input[type="range"]::-ms-fill-lower {
     border-width: 3px;
     border-style: solid;
     border-color: rgb(227, 167, 168);
-    padding: 15px;
     color: rgb(227, 167, 168);
     letter-spacing: 2px;
     font-size: 9px;
