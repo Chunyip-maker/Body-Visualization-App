@@ -377,7 +377,7 @@ def complete_step4():
         else:
             parameter_change_report = ["Hi {}! Thanks for taking a go at our Health Report page! We now have one of your " \
                                       "body measurement record in our database, well done! Please keep on using our website for your " \
-                                      "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward" \
+                                      "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward " \
                                       "summary to indicate how your body measurements have changed! Keep going! :)".format(model_name)]
 
             print(parameter_change_report)

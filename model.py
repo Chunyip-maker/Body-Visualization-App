@@ -400,7 +400,7 @@ class Model:
         # ))
         result.append(bmi)
         result.append(category)
-        result.append("Body mass index (BMI) is a person’s weight in kilograms "+
+        result.append("Body mass index (BMI) is a person's weight in kilograms "+
                       "divided by the square of height in meters. BMI is an "+
                       "inexpensive and easy screening method for weight "+
                       "categories—underweight, healthy weight, overweight,"+
