@@ -6,6 +6,7 @@ import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+import {BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, TextureLoader} from "three";
 
 //init
 
@@ -37,7 +38,7 @@ function sceneInit(canvasID) {
         clock = new THREE.Clock();
 
         //set up camera
-        camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
+        camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 100);
         camera.position.set(1.66,2.05,3.61);
         //camera.rotation.set(-0.34, 0.51, 0.17);
         camera.lookAt(0,1,0);
@@ -76,6 +77,21 @@ function sceneInit(canvasID) {
         const gridHelper = new THREE.GridHelper(10, 10);
         gridHelper.receiveShadow = true;
         scene.add(gridHelper);
+
+        //Testing skybox
+        let textureLoader = new TextureLoader();
+        let skyBoxGeometry = new BoxGeometry(30, 30, 30);
+        //the textures pattern in skybox material is left, right, up, down, front, back
+        let skyBoxMaterial = [
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
+            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide})
+        ];
+        let skyboxMesh = new Mesh(skyBoxGeometry, skyBoxMaterial);
+        scene.add(skyboxMesh);
 
         //set up stats
         // stats = new Stats();
