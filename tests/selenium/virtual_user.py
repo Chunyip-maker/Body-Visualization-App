@@ -6,7 +6,6 @@ import csv
 import getpass
 import random
 
-
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver import ActionChains
@@ -96,7 +95,8 @@ class Build_user:
 
         self.smallSpacer()
         print("Testing hair color buttons")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/form/div[3]/ul/li[3]/label"))).click()
+        self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/form/div[3]/ul/li[3]/label"))).click()
         time.sleep(self.time_sleep)
         self.driver.find_element(By.XPATH, r'/html/body/div[2]/div[3]/form/div[3]/ul/li[4]/label').click()
         time.sleep(self.time_sleep)
@@ -138,7 +138,8 @@ class Build_user:
 
         self.smallSpacer()
         print("save model parameter and go to the step4")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
+        self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
 
         self.smallSpacer()
         print("scroll down")
@@ -168,7 +169,8 @@ class Build_user:
 
         self.smallSpacer()
         print("Change Shank")
-        slider1 = self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[9]/div/input")))
+        slider1 = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[9]/div/input")))
         self.action.click_and_hold(slider1).perform()
         self.action.drag_and_drop_by_offset(slider1, xoffset=100, yoffset=0).perform()
         self.action.release().perform()
@@ -244,7 +246,8 @@ class Build_user:
 
         self.smallSpacer()
         print("Save and see new data")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
+        self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[2]/form[1]/div[10]/button"))).click()
 
         self.smallSpacer()
         print("Check camera top button")
@@ -315,7 +318,8 @@ class Build_user:
             lastCount = lenOfPage
             time.sleep(3)
             lenOfPage = self.driver.execute_script(
-                "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+                "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return "
+                "lenOfPage;")
             if lastCount == lenOfPage:
                 match = True
 
@@ -340,7 +344,17 @@ class Build_user:
         options.add_argument("start-maximized")
         # to supress the error messages/logs
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver.exe')
+
+        # change the path of driver to yours
+        # windows
+        # self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver.exe')
+
+        # Macos chrome 106
+        self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver106')
+
+        # Macos chrom 107
+        # self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver107')
+
         self.action = ActionChains(self.driver, 50)
         self.time_sleep = 0
         self.wait = ui.WebDriverWait(self.driver, 20)
