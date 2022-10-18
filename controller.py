@@ -60,7 +60,6 @@ def register_page():
     - [GET] viewing the register page
     - [POST] if submitting register detail - model name, check register
     """
-    # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
     if 'logged_in' in session:
         return redirect(url_for('complete_step3'))
 

@@ -6,7 +6,7 @@ import Stats from '/static/js/stats.module.js';
 import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
-import {BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, TextureLoader} from "three";
+import {BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, PMREMGenerator, TextureLoader} from "three";
 
 //init
 
@@ -55,7 +55,7 @@ function sceneInit(canvasID) {
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.shadowMap.enabled = true;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1; 
+        renderer.toneMappingExposure = 1;
         canvas.appendChild(renderer.domElement);
 
 
@@ -78,20 +78,22 @@ function sceneInit(canvasID) {
         gridHelper.receiveShadow = true;
         scene.add(gridHelper);
 
-        //Testing skybox
-        let textureLoader = new TextureLoader();
-        let skyBoxGeometry = new BoxGeometry(30, 30, 30);
-        //the textures pattern in skybox material is left, right, up, down, front, back
-        let skyBoxMaterial = [
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide}),
-            new MeshBasicMaterial({ map: textureLoader.load('./static/images/background1.png'), side: DoubleSide})
-        ];
-        let skyboxMesh = new Mesh(skyBoxGeometry, skyBoxMaterial);
-        scene.add(skyboxMesh);
+        // //Skybox ((( COMPLETE BUT NOT IN FINAL PRODUCT )))
+        // let textureLoader = new TextureLoader();
+        // let skyBoxGeometry = new BoxGeometry(40, 40, 40);
+        // //the textures pattern in skybox material is left, right, up, down, front, back, px, nx, py, ny, pz, nz
+        // //current scene: 13, 14_b, 20, 21, 23_b
+        // let skyBoxMaterial = [
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/px.png'), side: DoubleSide}),
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/nx.png'), side: DoubleSide}),
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/py.png'), side: DoubleSide}),
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/ny.png'), side: DoubleSide}),
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/pz.png'), side: DoubleSide}),
+        //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/nz.png'), side: DoubleSide})
+        // ];
+        // let skyboxMesh = new Mesh(skyBoxGeometry, skyBoxMaterial);
+        // skyboxMesh.position.set(0, -3, 0);
+        // scene.add(skyboxMesh);
 
         //set up stats
         // stats = new Stats();

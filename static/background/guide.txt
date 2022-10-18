@@ -1,0 +1,37 @@
+https://matheowis.github.io/HDRI-to-CubeMap/
+splite hdr in 6 dimension png.
+
+From HDRI_file you can see all the hdri source file.
+From overview you can the overview of all the picture of the hdri source.
+From png you can find all the 6 dimenstion png pictures of the above overview.
+
+For our project, 
+the canvas of step3 is in THREEController.js
+the canvas of step2 is in THREEControllerS2.js
+the canvas of health report page is in THREEControllerS4.js
+
+Modify the ./static/js/... of the above file.
+Find the "skyBox" portion code in the file. It is like
+
+-----------------------------------------------------------
+//Testing skybox
+let textureLoader = new TextureLoader();
+let skyBoxGeometry = new BoxGeometry(20, 20, 20);
+//the textures pattern in skybox material is left, right, up, down, front, back
+let skyBoxMaterial = [
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/px.png'), side: DoubleSide}),
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/nx.png'), side: DoubleSide}),
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/py.png'), side: DoubleSide}),
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/ny.png'), side: DoubleSide}),
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/pz.png'), side: DoubleSide}),
+   new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/xxx/nz.png'), side: DoubleSide})
+];
+let skyboxMesh = new Mesh(skyBoxGeometry, skyBoxMaterial);
+scene.add(skyboxMesh);
+------------------------------------------------------------
+
+Change the loading url path of layout "xxx" of the png of the middle part, you can see the different scene.
+The names of the pngs is fixed in this case as the website of the header generated
+the pictures and set name automatically.
+
+----------------------------------------------------------------------
