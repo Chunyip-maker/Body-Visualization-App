@@ -38,15 +38,16 @@ function sceneInit(canvasID) {
         clock = new THREE.Clock();
 
         //set up camera
-        camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 100);
-        camera.position.set(1.66,2.05,3.61);
+        camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 10000);
+        //camera.position.set(1.66,2.05,3.61);
+        camera.position.set(1.4485807979862497,2.0668476949423362,3.934246459224377);
         //camera.rotation.set(-0.34, 0.51, 0.17);
-        camera.lookAt(0,1,0);
+        camera.lookAt(0,1,-1);
         //console.log(camera);
 
         //scene set up, background color debug use only
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
+        scene.background = new THREE.Color(0xD6E7C5);
         
         //set up render
         renderer = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
@@ -62,6 +63,7 @@ function sceneInit(canvasID) {
         //light
         const light = new THREE.AmbientLight(0xffffff,0.8);
         light.position.set(10.0, 10.0, 10.0).normalize();
+        light.castShadow = true;
         scene.add(light);
         var light2 = new THREE.DirectionalLight(0xffffff,1);
         light2.position.set(0, 3, 2);
@@ -74,9 +76,9 @@ function sceneInit(canvasID) {
 
 
         //grid
-        const gridHelper = new THREE.GridHelper(10, 10);
-        gridHelper.receiveShadow = true;
-        scene.add(gridHelper);
+        // const gridHelper = new THREE.GridHelper(10, 10);
+        // gridHelper.receiveShadow = true;
+        // scene.add(gridHelper);
 
         // //Skybox ((( COMPLETE BUT NOT IN FINAL PRODUCT )))
         // let textureLoader = new TextureLoader();
@@ -152,6 +154,7 @@ async function reload(canvasID){
         }
     })
     scene.add(loadModel);
+    loadModel.position.set(0,0.25,0);
     setFbxAnimation(loadModel);
 
 
@@ -168,6 +171,11 @@ async function init(canvasID) {
         fbxLoader.loadAsync( 'Idle.fbx' ),
         fbxLoader.loadAsync( 'Idle.fbx' )
     ] );
+
+
+
+    
+
 
     setTexture();
 
@@ -188,7 +196,40 @@ async function init(canvasID) {
             child.material.alphaTest = 0.5;
         }
     })
-    scene.add(loadModel);
+
+
+    //new stage
+    const stageLoader = new FBXLoader().setPath("/static/model/test/");
+    var [stage] = await Promise.all([
+        stageLoader.loadAsync("Podium.fbx")
+    ]);
+    var list = []
+    for (var i = 0; i < stage.children.length;i++) {
+        if (stage.children[i].name != "Camera"
+        &&stage.children[i].name != "Light" &&
+        stage.children[i].name != "Light002"
+        ) {
+            list.push(stage.children[i]);
+        }
+
+    }
+    stage.children = list;
+    scene.add(stage);
+
+    scene.traverse(child =>{
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    })
+    stage.scale.multiplyScalar(0.004);
+    
+    // console.log(loadModel);
+    // console.log(loadModel.position);
+    loadModel.position.set(0,0.25,0);
+    //loadVrmModel.translateY(1.0);
+    console.log(stage)
+
+    //end stage
     setFbxAnimation(loadModel);
     
 }
@@ -207,6 +248,7 @@ function animate() {
     const delta = clock.getDelta();
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
+    console.log(camera.position);
     //stats.update();
 }
 
