@@ -122,9 +122,23 @@ class Test_Model:
         assert result[1] == 'obese'
 
     def test_generate_bfr_report(self):
+        # invaild input
         result = self.model.generate_bfr_report(24,None)
         assert result is None
 
+        result = self.model.generate_bfr_report(0, None)
+        assert result is None
+
+        result = self.model.generate_bfr_report(-1, None)
+        assert result is None
+
+        result = self.model.generate_bfr_report("25", None)
+        assert result is None
+
+        result = self.model.generate_bfr_report([25], None)
+        assert result is None
+
+        # valid input
         result = self.model.generate_bfr_report(4, "male")
         assert result[1] == "abnormal"
 
@@ -190,3 +204,20 @@ class Test_Model:
                           ("isabelle", "2021-09-09 00:05:09", 1, 2, 3, 4, 5, 6, 7, 8, 9)])
         result = self.model.get_historic_body_measurement_records_to_be_displayed("Isabelle")
         assert result is not None
+
+    # def test_generate_bfr_report(self):
+    #     # test the generate_bfr_report function to be added in model.py
+    #     # generate_bfr_report function takes 2 argument, body_fat_rate, gender
+    #     # if the gender is male:
+    #     #   body_fat < 5 => diagnosed as "abnormal"
+    #     #   body_fat <= 24 => diagnosed as  "healthy"
+    #     #   body_fat > 24 => diagnosed as  "obese"
+    #     # if the gender is female:
+    #     #   body_fat < 10 => diagnosed as  "abnormal"
+    #     #   body_fat <= 31 => diagnosed as  "healthy"
+    #     #   body_fat > 31 => diagnosed as  "obese"
+    #     # if the gender is not given;
+    #     #   return None
+    #     # this function should return in the format of a list:
+    #     #       [given_body_fat_rate, diagnosis, string]
+    #     pass
