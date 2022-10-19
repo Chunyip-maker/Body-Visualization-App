@@ -424,7 +424,7 @@ class Model:
 
     def generate_bfr_report(self,body_fat_rate, gender):
         result = []
-        if not isinstance(body_fat_rate,int) or not isinstance(body_fat_rate,float):
+        if not isinstance(body_fat_rate,int) and not isinstance(body_fat_rate,float):
             return None
         if body_fat_rate <= 0:
             return None
