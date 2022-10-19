@@ -60,7 +60,6 @@ def register_page():
     - [GET] viewing the register page
     - [POST] if submitting register detail - model name, check register
     """
-    # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
     if 'logged_in' in session:
         return redirect(url_for('complete_step3'))
 
@@ -377,7 +376,7 @@ def complete_step4():
         else:
             parameter_change_report = ["Hi {}! Thanks for taking a go at our Health Report page! We now have one of your " \
                                       "body measurement record in our database, well done! Please keep on using our website for your " \
-                                      "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward" \
+                                      "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward " \
                                       "summary to indicate how your body measurements have changed! Keep going! :)".format(model_name)]
 
             print(parameter_change_report)

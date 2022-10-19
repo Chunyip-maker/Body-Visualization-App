@@ -6,6 +6,7 @@ import { Scene } from '/static/js//three.module.js';
 import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
 
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
+import {BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, TextureLoader} from "three";
 
 //init
 
@@ -42,7 +43,7 @@ async function init(canvasID) {
     clock = new THREE.Clock();
 
     //set up camera
-    camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
+    camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 100);
     camera.position.set(1.66,2.05,3.61);
     //camera.rotation.set(-0.34, 0.51, 0.17);
     camera.lookAt(0,1,0);
@@ -60,7 +61,8 @@ async function init(canvasID) {
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.shadowMap.enabled = true;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1; 
+    renderer.toneMappingExposure = 1;
+    //renderer.outputEncoding = THREE.sRGBEncoding;
     canvas.appendChild(renderer.domElement);
 
 
@@ -78,18 +80,34 @@ async function init(canvasID) {
     light3.castShadow = true;
     scene.add(light3);
 
-
     //grid
     const gridHelper = new THREE.GridHelper(10, 10);
     gridHelper.receiveShadow = true;
     scene.add(gridHelper);
+
+    // //Skybox ((( COMPLETE BUT NOT IN FINAL PRODUCT )))
+    // let textureLoader = new TextureLoader();
+    // let skyBoxGeometry = new BoxGeometry(40, 40, 40);
+    // //the textures pattern in skybox material is left, right, up, down, front, back, px, nx, py, ny, pz, nz
+    // //current scene: 13, 14_b, 20, 21, 23_b
+    // let skyBoxMaterial = [
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/px.png'), side: DoubleSide}),
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/nx.png'), side: DoubleSide}),
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/py.png'), side: DoubleSide}),
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/ny.png'), side: DoubleSide}),
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/pz.png'), side: DoubleSide}),
+    //     new MeshBasicMaterial({ map: textureLoader.load('./static/background/png/20/nz.png'), side: DoubleSide})
+    // ];
+    // let skyboxMesh = new Mesh(skyBoxGeometry, skyBoxMaterial);
+    // skyboxMesh.position.set(0, -3, 0);
+    // scene.add(skyboxMesh);
 
 
     //set up stats
     // stats = new Stats();
     // document.body.appendChild( stats.dom );
 
-            //set up controller(enable user to control camera)
+    //set up controller(enable user to control camera)
     controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
     controls.target.set(0, 1, 0)
@@ -133,12 +151,6 @@ async function init(canvasID) {
     readInput(bottom_dress);
 
 
-
-
-
-    //Set the range for different age group, default adult male
-    //selectGroup(3); //change this by checking the url of model
-
     //Save the origin bones position data.
     loadOriginBones(modelBoneName, bonePositionY);
 
@@ -178,67 +190,6 @@ function animate() {
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
     //stats.update();
-}
-
-//Functions of selecting range
-//{Height, Weight, Chest, Waist, Hip, Arm girth, Arms pan, Thigh, Shank}
-//Should be in range of {50, 60, 20, 20, 20, 15, 15, 18, 18}
-//min & max
-function selectGroup(agegroup){
-
-    let teenagerMale = new Array(130, 180, 30, 90, 75, 95, 60, 80, 75, 95, 20, 35, 35, 50, 40, 58, 22, 40);
-    let teenagerFemale = new Array(130, 180, 30, 90, 70, 90, 45, 65, 70, 90, 15, 30, 30, 40, 37, 45, 20, 38);
-    let adultMale = new Array(160, 210, 40, 100, 85, 105, 70, 90, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
-    let adultFemale = new Array(150, 200, 30, 90, 80, 100, 55, 75, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
-    let middleMale = new Array(160, 210, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
-    let middleFemale = new Array(150, 200, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
-    let oldMale = new Array(155, 205, 40, 100, 90, 110, 75, 95, 85, 105, 25, 40, 40, 55, 48, 66, 30, 48);
-    let oldFemale = new Array(145, 195, 30, 90, 85, 105, 65, 85, 80, 100, 15, 30, 34, 44, 45, 63, 28, 46);
-    switch (agegroup){
-        case 1:
-            setRange(teenagerMale);
-            break;
-        case 2:
-            setRange(teenagerFemale);
-            break;
-        case 3:
-            setRange(adultMale);
-            break;
-        case 4:
-            setRange(adultFemale);
-            break;
-        case 5:
-            setRange(middleMale);
-            break;
-        case 6:
-            setRange(middleFemale);
-            break;
-        case 7:
-            setRange(oldMale);
-            break;
-        case 8:
-            setRange(oldFemale);
-            break;
-   }
-}
-
-function setRange(rangeList){
-    setRangeById(1, rangeList[0], rangeList[1]);
-    setRangeById(2, rangeList[2], rangeList[3]);
-    setRangeById(3, rangeList[4], rangeList[5]);
-    setRangeById(4, rangeList[6], rangeList[7]);
-    setRangeById(5, rangeList[8], rangeList[9]);
-    setRangeById(6, rangeList[10], rangeList[11]);
-    setRangeById(7, rangeList[12], rangeList[13]);
-    setRangeById(8, rangeList[14], rangeList[15]);
-    setRangeById(9, rangeList[16], rangeList[17]);
-}
-
-function setRangeById(id, min, max){
-    document.getElementById("a" + id).min = min;
-    document.getElementById("a" + id).max = max;
-    document.getElementById("a" + id).value = (max + min)/2;
-    document.getElementById("b" + id).innerText = (max + min)/2;
 }
 
 //Method for changing the body due to parameter

@@ -71,10 +71,25 @@
     <p id="basic_model_parameters_range" style="display: none">{{body_parameters_range}}</p>
     <p id="latest_records" style="display: none">{{ latest_records|safe}}</p>
 
-    <main class="main">
+    <div class="main">
         <div class="main-title">
-            Your Health Report
+            <!-- Buttons -->
+            <form class="last" action="/step3" method='GET'>
+                <button>
+                    Step 3
+                </button>
+            </form>
+            <div class="main-title-text">
+                Your Health Report
+            </div>
+            <form class="logout" action="/logout" method='GET'>
+                <button>
+                    Logout
+                </button>
+            </form>    
         </div>
+
+        <hr>
 
         <div class="comparison">
             <!-- <h2> Part 1. Model Comparison</h2> -->
@@ -539,18 +554,7 @@
     <script src="../static/js/dashboard.js"></script>
 
 
-    <!-- Buttons -->
-    <form class="last" action="/step3" method='GET'>
-        <button>
-            Step 3
-        </button>
-    </form>
 
-    <form class="logout" action="/logout" method='GET'>
-        <button>
-            Logout
-        </button>
-    </form>
 
 
 
