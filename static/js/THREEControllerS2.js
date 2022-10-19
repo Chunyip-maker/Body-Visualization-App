@@ -197,7 +197,7 @@ async function init(canvasID) {
         }
     })
 
-
+    scene.add(loadModel);
     //new stage
     const stageLoader = new FBXLoader().setPath("/static/model/test/");
     var [stage] = await Promise.all([
@@ -248,7 +248,7 @@ function animate() {
     const delta = clock.getDelta();
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
-    console.log(camera.position);
+    //console.log(camera.position);
     //stats.update();
 }
 
