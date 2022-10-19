@@ -121,6 +121,21 @@
                 <button type="button" id="Bottom_side">Bottom side</button>
                 <button type="button" id="Back">Back</button>
             </div>
+            <div class="basic-text" id="basic_stat">
+
+            </div>
+    
+            <script>
+    
+                var lst = {{parameter_change_report | tojson}} 
+                var block = document.getElementById("basic_stat")
+    
+                var str = ""
+                for (var i = 0; i < lst.length; i ++) {
+                    str += lst[i] + "<br>"
+                }
+                block.innerHTML = str;
+            </script>
         </div>
 
 
@@ -141,21 +156,7 @@
 
         <!-- <h1> Part 2. Basic Health Statistics </h1> -->
         
-        <div class="basic-text" id="basic_stat">
 
-        </div>
-
-        <script>
-
-            var lst = {{parameter_change_report | tojson}} 
-            var block = document.getElementById("basic_stat")
-
-            var str = ""
-            for (var i = 0; i < lst.length; i ++) {
-                str += lst[i] + "<br>"
-            }
-            block.innerHTML = str;
-        </script>
 
         <!-- <h1> Part 3. Advanced Health Statistics </h1> -->
         <div class="part-two">

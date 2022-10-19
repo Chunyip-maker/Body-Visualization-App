@@ -24,9 +24,15 @@ body {
 }
 
 .main-title {
-    font-size: 60px;
+    /* overflow: hidden; */
+    background-color: transparent;
+    color: #f6f6f6;
+    text-shadow: rgb(164, 189, 199) 4px 0 0, rgb(164, 189, 199) 0 4px 0, rgb(164, 189, 199) -4px 0 0, rgb(164, 189, 199) 0 -4px 0;
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 3px;
     width: 1200px;
-    height: 200px;
+    height: 150px;
 }
 
 /* Button */
@@ -59,7 +65,7 @@ body {
 }
 
 .main-title-text {
-    margin-left: 150px;
+    margin-left: 200px;
     margin-right: 150px;
     float: left;
 }
@@ -101,7 +107,10 @@ body {
 
 .comparison {
     width: 1200px;
-    height: 600px;
+    height: 1100px;
+    background-color: rgb(222, 234, 237);
+    border-radius: 20px;
+    
 }
 .comparison .left{
     float: left;
@@ -121,7 +130,8 @@ body {
 }
 
 .comparison .right{
-    float: right;
+    float: left;
+    
     width: 400px;
     height: 600px;
     border-width: 1px;
@@ -141,6 +151,8 @@ body {
     float: left;
     width: 400px;
     height: 500px;
+    margin-left: 0;
+    margin-right: 0;
     border-width: 1px;
     background-color: white;
 }
@@ -169,13 +181,14 @@ body {
 
 .angle_button {
     float: left;
-    width: 200px;
+    margin-right: 20px;
+    width: 150px;
     height: 600px;
 }
 
 .angle_button button {
     height: 50px;
-    width: 200px;
+    width: 170px;
     margin-bottom: 50px;
     background-color: #f6f6f6;
     outline: none;
@@ -199,6 +212,7 @@ body {
 }
 
 .basic-text  {
+    margin-left: 20px;
     font-size: 28px;
     color: rgb(80, 120, 132);
 }
@@ -250,7 +264,8 @@ body {
 
 .canvas {
     float: left;
-    margin-right: 100px;
+    margin-left: 30px;
+    margin-right: 70px;
     font-size: 24px;
     background-color: transparent;
     width: 400px;
