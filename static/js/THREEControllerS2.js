@@ -63,7 +63,7 @@ function sceneInit(canvasID) {
         //light
         const light = new THREE.AmbientLight(0xffffff,0.8);
         light.position.set(10.0, 10.0, 10.0).normalize();
-        light.castShadow = true;
+        //light.castShadow = true;
         scene.add(light);
         var light2 = new THREE.DirectionalLight(0xffffff,1);
         light2.position.set(0, 3, 2);
