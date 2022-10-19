@@ -424,6 +424,10 @@ class Model:
 
     def generate_bfr_report(self,body_fat_rate, gender):
         result = []
+        if not isinstance(body_fat_rate,int) and not isinstance(body_fat_rate,float):
+            return None
+        if body_fat_rate <= 0:
+            return None
         if gender is None:
             return
         if gender == "male":
@@ -440,10 +444,8 @@ class Model:
                 category = "healthy"
             else:
                 category = "obese"
-        # result.append("Your current body fat rate is {bfr}%. This body fate rate falls within the {category} range.".format(
-        #     bfr=body_fat_rate,
-        #     category=category
-        # ))
+        else:
+            return
         result.append(body_fat_rate)
         result.append(category)
         result.append("The body fat rate of a human or other living being is the total mass of fat divided by total body mass, multiplied by 100; body fat includes essential body fat and storage body fat. Essential body fat is necessary to maintain life and reproductive functions. The percentage of essential body fat for women is greater than that for men, due to the demands of childbearing and other hormonal functions.For a man, 2–5% fat is essential, 2–24% fat is considered healthy, and more than 25% classifies as obesity. For a woman, 10–13% fat is essential, 10–31% fat is healthy, and more than 32% classifies as obesity.")
