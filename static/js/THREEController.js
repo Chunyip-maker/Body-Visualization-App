@@ -20,8 +20,10 @@ let modelBoneName = [], bonePositionY = [];
 init("canvas");
 
 
-
-
+//for new stage
+var initPosition = 0.25;
+var currentPosition;
+//end of new variable
 
 async function init(canvasID) {
 
@@ -44,7 +46,8 @@ async function init(canvasID) {
 
     //set up camera
     camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 100);
-    camera.position.set(1.66,2.05,3.61);
+    //camera.position.set(1.66,2.05,3.61);
+    camera.position.set(1.4485807979862497,2.0668476949423362,3.934246459224377);
     //camera.rotation.set(-0.34, 0.51, 0.17);
     camera.lookAt(0,1,0);
     //console.log(camera);
@@ -180,6 +183,38 @@ async function init(canvasID) {
             child.material.alphaTest = 0.5;
         }
     })
+
+    //new stage
+    const stageLoader = new FBXLoader().setPath("/static/model/test/");
+    var [stage] = await Promise.all([
+        stageLoader.loadAsync("Podium.fbx")
+    ]);
+    var list = []
+    for (var i = 0; i < stage.children.length;i++) {
+        if (stage.children[i].name != "Camera"
+        &&stage.children[i].name != "Light" &&
+        stage.children[i].name != "Light002"
+        ) {
+            list.push(stage.children[i]);
+        }
+
+    }
+    stage.children = list;
+    group.add(stage);
+
+    scene.traverse(child =>{
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    })
+    stage.scale.multiplyScalar(0.004);
+    
+    // console.log(loadModel);
+    // console.log(loadModel.position);
+    loadModel.position.set(0,0.25,0);
+    //loadVrmModel.translateY(1.0);
+    console.log(stage)
+    //end stage
     animate();
 }
 
@@ -213,12 +248,16 @@ document.getElementById("a1").oninput = function changeHeight(){
     changeHeightImpl();
 }
 
+var prevIndex = 1;
 function changeHeightImpl(){
     let index = calculateTransformation(1, 0.2);
     changeScaleX(["Hips"], [], index);
     changeScaleY(["Hips"], [], index);
     changeScaleZ(["Hips"], [], index);
+    
+
 }
+
 
 document.getElementById("a2").oninput = function changeWeight(){
     changeWeightImpl();

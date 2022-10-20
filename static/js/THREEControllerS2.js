@@ -228,8 +228,8 @@ async function init(canvasID) {
     loadModel.position.set(0,0.25,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
-
     //end stage
+    
     setFbxAnimation(loadModel);
     
 }
