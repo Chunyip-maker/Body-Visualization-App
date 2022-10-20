@@ -255,9 +255,14 @@ function changeHeightImpl(){
     changeScaleY(["Hips"], [], index);
     changeScaleZ(["Hips"], [], index);
     
-
+    //new stage/environment
+    positionTranslate(index);
 }
 
+//new feature stage/environment
+function positionTranslate(index) {
+    loadModel.position.set(0,initPosition + (index-1),0);
+}
 
 document.getElementById("a2").oninput = function changeWeight(){
     changeWeightImpl();
