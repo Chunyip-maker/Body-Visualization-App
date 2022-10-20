@@ -231,16 +231,20 @@
 </div>
 
 <script>
-    var m = document.getElementById("main")
+    (function(){
+    var myDiv = document.getElementById("preloader"),
 
-    $(window).on("load", function () {
-        m.style.display = 'none'
-        $("#preloader").fadeOut("slow");
-        m.style.display = 'block'
-    });
-    // $('#main').load( "load", function () {
+      show = function(){
+        myDiv.style.display = "block";
+        setTimeout(hide, 5000); // 5 seconds
+      },
 
-    // });
+      hide = function(){
+        myDiv.style.display = "none";
+      };
+
+    show();
+  })();
 
 </script>
 

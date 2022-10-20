@@ -58,9 +58,20 @@
     </div>
 
     <script>
-        $(window).on("load", function () {
-            $("#preloader").fadeOut("slow");
-        });
+    (function(){
+    var myDiv = document.getElementById("preloader"),
+
+      show = function(){
+        myDiv.style.display = "block";
+        setTimeout(hide, 5000); // 5 seconds
+      },
+
+      hide = function(){
+        myDiv.style.display = "none";
+      };
+
+    show();
+  })();
     </script>
 
     <p id="hair_color" style="display: none">{{ model_texture[0] }}</p>
