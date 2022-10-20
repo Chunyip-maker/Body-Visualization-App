@@ -54,14 +54,15 @@ function sceneInit(canvasID) {
 
         //set up camera
         camera = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
-        camera.position.set(1.66,2.05,3.61);
+        //camera.position.set(1.66,2.05,3.61);
+        camera.position.set(1.4485807979862497,2.0668476949423362,3.934246459224377);
         //camera.rotation.set(-0.34, 0.51, 0.17);
         camera.lookAt(0,1,0);
         //console.log(camera);
 
         //scene set up, background color debug use only
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
+        scene.background = new THREE.Color(0xD6E7C5);
         
         //set up render
         renderer = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
@@ -88,9 +89,9 @@ function sceneInit(canvasID) {
 
 
         //grid
-        const gridHelper = new THREE.GridHelper(10, 10);
-        gridHelper.receiveShadow = true;
-        scene.add(gridHelper);
+        // const gridHelper = new THREE.GridHelper(10, 10);
+        // gridHelper.receiveShadow = true;
+        // scene.add(gridHelper);
 
         //set up stats
         // stats = new Stats();
@@ -145,6 +146,38 @@ async function init(canvasID) {
     })
 
     scene.add(loadModel);
+
+    //new stage
+    const stageLoader = new FBXLoader().setPath("/static/model/test/");
+    var [stage] = await Promise.all([
+        stageLoader.loadAsync("Podium.fbx")
+    ]);
+    var list = []
+    for (var i = 0; i < stage.children.length;i++) {
+        if (stage.children[i].name != "Camera"
+        &&stage.children[i].name != "Light" &&
+        stage.children[i].name != "Light002"
+        ) {
+            list.push(stage.children[i]);
+        }
+
+    }
+    stage.children = list;
+    scene.add(stage);
+
+    scene.traverse(child =>{
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    })
+    stage.scale.multiplyScalar(0.004);
+    
+    // console.log(loadModel);
+    // console.log(loadModel.position);
+    loadModel.position.set(0,0.25,0);
+    //loadVrmModel.translateY(1.0);
+    console.log(stage)
+    //end stage
     setFbxAnimation(loadModel);
     
 }
@@ -205,14 +238,15 @@ function sceneInit1(canvasID) {
 
     //set up camera
     camera1 = new THREE.PerspectiveCamera( 30, canvasWidth / canvasHeight, 0.1, 20);
-    camera1.position.set(1.66,2.05,3.61);
+    //camera1.position.set(1.66,2.05,3.61);
+    camera1.position.set(1.4485807979862497,2.0668476949423362,3.934246459224377);
     //camera.rotation.set(-0.34, 0.51, 0.17);
     camera1.lookAt(0,1,0);
     //console.log(camera);
 
     //scene set up, background color debug use only
     scene1 = new THREE.Scene();
-    scene1.background = new THREE.Color(0xffffff);
+    scene1.background = new THREE.Color(0xD6E7C5);
     
     //set up render
     renderer1 = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
@@ -240,9 +274,9 @@ function sceneInit1(canvasID) {
 
 
     //grid
-    const gridHelper = new THREE.GridHelper(10, 10);
-    gridHelper.receiveShadow = true;
-    scene1.add(gridHelper);
+    // const gridHelper = new THREE.GridHelper(10, 10);
+    // gridHelper.receiveShadow = true;
+    // scene1.add(gridHelper);
 
     //set up stats
     //stats1 = new Stats();
@@ -304,6 +338,37 @@ async function init1(canvasID, modelName) {
     })
 
     scene1.add(loadModel1);
+    //new stage
+    const stageLoader = new FBXLoader().setPath("/static/model/test/");
+    var [stage] = await Promise.all([
+        stageLoader.loadAsync("Podium.fbx")
+    ]);
+    var list = []
+    for (var i = 0; i < stage.children.length;i++) {
+        if (stage.children[i].name != "Camera"
+        &&stage.children[i].name != "Light" &&
+        stage.children[i].name != "Light002"
+        ) {
+            list.push(stage.children[i]);
+        }
+
+    }
+    stage.children = list;
+    scene1.add(stage);
+
+    scene1.traverse(child =>{
+        if (child instanceof THREE.Mesh) {
+            child.frustumCulled = false;
+        }
+    })
+    stage.scale.multiplyScalar(0.004);
+    
+    // console.log(loadModel);
+    // console.log(loadModel.position);
+    loadModel1.position.set(0,0.25,0);
+    //loadVrmModel.translateY(1.0);
+    console.log(stage)
+    //end stage
     setFbxAnimation1(loadModel1);
 
 }
