@@ -156,10 +156,11 @@ async function init(canvasID) {
 
 
     //Save the origin bones position data.
+
     loadOriginBones(modelBoneName, bonePositionY);
 
     //Alter history data
-
+    loadModel.position.set(0,initPosition,0);
     if(document.getElementById("check_new_model").innerText != 0){
         loadingHistoryBodyData();
     }
@@ -212,7 +213,7 @@ async function init(canvasID) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel.position.set(0,initPosition,0);
+
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage

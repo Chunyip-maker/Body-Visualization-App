@@ -137,6 +137,7 @@ async function init(canvasID) {
     //Save the origin bones position data.
     loadOriginBones(modelBoneName, bonePositionY);
 
+    loadModel.position.set(0,initPosition,0);
     loadingHistoryBodyData(loadModel,0);
 
     loadModel.traverse( child => {
@@ -177,7 +178,6 @@ async function init(canvasID) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel.position.set(0,initPosition,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage
@@ -316,6 +316,7 @@ async function init1(canvasID, modelName) {
     readInput(loadModel1,top_dress);
     readInput(loadModel1,bottom_dress);
 
+    loadModel1.position.set(0,initPosition,0);
      if(isOne){
         loadingHistoryBodyData(loadModel1,0);
         var canvas = document.getElementById("after_canvas");
@@ -370,7 +371,6 @@ async function init1(canvasID, modelName) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel1.position.set(0,initPosition,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage
