@@ -225,7 +225,7 @@ async function init(canvasID) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel.position.set(0,0.25,0);
+    loadModel.position.set(0,0.23,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage

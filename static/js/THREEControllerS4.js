@@ -36,7 +36,7 @@ console.log(latest_records);
 
 var isOne = latest_records.length == 1;
 
-var initPosition = 0.25;
+var initPosition = 0.23;
 //test version for model under /static/model/test2/ folder only
 init("before_canvas");
 init1("after_canvas");
@@ -174,7 +174,7 @@ async function init(canvasID) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel.position.set(0,0.25,0);
+    loadModel.position.set(0,initPosition,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage
@@ -365,7 +365,7 @@ async function init1(canvasID, modelName) {
     
     // console.log(loadModel);
     // console.log(loadModel.position);
-    loadModel1.position.set(0,0.25,0);
+    loadModel1.position.set(0,initPosition,0);
     //loadVrmModel.translateY(1.0);
     console.log(stage)
     //end stage
@@ -553,7 +553,7 @@ function changeHeightImpl(loadModel,model){
     changeScaleX(loadModel,["Hips"], [], index);
     changeScaleY(loadModel,["Hips"], [], index);
     changeScaleZ(loadModel,["Hips"], [], index);
-    
+
     //new stage/environment
     positionTranslate(index);
 }
