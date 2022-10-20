@@ -36,7 +36,7 @@ console.log(latest_records);
 
 var isOne = latest_records.length == 1;
 
-
+var initPosition = 0.25;
 //test version for model under /static/model/test2/ folder only
 init("before_canvas");
 init1("after_canvas");
@@ -553,6 +553,14 @@ function changeHeightImpl(loadModel,model){
     changeScaleX(loadModel,["Hips"], [], index);
     changeScaleY(loadModel,["Hips"], [], index);
     changeScaleZ(loadModel,["Hips"], [], index);
+    
+    //new stage/environment
+    positionTranslate(index);
+}
+
+//new feature stage/environment
+function positionTranslate(index) {
+    loadModel.position.set(0,initPosition + (index-1),0);
 }
 
 function changeWeightImpl(loadModel,model){
