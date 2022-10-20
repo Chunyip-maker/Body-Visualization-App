@@ -116,7 +116,8 @@ async function init(canvasID) {
     controls.target.set(0, 1, 0)
     controls.update()
 
-
+    controls.minPolarAngle = 0;
+    controls.maxPolarAngle =  Math.PI * 0.5;
     //fbx loader
     let boneMenu = [];
     let objectCopy = null;

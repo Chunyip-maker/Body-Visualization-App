@@ -103,6 +103,9 @@ function sceneInit(canvasID) {
         controls.target.set(0, 1, 0)
         controls.update()
 
+        controls.minPolarAngle = 0;
+		controls.maxPolarAngle =  Math.PI * 0.5;
+
         controls.addEventListener( 'change', () => {
             camera1.position.copy( camera.position );
             camera1.rotation.copy( camera.rotation );
@@ -288,6 +291,8 @@ function sceneInit1(canvasID) {
     controls1.target.set(0, 1, 0)
     controls1.update()
     
+    controls1.minPolarAngle = 0;
+    controls1.maxPolarAngle =  Math.PI * 0.5;
 
     controls1.addEventListener( 'change', () => {
         camera.position.copy( camera1.position );

@@ -106,6 +106,9 @@ function sceneInit(canvasID) {
         controls.enableDamping = true
         controls.target.set(0, 1, 0)
         controls.update()
+
+        controls.minPolarAngle = 0;
+		controls.maxPolarAngle =  Math.PI * 0.5;
 }
 async function reload(canvasID){
     scene.remove(loadModel);
