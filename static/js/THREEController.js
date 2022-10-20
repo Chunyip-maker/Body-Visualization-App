@@ -55,8 +55,8 @@ async function init(canvasID) {
 
     //scene set up, background color debug use only
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(background_1.color);
-    
+    //scene.background = new THREE.Color(background_1.color);
+    scene.background = new THREE.Color(0xD6E7C5);
     //set up render
     renderer = new THREE.WebGLRenderer( {antialias: true, alpha: true } );
     renderer.setSize( canvasWidth , canvasHeight );
@@ -84,9 +84,9 @@ async function init(canvasID) {
     scene.add(light3);
 
     //grid
-    const gridHelper = new THREE.GridHelper(10, 10);
-    gridHelper.receiveShadow = true;
-    scene.add(gridHelper);
+    // const gridHelper = new THREE.GridHelper(10, 10);
+    // gridHelper.receiveShadow = true;
+    // scene.add(gridHelper);
 
     // //Skybox ((( COMPLETE BUT NOT IN FINAL PRODUCT )))
     // let textureLoader = new TextureLoader();
