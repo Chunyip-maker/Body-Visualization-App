@@ -7,7 +7,7 @@ import {MeshPhongMaterial} from '/static/js//MeshPhongMaterial.js';
 
 import * as dat from 'https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js';
 import {BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial, TextureLoader} from "three";
-
+import { Vector3 } from 'three';
 //init
 
 let stats, mixer, canvas, canvasWidth, canvasHeight, clock;
@@ -222,10 +222,12 @@ async function init(canvasID) {
 
 
 function animate() {
+    TWEEN.update();
     requestAnimationFrame( animate );
     const delta = clock.getDelta();
     if ( mixer ) mixer.update( delta );
     renderer.render( scene, camera );
+    //console.log(camera.position, controls.target)
     //stats.update();
 }
 
@@ -251,6 +253,7 @@ document.getElementById("a1").oninput = function changeHeight(){
 }
 
 var prevIndex = 1;
+var callOnce = [0,0,0];
 function changeHeightImpl(){
     let index = calculateTransformation(1, 0.2);
     changeScaleX(["Hips"], [], index);
@@ -259,6 +262,48 @@ function changeHeightImpl(){
     
     //new stage/environment
     positionTranslate(index);
+    //console.log(index)
+    if (index > 0.93 && index < 1.03 && callOnce[0] == 0) {
+        callOnce = [0 ,0 ,0];
+        callOnce[0] = 1;
+        cameraPositionOrigin();
+    }
+    if (index >= 1.03 && callOnce[1] == 0) {
+        callOnce = [0 ,0 ,0];
+        callOnce[1] = 1;
+        cameraPositionHigh();
+    }
+    if (index <= 0.93 && callOnce[2] == 0) {
+        callOnce = [0 ,0 ,0];
+        callOnce[2] = 1;
+        cameraPositionLow();
+    }
+}
+
+//new feature camera
+function cameraPositionOrigin() {
+    const cameraTarget = new Vector3(1.1297525756088347, 2.1543632778727355, 4.013221907024572)
+    const controlTarget = new Vector3(0,
+        1,
+        0)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+}
+
+//new feature camera
+function cameraPositionLow() {
+    const cameraTarget = new Vector3(1.1103991149486863, 2.1710353733201555, 3.3357958987540135)
+    const controlTarget = new Vector3(0.017290990949987674,
+        0.9664811149186596,
+        -0.053962235011330704)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
+}
+//new feature camera
+function cameraPositionHigh() {
+    const cameraTarget = new Vector3(1.3914624363865524, 2.369216508506059, 4.652770183181438)
+    const controlTarget = new Vector3(0,
+        1,
+        0)
+    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
 }
 
 //new feature stage/environment
@@ -497,4 +542,53 @@ function readInput(input){
         textureChange(input[i], input[i+1]);
         //console.log(input[i], input[i+1]);
     }
+}
+
+//reference: http://zuoben.top/#4-10
+// current1 相机当前的位置
+// target1 相机的controls的target
+// current2 新相机的目标位置
+// target2 新的controls的target
+var tween;
+ 
+function animateCamera(current1, target1, current2, target2) {
+    
+    let positionVar = {
+        x1: current1.x,
+        y1: current1.y,
+        z1: current1.z,
+        x2: target1.x,
+        y2: target1.y,
+        z2: target1.z
+    };
+    
+    controls.enabled = false;
+    tween = new TWEEN.Tween(positionVar);
+    tween.to({
+        x1: current2.x,
+        y1: current2.y,
+        z1: current2.z,
+        x2: target2.x,
+        y2: target2.y,
+        z2: target2.z
+    }, 500);
+    
+    tween.onUpdate(function() {
+        
+        camera.position.x = positionVar.x1;
+        camera.position.y = positionVar.y1;
+        camera.position.z = positionVar.z1;
+        controls.target.x = positionVar.x2;
+        controls.target.y = positionVar.y2;
+        controls.target.z = positionVar.z2;
+        controls.update();
+        
+    })
+ 
+    tween.onComplete(function() {
+        controls.enabled = true;
+    })
+ 
+    tween.easing(TWEEN.Easing.Cubic.InOut);
+    tween.start();
 }
