@@ -371,8 +371,13 @@ def complete_step4():
         changed_parameters = []
         unchanged_parameters = []
         parameter_change_report = []
+        times = []
 
         if not is_new_account and not has_only_one_record:
+            old_time = latest_records[0]["update_time"]
+            new_time = latest_records[1]["update_time"]
+            times.append(old_time)
+            times.append(new_time)
             changed_parameters, unchanged_parameters = model.generate_parameter_change_report(model_name,latest_records)
             # print("Changed:")
             # for each in changed_parameters:
@@ -450,6 +455,7 @@ def complete_step4():
                                last_twenty_combined_records = last_twenty_combined_records,
                                has_only_one_record = has_only_one_record,
                                parameter_change_report = json.dumps(parameter_change_report),
+                               times = json.dumps(times),
                                bmi_report_list=bmi_report_list,
                                bmr_report_list=bmr_report_list,
                                bfr_report_list=bfr_report_list,
