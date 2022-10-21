@@ -565,7 +565,7 @@ function changeHeightImpl(loadModel,model){
     changeScaleZ(loadModel,["Hips"], [], index);
 
     //new stage/environment
-    positionTranslate(index);
+    positionTranslate(loadModel,index);
 
     if (index > 0.93 && index < 1.03 && callOnce[0] == 0) {
         callOnce = [0 ,0 ,0];
@@ -611,7 +611,7 @@ function cameraPositionHigh() {
 
 
 //new feature stage/environment
-function positionTranslate(index) {
+function positionTranslate(loadModel,index) {
     loadModel.position.set(0,initPosition + (index-1),0);
 }
 
