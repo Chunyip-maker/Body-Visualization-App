@@ -49,8 +49,8 @@ body {
 .main #canvas {
     margin-left: 50px;
     float: left;
-    width: 400px;
-    height: 500px;
+    width: 450px;
+    height: 570px;
     border-width: 1px;
     background-color: white;
 }
@@ -111,8 +111,8 @@ hr {
 }
 
 .next button {
-    float: right;
     margin-top: 8px;
+    margin-left: 160px;
     width: 50%;
     background-color: #f6f6f6;
     outline: none;
