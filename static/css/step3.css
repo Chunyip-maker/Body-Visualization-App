@@ -46,7 +46,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 1100px;
-    height: 700px;
+    height: 710px;
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 12px;
 }
@@ -54,11 +54,11 @@ body {
 .main #canvas {
     float: left;
     position: relative;
-    margin-top: 110px;
+    margin-top: 25px;
     margin-left: 40px;
     left: 1%;
     width: 450px;
-    height: 550px;
+    height: 570px;
     border-width: 1px;
     background-color: white;
 }
@@ -78,7 +78,7 @@ body {
     padding-left: 50px;
     height: 550px;
     margin-left: 50px;
-    margin-top: 110px;
+    margin-top: 25px;
     /* background-color: pink; */
     border-radius: 20px;
 
@@ -167,8 +167,10 @@ input[type="range"]::-ms-fill-lower {
 .next button {
     float: right;
     margin-top: 30px;
-    margin-left: 25px;
-    width: 250px;
+    margin-right: 20px;
+    width: 220px;
+    height: 60px;
+
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
@@ -194,7 +196,9 @@ input[type="range"]::-ms-fill-lower {
 .history button {
     float: left;
     margin-top: 30px;
-    width: 200px;
+    width: 220px;
+    height: 60px;
+
     background-color: #f6f6f6;
     outline: none;
     border-radius: 50px;
@@ -218,11 +222,11 @@ input[type="range"]::-ms-fill-lower {
 }
 
 .logout button {
-    position: absolute;
-    left: 70%;
-    top: 8%;
+    position: relative;
+    float: left;
+    margin-left: 950px;
+    margin-top: 17px;
 
-    float: right;
     width: 70px;
     height: 70px;
 
