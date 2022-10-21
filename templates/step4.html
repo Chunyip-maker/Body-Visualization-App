@@ -100,7 +100,6 @@
             </form>    
         </div>
 
-        <hr>
 
         <div class="second-title">   
             Part 1: Model Comparison
@@ -108,7 +107,7 @@
 
         <div class="comparison">
             <div class="angle_button">
-                <hr>
+            
                 <button type="button" id="Top">Top</button>
                 <button type="button" id="Bottom">Bottom</button>
                 <button type="button" id="Top_side">Top side</button>
@@ -125,6 +124,7 @@
                     <!-- <img src="../static/images/fake_step4_1.jpg" alt="">
                     老模型 -->
                 </div>
+
             </div>
             <div class="canvas">
                 <div class="canvas-text" id = "after_canvas_text">
@@ -135,25 +135,78 @@
                     <!-- <img src="../static/images/fake_step4_2.jpg" alt=""> -->
                     <!-- 最新模型 -->
                 </div>
-            </div>
-
-            <hr>
-
-            <div class="basic-text" id="basic_stat">
 
             </div>
-    
-            <script>
-    
-                var lst = {{parameter_change_report | tojson}} 
-                var block = document.getElementById("basic_stat")
-    
-                var str = ""
-                for (var i = 0; i < lst.length; i ++) {
-                    str += lst[i] + "<br>"
+
+        
+            <div class="basic-box" id="basic_box">
+                <div class="basic-text-title" id="basic-text-title">
+                    
+                </div>
+                <script>  
+                    document.getElementById("basic-text-title").innerHTML =  "Hi, {{model_name}}";
+                </script>
+
+                <div class="basic-text" id="basic_stat">
+
+                </div>
+                <script>
+                    var block = document.getElementById("basic_stat")
+                    var one = {{has_only_one_record}}
+                    var lst = JSON.parse({{parameter_change_report | tojson}})
+                    if (one == 1) {
+                        var box = document.getElementById("basic_box");
+                        var title = document.getElementById("basic-text-title");
+                        box.style.margin = 0;
+                        // box.style.marginLeft = "50px";
+                        box.style.width = "520px";
+                        box.style.padding = 0;
+                        title.style.width = "200px";
+                        title.style.fontSize = "20px";
+                        title.style.lineHeight = "40px";
+                        title.style.height = "40px";
+                        block.innerHTML =  lst[0];
+                    } else {
+
+                    
+                    var time = JSON.parse({{times | tojson}})
+                    var str = "";
+                    // var first_line = '<span>';
+                    var first_line = "";
+                    first_line += "Your body change summary from ";
+                    first_line += "<span class='important_text'>" + time[0] + "</span>"; 
+                    first_line += " to ";
+                    first_line += "<span class='important_text'>" + time[1] + "</span>";
+                    // first_line = '</span>';
+                    // first_line += "<hr>";
+
+
+                    str +=  "<span class='header_text'>" + first_line + '</span>' + "<hr>";
+
+                    for (var i in lst) {
+                        str += '<span class="normal_text">'
+                        str += lst[i].measurement; 
+                        if (lst[i].status == "Remain Unchanged") {
+                            str += ": " + "<span class='important_text'>" + lst[i].status + "</span>";
+                            str += " at ";
+                            str += "<span class='important_text'>" + lst[i].new + "</span>";
+                        } else {
+                            str += ": " + "<span class='important_text'>" + lst[i].status + "</span>"; 
+                            str += " by ";
+                            str += "<span class='important_text'>" + lst[i].diff + "</span>"; 
+                            str += ", from ";
+                            str += "<span class='important_text'>" + lst[i].old + "</span>";
+                            str += " to ";
+                            str += "<span class='important_text'>" + lst[i].new + "</span>";
+                        }
+                        str += "<hr>" + " </span>"
+
+                    }
+                    block.innerHTML = str;
                 }
-                block.innerHTML = str;
-            </script>
+                </script>
+            </div>    
+         
         </div>
 
 
@@ -546,7 +599,7 @@
                 </script>
             </div>
         </section>
-        <!-- <script>
+        <script>
             function setFirstChild() {
                 var isMale = Boolean({{is_male}});
 
@@ -559,7 +612,7 @@
             }
 
             setFirstChild()
-        </script> -->
+        </script>
         </div>
 
 

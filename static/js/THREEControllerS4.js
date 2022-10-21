@@ -329,9 +329,11 @@ async function init1(canvasID, modelName) {
         before_canvas_text.innerText = "Latest Model";
         after_canvas_text.style.display = 'none';
         text.style.float = "default";
-        text.style.width = "400px";
+        text.style.width = "500px";
         text.style.margin = "0px";
-        text.style.marginLeft = "50px";
+        text.style.marginLeft = "25px";
+        
+        text.style.padding = "10px";
         
     }
     else{
