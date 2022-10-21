@@ -38,7 +38,7 @@ error_message = "No Special Characters Allowed ; # & ' < > -  , not empty input 
 @app.route('/')
 def index():
     """
-    If already login( 即之前已输入过model name ), go to step3
+    If already login, go to step3
     Otherwise prompt login
      """
     # 如果未登录
@@ -55,7 +55,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
     """
-    Here handles the register page
+    Handle the register page
     Provides /register
     - [GET] viewing the register page
     - [POST] if submitting register detail - model name, check register
@@ -364,28 +364,40 @@ def complete_step4():
             is_new_account = False
 
         if latest_records is not None and len(latest_records) == 1:
-            has_only_one_record = True
+            has_only_one_record = 1
         else:
-            has_only_one_record = False
+            has_only_one_record = 0
+
+        changed_parameters = []
+        unchanged_parameters = []
+        parameter_change_report = []
 
         if not is_new_account and not has_only_one_record:
-            parameter_change_report = model.generate_parameter_change_report(model_name,latest_records)
+            changed_parameters, unchanged_parameters = model.generate_parameter_change_report(model_name,latest_records)
+            # print("Changed:")
+            # for each in changed_parameters:
+            #     print(each)
+            #
+            # print("Unchanged:")
+            # for each in unchanged_parameters:
+            #     print(each)
 
-            for each in parameter_change_report:
-                print(each)
+            parameter_change_report = changed_parameters+unchanged_parameters
+            # for each in parameter_change_report:
+            #     print(each)
         else:
-            parameter_change_report = ["Hi {}! Thanks for taking a go at our Health Report page! We now have one of your " \
+            parameter_change_report = ["Thanks for taking a go at our Health Report page! We now have one of your " \
                                       "body measurement record in our database, well done! Please keep on using our website for your " \
                                       "body shape tracking! With one more record stored, we are able to offer you a brief and straightforward " \
                                       "summary to indicate how your body measurements have changed! Keep going! :)".format(model_name)]
 
-            print(parameter_change_report)
+            # print(parameter_change_report)
 
         if not is_new_account:
             # bmi_report是一个长度为2的list，第一个element是评价，第二个是科普信息
             current_bmi = bmi_records[len(bmi_records)-1]
             bmi_report_list= model.generate_bmi_report(current_bmi)
-            print(bmi_report_list)
+            # print(bmi_report_list)
         else:
             bmi_report_list = []
 
@@ -393,7 +405,7 @@ def complete_step4():
             # bmr_report是一个长度为2的list，第一个element是评价，第二个是科普信息
             current_bmr = bmr_records[len(bmr_records)-1]
             bmr_report_list = model.generate_bmr_report(current_bmr)
-            print(bmr_report_list)
+            # print(bmr_report_list)
         else:
             bmr_report_list = []
 
@@ -401,13 +413,13 @@ def complete_step4():
             # bfr_report是一个长度为2的list，第一个element是评价，第二个是科普信息
             current_body_fat_rate = body_fat_rate_records[len(body_fat_rate_records)-1]
             bfr_report_list = model.generate_bfr_report(current_body_fat_rate,request.cookies.get("gender"))
-            print(bfr_report_list)
+            # print(bfr_report_list)
         else:
             bfr_report_list = []
 
         if not is_new_account:
             weight_report = model.generate_weight_report(latest_records,weight_records)
-            print(weight_report)
+            # print(weight_report)
         else:
             weight_report =[]
 
@@ -416,7 +428,7 @@ def complete_step4():
         else:
             less_than_5_records = False
 
-        print("Less than 5 records: "+str(less_than_5_records))
+        # print("Less than 5 records: "+str(less_than_5_records))
 
         return render_template('step4.html',
                                model_texture=model_texture,
@@ -436,7 +448,8 @@ def complete_step4():
                                last_twenty_bmr_records = last_twenty_bmr_records,
                                last_twenty_body_fate_rate_records = last_twenty_body_fate_rate_records,
                                last_twenty_combined_records = last_twenty_combined_records,
-                               parameter_change_report=parameter_change_report,
+                               has_only_one_record = has_only_one_record,
+                               parameter_change_report = json.dumps(parameter_change_report),
                                bmi_report_list=bmi_report_list,
                                bmr_report_list=bmr_report_list,
                                bfr_report_list=bfr_report_list,

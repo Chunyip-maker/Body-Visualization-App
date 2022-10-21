@@ -308,58 +308,74 @@ class Model:
         if model_name is None or latest_records is None:
             return
 
-        result = []
+        unchanged_parameters = []
+        changed_parameters = []
+
         old_record = latest_records[0]
         new_record = latest_records[1]
 
         old_time = latest_records[0]["update_time"]
         new_time = latest_records[1]["update_time"]
 
-        # intro paragraph
-        intro = "Hi, {model_name}! Your body change from {old_time} to {new_time} is summarized as below:".format(
-            model_name=model_name,
-            old_time=old_time,
-            new_time=new_time
-        )
-        result.append(intro)
-
         # paragraph to display parameters that have changes
-        second_paragraph = ""
         parameters =["height", "weight", "thigh", "shank","hip", "arm_girth","arm_pan","waist", "chest"]
         temp = [] # store the parameter of which the value is not changed
         unit_map = {"height":"cm","weight":"kg","thigh":"cm","shank":"cm","hip":"cm","arm_girth":"cm","arm_pan":"cm","waist":"cm", "chest":"cm"}
         for key in parameters:
             if old_record[key] == new_record[key]:
+                # store parameters that have not changed
                 temp.append(key)
             else:
+                # for parameters that have changed
                 if old_record[key] < new_record[key]:
-                    row = "{parameter} : Increase by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
-                        parameter=key.replace("_"," ").upper(),
-                        diff=new_record[key]-old_record[key],
-                        old_value=old_record[key],
-                        new_value=new_record[key],
-                        unit=unit_map[key]
-                    )
+                    # row = "{parameter} : Increase by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
+                    #     parameter=key.replace("_"," ").upper(),
+                    #     diff=new_record[key]-old_record[key],
+                    #     old_value=old_record[key],
+                    #     new_value=new_record[key],
+                    #     unit=unit_map[key]
+                    # )
+                    each = {}
+                    unit = unit_map[key]
+                    each["measurement"] = key.replace("_"," ").upper()
+                    each["status"] = "Increase"
+                    each["diff"] = str(new_record[key]-old_record[key])+unit
+                    each["old"] = str(old_record[key])+unit
+                    each["new"] = str(new_record[key])+unit
                 else:
-                    row = "{parameter} : Decrease by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
-                        parameter=key.replace("_"," ").upper(),
-                        diff=old_record[key] - new_record[key],
-                        old_value=old_record[key],
-                        new_value=new_record[key],
-                        unit=unit_map[key]
-                    )
-                result.append(row)
+                    # row = "{parameter} : Decrease by {diff}{unit}, from {old_value}{unit} to {new_value}{unit}".format(
+                    #     parameter=key.replace("_"," ").upper(),
+                    #     diff=old_record[key] - new_record[key],
+                    #     old_value=old_record[key],
+                    #     new_value=new_record[key],
+                    #     unit=unit_map[key]
+                    # )
+                    each = {}
+                    unit = unit_map[key]
+                    each["measurement"] = key.replace("_", " ").upper()
+                    each["status"] = "Decrease"
+                    each["diff"] = str(old_record[key] - new_record[key]) + unit
+                    each["old"] = str(old_record[key]) + unit
+                    each["new"] = str(new_record[key]) + unit
+                changed_parameters.append(each)
 
         #paragraph to display parameters that have no changes
 
         for key in temp:
-            row = "{parameter} : Remain unchanged at {old_value}{unit}".format(
-                parameter=key.replace("_", " ").upper(),
-                old_value=old_record[key],
-                unit=unit_map[key]
-            )
-            result.append(row)
-        return result
+            # row = "{parameter} : Remain unchanged at {old_value}{unit}".format(
+            #     parameter=key.replace("_", " ").upper(),
+            #     old_value=old_record[key],
+            #     unit=unit_map[key]
+            # )
+            each = {}
+            unit = unit_map[key]
+            each["measurement"] = key.replace("_", " ").upper()
+            each["status"] = "Remain Unchanged"
+            each["diff"] = str(0)+unit
+            each["old"] = str(old_record[key]) + unit
+            each["new"] = str(new_record[key]) + unit
+            unchanged_parameters.append(each)
+        return changed_parameters,unchanged_parameters
 
     def generate_weight_report(self, latest_records,weight_records):
         if weight_records is None or len(weight_records) == 0:
