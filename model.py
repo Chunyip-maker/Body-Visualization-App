@@ -314,8 +314,8 @@ class Model:
         old_record = latest_records[0]
         new_record = latest_records[1]
 
-        old_time = latest_records[0]["update_time"]
-        new_time = latest_records[1]["update_time"]
+        # old_time = latest_records[0]["update_time"]
+        # new_time = latest_records[1]["update_time"]
 
         # paragraph to display parameters that have changes
         parameters =["height", "weight", "thigh", "shank","hip", "arm_girth","arm_pan","waist", "chest"]
