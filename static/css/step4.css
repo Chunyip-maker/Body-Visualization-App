@@ -32,7 +32,7 @@ body {
     font-weight: bold;
     letter-spacing: 3px;
     width: 1200px;
-    height: 150px;
+    height: 120px;
 }
 
 /* Button */
@@ -40,6 +40,7 @@ body {
 
 .last button{
     float: left;
+    margin-top: 20px;
     width: 150px;
     height: 75px;
     background-color: #f6f6f6;
@@ -72,6 +73,7 @@ body {
 
 .logout button{
     float: right;
+    margin-top: 20px;
     width: 150px;
     height: 75px;
     background-color: #f6f6f6;
@@ -106,9 +108,13 @@ body {
 /* comparison */
 
 .comparison {
+    float: left;
     width: 1200px;
+    margin-bottom: 50px;
     padding-bottom: 50px;
     padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
     background-color: rgb(222, 234, 237);
     border-radius: 20px;
     
@@ -118,7 +124,7 @@ body {
     width: 400px;
     height: 600px;
     border-width: 1px;
-    background-color: white;
+    background-color: pink;
 }
 
 .comparison .left img{
@@ -132,11 +138,9 @@ body {
 
 .comparison .right{
     float: left;
-    
     width: 400px;
     height: 600px;
     border-width: 1px;
-    background-color: white;
 }
 
 
@@ -153,7 +157,7 @@ body {
     width: 400px;
     height: 500px;
     margin-left: 0;
-    margin-right: 30px;
+    margin-right: 0;
     border-width: 1px;
     background-color: white;
 }
@@ -182,7 +186,6 @@ body {
 
 .angle_button {
     float: left;
-    margin-left: 20px;
     margin-right: 30px;
     width: 150px;
     height: 500px;
@@ -190,7 +193,7 @@ body {
 
 .angle_button button {
     height: 50px;
-    width: 170px;
+    width: 190px;
     margin-bottom: 50px;
     background-color: #f6f6f6;
     outline: none;
@@ -214,9 +217,13 @@ body {
 }
 
 .basic-text  {
-    margin-left: 20px;
+    float: left;
+    margin-top: 50px;
     font-size: 28px;
     color: rgb(80, 120, 132);
+    background-color:rgb(209, 225, 230);
+    border-radius: 30px;
+    padding: 10px;
 }
 
 /* Part 2 */
@@ -266,8 +273,7 @@ body {
 
 .canvas {
     float: left;
-    margin-left: 30px;
-    margin-right: 70px;
+    margin-left: 50px;
     font-size: 24px;
     background-color: transparent;
     width: 400px;
@@ -282,9 +288,9 @@ body {
 
 .part-two {
     float: left;
-    margin-top: 50px;
     width: 1200px;
     height: 1100px;
+    margin-bottom: 50px;
     background-color: rgb(222, 234, 237);
     border-radius: 20px;
 }
@@ -300,7 +306,6 @@ body {
 
 .part-three {
     float: left;
-    margin-top: 100px;
     width: 1200px;
     padding: 20px;
     background-color: rgb(222, 234, 237);
@@ -309,4 +314,13 @@ body {
 
 .part-three h2 {
     text-align: center;
+}
+
+.second-title {
+    color: #f6f6f6;
+    text-shadow: rgb(164, 189, 199) 4px 0 0, rgb(164, 189, 199) 0 4px 0, rgb(164, 189, 199) -4px 0 0, rgb(164, 189, 199) 0 -4px 0;
+    font-size: 32px;
+    letter-spacing: 3px; 
+    margin-bottom: 10px;
+    padding-bottom: 5px;
 }
