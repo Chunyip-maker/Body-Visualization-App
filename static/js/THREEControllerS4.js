@@ -569,39 +569,13 @@ function changeHeightImpl(loadModel,model){
     //new stage/environment
     positionTranslate(loadModel,index);
 
-    if (index > 0.93 && index < 1.03 && callOnce[0] == 0) {
-        callOnce = [0 ,0 ,0];
-        callOnce[0] = 1;
-        cameraPositionOrigin();
-    }
     if (index >= 1.03 && callOnce[1] == 0) {
         callOnce = [0 ,0 ,0];
         callOnce[1] = 1;
         cameraPositionHigh();
     }
-    if (index <= 0.93 && callOnce[2] == 0) {
-        callOnce = [0 ,0 ,0];
-        callOnce[2] = 1;
-        cameraPositionLow();
-    }
-}
-//new feature camera
-function cameraPositionOrigin() {
-    const cameraTarget = new Vector3(1.1297525756088347, 2.1543632778727355, 4.013221907024572)
-    const controlTarget = new Vector3(0,
-        1,
-        0)
-    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
 }
 
-//new feature camera
-function cameraPositionLow() {
-    const cameraTarget = new Vector3(1.1103991149486863, 2.1710353733201555, 3.3357958987540135)
-    const controlTarget = new Vector3(0.017290990949987674,
-        0.9664811149186596,
-        -0.053962235011330704)
-    animateCamera(camera.position, controls.target,cameraTarget,controlTarget)
-}
 //new feature camera
 function cameraPositionHigh() {
     const cameraTarget = new Vector3(1.3914624363865524, 2.369216508506059, 4.652770183181438)
