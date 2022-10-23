@@ -198,7 +198,6 @@ def complete_step1():
 @app.route('/step2', methods=['GET', 'POST'])
 def complete_step2():
     """ Handle the 3rd step of the body visualizer """
-    # 如果已经登陆过，直接跳转至step3.html开始调身体参数捏人
     if 'logged_in' in session:
         return redirect(url_for('complete_step3'))
 
@@ -215,12 +214,10 @@ def complete_step2():
         basic_model = model.define_basic_model(age, gender)
         return render_template('step2.html', basic_model=basic_model)
     elif request.method == 'POST':
-        # 如果未登录 -- 未完成注册系统都不识别为登录成功
         if 'logged_in' not in session or not session['logged_in']:
             session['logged_in'] = True
             # # load model name
             model_name = request.cookies.get('model_name')
-            #
             # # define basic model
             age = request.cookies.get('age')
             gender = request.cookies.get('gender')
@@ -235,16 +232,7 @@ def complete_step2():
             bottom_dress = request.form.get('bot')  # 下装
             basic_model_path = request.form.get("clothing_style")  # 基础模型的路径
 
-            # hair_color = model.split_mesh_name(hair_color)
-            # skin_color = model.split_mesh_name(skin_color)
-            # top_dress = model.split_mesh_name(top_dress)
-            # bottom_dress = model.split_mesh_name(bottom_dress)
-
             model.add_model_appearance(model_name, hair_color, skin_color, top_dress, bottom_dress, basic_model_path)
-
-            # 暂时没用
-            # textures_file_path = model.search_model_texture_file_path(model_name)
-            # basic_model_file_path = model.search_basic_model_file_path(model_name)
 
             latest_records = model.get_at_most_two_newest_body_measurement_record(model_name)
             if latest_records is None or len(latest_records) == 0:
