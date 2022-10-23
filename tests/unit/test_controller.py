@@ -50,7 +50,7 @@ class Test_Controller():
         return mock_database
 
     def setup(self):
-        """在执行具体方法前先被调用"""
+        """Called before any test case"""
         self.app = app
         self.mock_database = self.create_mock_database()
 
@@ -59,10 +59,8 @@ class Test_Controller():
         self.app.config['SECRET_KEY']='123'
         self.context = app.app_context()
         self.context.push()
-        # 利用flask提供的测试客户端进行测试
         self.client = app.test_client()
 
-        # 激活测试标志
         app.config['TESTING'] = True
 
         current_app.config["DEBUG"]
@@ -94,12 +92,6 @@ class Test_Controller():
             response = self.client.post(url_for('register_page'),data=Test_Controller.MODEL_OBJ)
             assert response.status_code == 302
 
-    # def test_index_previous_logged_in(self):
-    #     with self.client.session_transaction() as session:
-    #         session['logged_in']=True
-    #
-    #     response = self.client.get(url_for('register_page'))
-    #     assert response.status_code == 302
 
     def test_register_page_get(self):
         with self.client:

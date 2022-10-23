@@ -1,0 +1,3 @@
+https://registry.npmmirror.com/binary.html?path=chromedriver/
+
+Download the driver depends on your system and chrome version here.
