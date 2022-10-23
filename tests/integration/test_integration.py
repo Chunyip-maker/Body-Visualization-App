@@ -9,7 +9,7 @@ from controller import model
 @pytest.mark.integration_test
 class TestIntegration:
     def setup(self):
-        """在执行具体方法前先被调用"""
+        """Called before each test case gets executed"""
         self.app = app
 
         self.mock_database = self.create_mock_database()
@@ -19,10 +19,8 @@ class TestIntegration:
         self.app.config['SECRET_KEY'] = '123'
         self.context = app.app_context()
         self.context.push()
-        # 利用flask提供的测试客户端进行测试
         self.client = app.test_client()
 
-        # 激活测试标志
         app.config['TESTING'] = True
 
         current_app.config["DEBUG"]
@@ -94,15 +92,15 @@ class TestIntegration:
     def test_register_step1(self):
         with self.client:
             response = self.client.get(url_for('register_page'))
-            # 未登录用户，首先跳转至/login
+            # For user who have not logged in, directed to step1
             assert response.status_code == 200
 
-            # 提交后进入Step1
+            # Enter step1
             response = self.client.post(url_for('register_page'), data=self.MODEL_OBJ, follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step1')
 
-            # 验证此时尚未入库,前面注册不成功
+            # Verify that the data has not been stored in the database, the register is not complete
             response = self.client.get(url_for('index'), follow_redirects = True)
             assert response.status_code == 200
             assert response.request.path == url_for('login_page')
@@ -111,20 +109,20 @@ class TestIntegration:
     def test_register_step1_step2(self):
         with self.client:
             response = self.client.get(url_for('register_page'))
-            # 未登录用户，首先跳转至/login
+            # For user who have not logged in, directed to step1
             assert response.status_code == 200
 
-            # 提交后进入Step1
+            # Enter step1
             response = self.client.post(url_for('register_page'), data=self.MODEL_OBJ, follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step1')
 
-            # 在step1提交年龄性别数据,进入step2
+            # Submit age and gender in Step1, then enter step2
             response = self.client.post(url_for('complete_step1'), data=self.MODEL_OBJ, follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step2')
 
-            # 验证此时尚未入库,前面注册不成功
+            # Verify that the data has not been stored in the database, the register is not complete
             response = self.client.get(url_for('index'), follow_redirects = True)
             assert response.status_code == 200
             assert response.request.path == url_for('login_page')
@@ -134,32 +132,32 @@ class TestIntegration:
 
         with self.client:
             response = self.client.get(url_for('register_page'))
-            # 未登录用户，首先跳转至/login
+            # For user who have not logged in, directed to step1
             assert response.status_code == 200
 
-            # 提交后进入Step1
+            # Enter Step1
             response = self.client.post(url_for('register_page'), data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step1')
 
-            # 在step1提交年龄性别数据
+            # Submit age and gender in Step1, then enter step2
             response = self.client.post(url_for('complete_step1'),data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step2')
 
-            # 在step2提交外形数据
+            # Submit outfit data in Step2, then enter step3
             response = self.client.post(url_for('complete_step2'), data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
 
-            # 在step3选定身体参数并入库
+            # Settle the body measurmenet in step3, and the data gets stored in the database
             try:
                 response = self.client.post(url_for('complete_step3'), data=self.MODEL_OBJ,follow_redirects=True)
             except IndexError:
                 assert response.status_code == 200
 
 
-            # 确认入库
+            # Verify that the data has been stored in the database
             response = self.client.get(url_for('register_page'), follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
@@ -167,31 +165,31 @@ class TestIntegration:
     def test_register_step1_step2_step3_step4(self):
         with self.client:
             response = self.client.get(url_for('register_page'))
-            # 未登录用户，首先跳转至/login
+            # For user who have not logged in, directed to step1
             assert response.status_code == 200
 
-            # 提交后进入Step1
+            # Enter Step1
             response = self.client.post(url_for('register_page'), data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step1')
 
-            # 在step1提交年龄性别数据
+            # Submit age and gender in Step1, then enter step2
             response = self.client.post(url_for('complete_step1'),data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step2')
 
-            # 在step2提交外形数据
+            # Submit outfit data in Step2, then enter step3
             response = self.client.post(url_for('complete_step2'), data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
 
-            # 在step3选定身体参数并入库,进入step4
+            # Settle the body measurmenet in step3, and the data gets stored in the database, enter Step4
             try:
                 response = self.client.post(url_for('complete_step3'), data=self.MODEL_OBJ,follow_redirects=True)
             except IndexError:
                 assert response.status_code == 200
 
-            # 确认入库
+            # Verify that the data has been stored in the database
             response = self.client.get(url_for('register_page'), follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
@@ -201,12 +199,12 @@ class TestIntegration:
         self.mock_database.check_model_existence = MagicMock(return_value=True)
 
         with self.client:
-            # 从主页登陆
+            # login from the index page
             response = self.client.get(url_for('index'),follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('login_page')
 
-            # 登陆成功，直接跳去step3
+            # after successful login, directed to step3
             response = self.client.post(url_for('login_page'), data=self.MODEL_OBJ,follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
@@ -215,17 +213,17 @@ class TestIntegration:
         self.mock_database.check_model_existence = MagicMock(return_value=True)
 
         with self.client:
-            # 从主页登陆
+            # login from the index page
             response = self.client.get(url_for('index'), follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('login_page')
 
-            # 登陆成功，直接跳去step3
+            # after successful login, directed to step3
             response = self.client.post(url_for('login_page'), data=self.MODEL_OBJ, follow_redirects=True)
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
 
-            # 选择参数，进入step4/historic report
+            # Choose the body measurement and enter step4/historic report
             try:
                 response = self.client.post(url_for('complete_step3'), data=self.MODEL_OBJ, follow_redirects=True)
             except IndexError:
@@ -248,7 +246,7 @@ class TestIntegration:
             assert response.status_code == 200
             assert response.request.path == url_for('complete_step3')
 
-            # 选择参数，进入step4 / historic report
+            # Choose the body measurement and enter step4/historic report
             try:
                 response = self.client.post(url_for('complete_step3'), data=self.MODEL_OBJ, follow_redirects=True)
             except IndexError:

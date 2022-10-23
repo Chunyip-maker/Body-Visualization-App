@@ -115,7 +115,6 @@ class Model:
             i+=2
         return general_body_parameters
 
-    # 返回 a list of records,最多两个record，最新的和次新的，每个record以字典形式存储body measurement
     def get_at_most_two_newest_body_measurement_record(self, model_name):
         if model_name is None:
             return
@@ -139,13 +138,8 @@ class Model:
             entry["chest"] = float(raw_result[10])
 
             result.insert(0, entry)
-
-        # print(result)
         return result
 
-    # 如果历史数据少于等于十个，都返回
-    # 如果历史数据个数多于十个，均匀取数共计十个
-    # 返回a list of record,每个record以字典形式存储body_measurement,第一个为最新的数据，最后一个为最老的数据
     def get_historic_body_measurement_records_to_be_displayed(self, model_name):
         if model_name is None:
             return
@@ -185,9 +179,7 @@ class Model:
                 entry["waist"] = float(raw_result[9])
                 entry["chest"] = float(raw_result[10])
                 result.insert(0, entry)
-        # for each in result:
-        #     print(each)
-        #     print()
+
         return result
 
     def get_last_twenty_body_measurement_records_to_be_displayed(self,model_name):
@@ -314,10 +306,6 @@ class Model:
         old_record = latest_records[0]
         new_record = latest_records[1]
 
-        # old_time = latest_records[0]["update_time"]
-        # new_time = latest_records[1]["update_time"]
-
-        # paragraph to display parameters that have changes
         parameters =["height", "weight", "thigh", "shank","hip", "arm_girth","arm_pan","waist", "chest"]
         temp = [] # store the parameter of which the value is not changed
         unit_map = {"height":"cm","weight":"kg","thigh":"cm","shank":"cm","hip":"cm","arm_girth":"cm","arm_pan":"cm","waist":"cm", "chest":"cm"}
