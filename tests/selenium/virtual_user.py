@@ -18,7 +18,7 @@ import selenium.webdriver.support.expected_conditions as EC
 class Build_user:
 
     def user1_execute(self):
-        username = "virtual_user" + str(random.uniform(200, 10000))
+        username = "virtualUser" + str(random.uniform(200, 10000))
         self.user1_login(username)
         self.user1_step1()
         self.user1_step2()
@@ -152,7 +152,7 @@ class Build_user:
 
         self.smallSpacer()
         print("Go back to step3")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[1]/button"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/form[1]/button"))).click()
 
     def user1_step3_testing(self):
         time.sleep(8)
@@ -165,7 +165,7 @@ class Build_user:
 
         self.smallSpacer()
         print("Go back to step3")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[1]/button"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/form[1]/button"))).click()
 
         self.smallSpacer()
         print("Change Shank")
@@ -252,27 +252,27 @@ class Build_user:
         self.smallSpacer()
         print("Check camera top button")
         time.sleep(3)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[1]"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/div[1]/button[1]"))).click()
 
         self.smallSpacer()
         print("Check camera bottom button")
         time.sleep(4)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[2]"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/div[1]/button[2]"))).click()
 
         self.smallSpacer()
         print("Check camera top side button")
         time.sleep(4)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[3]"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/div[1]/button[3]"))).click()
 
         self.smallSpacer()
         print("Check camera bottom side button")
         time.sleep(4)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[4]"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/div[1]/button[4]"))).click()
 
         self.smallSpacer()
         print("Check camera Back button")
         time.sleep(4)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[2]/div[3]/button[5]"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/div[1]/button[5]"))).click()
 
         self.smallSpacer()
         time.sleep(4)
@@ -286,16 +286,18 @@ class Build_user:
 
         self.smallSpacer()
         print("Log out")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/form[2]/button"))).click()
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/form[2]/button"))).click()
 
         self.smallSpacer()
         print("Enter user name")
+        time.sleep(4)
         username_field = self.driver.find_element(By.XPATH, r'/html/body/div/div[1]/form[1]/input')
         username_field.send_keys(username)
 
         # Submit request
         self.smallSpacer()
         print("Log in")
+        time.sleep(4)
         self.driver.find_element(By.XPATH, r'/html/body/div/div[1]/form[1]/button').click()
         print("Login with virtual_user1 successfully!!\n")
 
@@ -347,10 +349,10 @@ class Build_user:
 
         # change the path of driver to yours
         # windows
-        # self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver.exe')
+        self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver.exe')
 
-        # Macos chrome 106
-        self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver106')
+        # # Macos chrome 106
+        # self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver106')
 
         # Macos chrom 107
         # self.driver = webdriver.Chrome(options=options, executable_path='./chromedriver107')
