@@ -3,6 +3,7 @@
 ### How to run the project
 - **Before getting started, make sure you have all of these installed on your computer:**
   - Python 3.9 or above
+  - pip 20.2.3 or above
 ### Some dependencies after Python3 is installed
   - `pip3 install pytest-cov`
   - `pip3 install flask`
