@@ -27,27 +27,25 @@
   - `pip3 install flask-unittest  `   0.1.3
   - `pip3 install Flask-WTF `         1.0.1
   - `pip3 install selenium     `      4.5.0
- 
- 
- 
+
 ### Alternatively, you can install the dependency with our pre-prepared list in requirement.txt.
 - `pip3 install -r requirement.txt` 
 ### Browser Requirement:
-- Chrome - Recommended (win 106 or ios 106)
+- Chrome - Recommended (win 106 or IOS 106)
 
 ### How to Run the Tests:
 - **First, please make sure you are under the project root directory soft3888_w16_03_re_p50/
-Suppose you have already successfully set up the environment for Pytest, Python, flask etc., 
+Suppose you have already successfully set up the environment for PyTest, Python, Flask, etc., 
 To run Unit Test and generate code coverage report, please run command:**
 ```python3 -m pytest -m unit_test -v --cov --cov-report=html```,
-- You may wait 10 seconds for a /htmlcov folder to be generated, and open the html file /htmlcov/index.html in your default browser
+- You may wait 10 seconds for a `/htmlcov` folder to be generated, and open the html file `/htmlcov/index.html` in your default browser
 
 ### To run Integration Test, please run command:
-	```python3 -m pytest -m integration_test -v```
+	python3 -m pytest -m integration_test -v
 
 ### Then, follow these steps:
-- Clone this repository (SourceTree, VScode or PyCharm)
+- Clone this repository (`SourceTree`, `VSCode` or `PyCharm`)
 - run python3 run.py
 - Enter to 127.0.0.1:5000 into your browser (Chrome)
 ### Authors
-**Soft3888_w16_03_re_p50,  the University of Sydney**
+**SOFT3888_w16_03_re_p50,  the University of Sydney**
