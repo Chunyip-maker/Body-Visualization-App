@@ -1,1 +1,1 @@
-python3 -m pytest -m integration_test -v
+python -m pytest -m integration_test -v
