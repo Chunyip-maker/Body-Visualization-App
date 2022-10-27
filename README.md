@@ -4,7 +4,7 @@
 - **Before getting started, make sure you have all of these installed on your computer:**
   - Python 3.9 or above
   - pip 20.2.3 or above
-### Some dependencies after Python3 is installed(double click Install.bat to install denpendencies for windows)
+### Some dependencies after Python3 is installed
   - `pip3 install pytest-cov`
   - `pip3 install flask`
   - `pip3 install pytest`
@@ -30,6 +30,8 @@
 
 ### Alternatively, you can install the dependency with our pre-prepared list in requirement.txt.
 - `pip3 install -r requirement.txt` 
+  or
+  Double click Install.bat to install denpendencies for windows
 ### Browser Requirement:
 - Chrome - Recommended (win 106 or IOS 106)
 
@@ -42,6 +44,7 @@ To run Unit Test and generate code coverage report, please run command:**
 
 ### To run Integration Test, please run command:
 	python3 -m pytest -m integration_test -v
+  
 
 ### Then, follow these steps:
 - Clone this repository (`SourceTree`, `VSCode` or `PyCharm`)
