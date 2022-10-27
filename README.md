@@ -29,7 +29,7 @@
   - `pip3 install selenium     `      4.5.0
 
 ### Alternatively, you can install the dependency with our pre-prepared list in requirement.txt.
-- `pip3 install -r requirement.txt` 
+- `pip3 install -r requirements.txt` 
   or
   Double click Install.bat to install denpendencies for windows
 ### Browser Requirement:
