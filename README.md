@@ -36,15 +36,17 @@
 - Chrome - Recommended (win 106 or IOS 106)
 
 ### How to Run the Tests:
-- **First, please make sure you are under the project root directory soft3888_w16_03_re_p50/
-Suppose you have already successfully set up the environment for PyTest, Python, Flask, etc., 
-To run Unit Test and generate code coverage report, please run command:**
-```python3 -m pytest -m unit_test -v --cov --cov-report=html```,
-- You may wait 10 seconds for a `/htmlcov` folder to be generated, and open the html file `/htmlcov/index.html` in your default browser
+- ** First, please make sure you are under the project root directory soft3888_w16_03_re_p50/
+- ** Suppose you have already successfully set up the environment for PyTest, Python, Flask, etc., 
+
+### To run Unit Test and generate code coverage report, please run command:**
+  - For Mac: ```python3 -m pytest -m unit_test -v --cov --cov-report=html```,
+  - For windows: ```python -m pytest -m unit_test -v --cov --cov-report=html```
+  - You may wait 10 seconds for a `/htmlcov` folder to be generated, and open the html file `/htmlcov/index.html` in your default browser
 
 ### To run Integration Test, please run command:
-	python3 -m pytest -m integration_test -v
-  
+  - For Mac: ```python3 -m pytest -m integration_test -v```
+  - For windows: ```python -m pytest -m integration_test -v```
 
 ### Then, follow these steps:
 - Clone this repository (`SourceTree`, `VSCode` or `PyCharm`)
