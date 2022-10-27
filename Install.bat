@@ -19,5 +19,5 @@ pip3 install Flask-Testing
 pip3 install flask-unittest     
 pip3 install Flask-WTF 
 pip3 install selenium
-python3 run.py
+python run.py
 pause
